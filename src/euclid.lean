@@ -25,21 +25,17 @@ local infix ` ≃ `:55 := congruent  -- typed as \ equiv
 -------------------
 axiom distance_not_neg (p1 p2 : Point) : distance p1 p2 >= 0
 axiom distance_is_symm_op : is_symm_op Point ℝ distance
-@[symm, simp] lemma distance_is_symm : ∀ (p1 p2 : Point), distance p1 p2 = distance p2 p1 := distance_is_symm_op.symm_op
 
-@[refl, simp] axiom cong_is_equiv {A : Type} : is_equiv A (≃)
-instance cong_is_preorder {A : Type} : is_preorder A (≃) := @is_equiv.to_is_preorder A (≃) cong_is_equiv
-instance cong_is_trans {A : Type} : is_trans A (≃) :=  @is_preorder.to_is_trans A (≃) cong_is_preorder
-@[trans] lemma cong_trans {A : Type} (a b c : A) : a≃b → b≃c → a≃c := @is_trans.trans A (≃) cong_is_trans a b c
-instance cong_is_symm {A : Type} : is_symm A (≃) := @is_equiv.to_is_symm A (≃) cong_is_equiv
-@[symm] lemma cong_symm {A : Type} (a b : A) : a≃b → b≃a := @is_symm.symm A (≃) cong_is_symm a b
+@[simp] lemma distance_is_symm : ∀ (p1 p2 : Point), distance p1 p2 = distance p2 p1 := distance_is_symm_op.symm_op
 
 
+@[simp, refl] axiom cong_refl {A : Type} (a : A) : congruent a a
+@[symm] axiom cong_symm {A : Type} (a b: A) : congruent a b → congruent b a
+@[trans] axiom cong_trans {A : Type} (a b c: A) : congruent a b → congruent b c → congruent a c
 
--- # Helper functions
----------------------
--- condition for 3 terms being distict.
-def distinct {A : Type} (a b c : A) := a ≠ b ∧ b ≠ c ∧ c ≠ a
+@[simp] lemma cong_equiv {A : Type} : equivalence (@congruent A) := mk_equivalence congruent cong_refl cong_symm cong_trans  -- The @ makes implicit arguments explicit.
+--instance cong_is_equiv (A : Type) : is_equiv A (≃):= {symm := cong_symm, refl := cong_refl, trans := cong_trans}
+@[refl, symm, simp] axiom cong_is_equiv (A : Type) : is_equiv A (≃)
 
 
 -- Postulate I
@@ -54,6 +50,11 @@ axiom line_exists (p₁ p₂ : Point) (h : p₁ ≠ p₂) :
 structure Segment: Type :=
 (p1 p2 : Point)
 
+
+-- # Helper functions
+---------------------
+-- condition for 3 terms being distict.
+def distinct {A : Type} (a b c : A) := a ≠ b ∧ b ≠ c ∧ c ≠ a
 
 -- Missing axiom:
 -----------------
@@ -142,6 +143,8 @@ constant make_angle : Line → Line → Angle
 constant add_angle : Angle → Angle → Angle
 constant less_than_angle : Angle → Angle → Prop
 constant equal_angle : Angle → Angle → Prop
+constant in_circle : Point → Circle → Prop
+
 
 constant exists_intersection: Line → Line → Prop
 constant intersection (l1 l2 : Line) (is_inter : exists_intersection l1 l2): Point
@@ -189,3 +192,5 @@ axiom circles_intersect' (c₁ c₂ : Circle)
   (h₂ : (abs (radius c₁ - radius c₂) <= distance c₁.center c₂.center)) :
   let p : Point := circles_intersect c₁ c₂ h₁ h₂ in
   p ∈ circumference c₁ ∧ p ∈ circumference c₂
+
+
