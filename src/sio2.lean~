@@ -1,0 +1,23 @@
+import tactic
+
+noncomputable theory
+open_locale classical
+
+-- # Propositions as Types
+--------------------------
+
+/-
+
+
+
+-/
+
+
+-- # Curry-Howard Isomorphism
+-----------------------------
+
+/-
+
+
+
+-/

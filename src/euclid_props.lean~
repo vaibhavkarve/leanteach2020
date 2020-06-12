@@ -1,0 +1,82 @@
+import .euclid
+import tactic
+import tactic.equiv_rw
+
+-- Notation
+-----------
+local infix ` ≃ `:55 := congruent  -- typed as \ equiv
+local infix `⬝`:56 := Segment.mk  -- typed as \ cdot
+
+
+lemma hypothesis1_about_circles_radius (s : Segment) :
+  let c₁ : Circle := ⟨s.p1, s.p2⟩ in
+  let c₂ : Circle := ⟨s.p2, s.p1⟩ in
+  radius c₁ + radius c₂ >= distance c₁.center c₂.center :=
+begin
+  intros,
+  show distance s.p1 s.p2 ≤ radius c₁ + radius c₂,
+    calc distance s.p1 s.p2 ≤ distance s.p1 s.p2 + distance s.p1 s.p2
+                                              : by {simp, apply distance_not_neg}
+         ... = radius c₁ + distance s.p1 s.p2 : by refl
+         ... = radius c₁ + distance s.p2 s.p1 : by rw distance_symm
+         ... = radius c₁ + radius c₂ : by refl,
+end
+
+
+lemma hypothesis2_about_circles_radius (s : Segment) :
+  let c₁ : Circle := ⟨s.p1, s.p2⟩ in
+  let c₂ : Circle := ⟨s.p2, s.p1⟩ in
+  abs (radius c₁ - radius c₂) <= distance c₁.center c₂.center :=
+  begin
+    intros,
+    show abs (radius c₁ - radius c₂) ≤ distance s.p1 s.p2,
+    calc abs (radius c₁ - radius c₂) = abs (distance s.p1 s.p2 - radius c₂) : rfl
+         ... = abs (distance s.p1 s.p2 - distance s.p2 s.p1) : rfl
+         ... = abs (distance s.p1 s.p2 - distance s.p1 s.p2) : by rw distance_symm
+         ... = 0 : by simp
+         ... ≤ distance s.p1 s.p2 : by apply distance_not_neg,
+  end
+
+
+--Proposition 1
+lemma construct_equilateral (s : Segment) : ∃ (tri: Triangle),
+  s.p1 = tri.p1 ∧ s.p2 = tri.p2 ∧ is_equilateral tri :=
+begin
+  set c₁ : Circle := ⟨s.p1, s.p2⟩,
+  set c₂ : Circle := ⟨s.p2, s.p1⟩,
+  have h₁ := (hypothesis1_about_circles_radius s),
+  have h₂ := hypothesis2_about_circles_radius s,
+  set p : Point := circles_intersect c₁ c₂ h₁ h₂,
+  have hp₁ : p ∈ circumference c₁, from (circles_intersect' c₁ c₂ h₁ h₂).1,
+  have hp₂ : p ∈ circumference c₂, from (circles_intersect' c₁ c₂ h₁ h₂).2,
+  use ⟨s.p1, s.p2, p⟩,
+  -- Cleaning up the context ----------------------------------------------
+    tidy;
+    unfold circumference at hp₁ hp₂;
+    dsimp at *;
+    unfold radius_segment at hp₁ hp₂;
+    dsimp at *;
+    unfold sides_of_triangle;
+    simp,
+  ---- Cleaning done ------------------------------------------------------
+    { fapply cong_trans,
+      exact s.p2 ⬝ s.p1,
+      apply segment_symm,
+      assumption},
+    {calc s.p2⬝p ≃ s.p2 ⬝ s.p1 : by {apply cong_symm, assumption}
+            ...  ≃ s.p1 ⬝ s.p2 : by {apply segment_symm}
+            ...  ≃ s.p1 ⬝ p    : by {assumption}
+            ...  ≃ p ⬝ s.p1    : by { apply segment_symm}},
+end
+--how do we know that the two circles intersecet, i don't think we have an axiom rip
+--∃ p3 | p3 equadistant to p1, p2 by circle construction, look at https://mathcs.clarku.edu/~djoyce/java/elements/bookI/propI1.html
+
+
+--Proposition 2
+lemma placeline (s1 : Segment) (p1: Point): ∃ (s2 : Segment), (s1.p1 = s2.p1) ∧ congruent s1 s2 :=
+begin
+  sorry
+end
+--bruh moment
+
+--Proposition 3
