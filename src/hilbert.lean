@@ -298,7 +298,7 @@ def supplementary_angles (α₁ α₂ : Angle)
   ∧ line_of_points α₁.base α₁.ext₁ h₁ = line_of_points α₂.base α₂.ext₁ h₂
   ∧ collinear_points α₁.base α₁.ext₂ α₂.ext₂
 
-def mk_supplementary_angle (α : Angle) : Angle := sorry
+def mk_supplementary_angle (α : Angle) : Angle := ⟨α.ext₁, α.base, sorry⟩
 
 lemma mk_supp_angle_condition (α : Angle):
  (mk_supplementary_angle α).base ≠ (mk_supplementary_angle α).ext₁ := sorry
