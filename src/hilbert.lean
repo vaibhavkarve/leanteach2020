@@ -84,22 +84,35 @@ def rays_of_angle (α : Angle) : Ray × Ray :=
 structure Triangle : Type :=
 (p₁ p₂ p₃ : Point)
 
-def side1_of_triangle (t : Triangle) : Segment := t.p₁ ⬝ t.p₂
-def side2_of_triangle (t : Triangle) : Segment := t.p₂ ⬝ t.p₃
-def side3_of_triangle (t : Triangle) : Segment := t.p₁ ⬝ t.p₃
-
 def sides_of_triangle (t : Triangle) : list Segment :=
   [t.p₁⬝t.p₂, t.p₂⬝t.p₃, t.p₁⬝t.p₃]
+def side1_of_triangle (t : Triangle) : Segment :=
+  t.p₁⬝t.p₂
+def side2_of_triangle (t : Triangle) : Segment :=
+  t.p₂⬝t.p₃
+def side3_of_triangle (t : Triangle) : Segment :=
+  t.p₁⬝t.p₃
+
+--- TODO :
+-- 1. How do lists work
+-- 2. Can we make list.inth work instead of list.nth
+-- 3. How do option.none and option.some work?
 
 
 def angles_of_triangle (t : Triangle) : list Angle :=
 [⟨t.p₂, t.p₁, t.p₃⟩, ⟨t.p₁, t.p₂, t.p₃⟩, ⟨t.p₂, t.p₃, t.p₁⟩]
+def angle1_of_triangle (t : Triangle) : Angle :=
+  ⟨t.p₂, t.p₁, t.p₃⟩
+def angle2_of_triangle (t : Triangle) : Angle :=
+  ⟨t.p₁, t.p₂, t.p₃⟩
+def angle3_of_triangle (t : Triangle) : Angle :=
+  ⟨t.p₂, t.p₃, t.p₁⟩
 
 
 
 def equilateral (t: Triangle) : Prop :=
   let sides := sides_of_triangle t in
-  sides.nth 1 ≃ sides.nth 2 ∧ sides.nth 2 ≃ sides.nth 3
+  sides.nth 0 ≃ sides.nth 1 ∧ sides.nth 1 ≃ sides.nth 2
 
 -- # II. Order Axioms (Good)
 ---------------------
@@ -233,7 +246,9 @@ axiom angle_congruent (α : Angle) (o : Point) (r : Ray) (h : r.base = o) :
 def congruent_triangle (t₁ t₂ : Triangle) : Prop :=
   let sides1 := sides_of_triangle t₁ in
   let sides2 := sides_of_triangle t₂ in
-  sides1.nth 1 ≃ sides2.nth 1  ∧ sides1.nth 2 ≃ sides2.nth 2 ∧ sides1.nth 3 ≃ sides2.nth 3
+  sides1.nth 0 ≃ sides2.nth 0
+  ∧ sides1.nth 1 ≃ sides2.nth 1
+  ∧ sides1.nth 2 ≃ sides2.nth 2
 
 -- TODO: Maybe this should be a Theorem?
 -- Corresponding angles in congruent triangles must be congruent
@@ -252,6 +267,11 @@ axiom congruent_triangle_SAS (a b c a' b' c' : Point) :
 
 -- III.5 (wikipedia)
 axiom C_angle_trans (α β γ : Angle) : α ≃ β → α ≃ γ → β ≃ γ
+
+-- TODO : Not sure if the following is an axiom or a lemma?
+axiom angle_symm (a b c : Point) : (⟨a, b, c⟩ : Angle) ≃ ⟨c, b, a⟩
+
+
 
 -- # IV. Parallel Axiom
 -----------------------
