@@ -52,8 +52,8 @@ axiom line_exists (p₁ p₂ : Point) (h : p₁ ≠ p₂) :
   lies_on_line p₁ l ∧ lies_on_line p₂ l
 
 -- I.3 (part 1)
-axiom two_points_on_line (c : Line):
-  ∃ (a b : Point), a ≠ b ∧ lies_on_line a c ∧ lies_on_line b c
+axiom two_points_on_line (l : Line):
+  ∃ (a b : Point), a ≠ b ∧ lies_on_line a l ∧ lies_on_line b l
 -- I.3 (part 2)
 axiom no_line_on_three_points:
   ∃ (a b c : Point), ¬∃ (l : Line), (lies_on_line a l) ∧ (lies_on_line b l) ∧ (lies_on_line c l)
