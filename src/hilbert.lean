@@ -284,10 +284,30 @@ constant p_line (p : Point) (l: Line): ¬ lies_on_line p l → Line
 
 axiom parallel_postulate (a : Point) (l : Line) (h: ¬lies_on_line a l): let l' : Line := p_line a l h in parallel_lines l l' ∧ lies_on_line a l'
 
--- # V. Missing Definitions
----------------------------
+-- # V. Angles
+--------------
+-- Two angles having the same vertex and one side in common, whilethe
+-- sides not common form a straight line, are called supplementary
+-- angles. Two angleshaving a common vertex and whose sides form
+-- straight lines are calledvertical angles.  An angle which is
+-- congruent to its supplementary angle is called a right angle.
+
+def supplementary_angles (α₁ α₂ : Angle)
+  (h₁ : α₁.base ≠ α₁.ext₁) (h₂ : α₂.base ≠ α₂.ext₁) : Prop :=
+  α₁.base = α₂.base
+  ∧ line_of_points α₁.base α₁.ext₁ h₁ = line_of_points α₂.base α₂.ext₁ h₂
+  ∧ collinear_points α₁.base α₁.ext₂ α₂.ext₂
+
+def mk_supplementary_angle (α : Angle) : Angle := sorry
+
+lemma mk_supp_angle_condition (α : Angle):
+ (mk_supplementary_angle α).base ≠ (mk_supplementary_angle α).ext₁ := sorry
+
+lemma mk_supplementary_angle_is_supplementary (α : Angle) (h : α.base ≠ α.ext₁):
+  supplementary_angles α (mk_supplementary_angle α) h (mk_supp_angle_condition α) := sorry
+
 -- This specifies a Predicate on the type Angle
-constant is_right : Angle → Prop
+def is_right (α : Angle) : Prop := α ≃ mk_supplementary_angle α
 
 -- A : Type
 -- A → Prop      -- this is a predicate
