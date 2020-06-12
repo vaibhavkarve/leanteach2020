@@ -1,6 +1,8 @@
 # LeanTeach2020 #
 Interactive theorem proving in Lean : teaching mathematics to a computer
 
+*Summer 2020 Illinois Geometry Lab + Uni-High research project*
+
 
 Wiki: [IllioisWiki for LeanTeach](https://wiki.illinois.edu/wiki/display/LT2020) 
 
