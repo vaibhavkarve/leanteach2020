@@ -11,7 +11,8 @@ local infix `⬝`:56   := Segment.mk  -- \ cdot == center-dot
 -- |#Instructions For Hilbert# |
 -------------------------------
 
--- Alex: I copied the instructions from the propositions.lean document and deleted the ones that didn't pertain to the Hilbert group 
+-- Alex: I copied the instructions from the propositions.lean document
+-- and deleted the ones that didn't pertain to the Hilbert group
 
 /-
 0. Read these instructions carefully.
@@ -35,10 +36,33 @@ local infix `⬝`:56   := Segment.mk  -- \ cdot == center-dot
 -- VK
 -/
 
--- Also need length
 
 
---https://www.math.uci.edu/~ndonalds/math161/ch2.pdf
+--If two distinct lines intersect, then they do so in exactly one point.
+lemma single_intersection (l₁ l₂ : Line) :
+     l₁ ≠ l₂
+  → intersect_line l₁ l₂
+  → ∃! x : Point, lies_on_line x l₁ ∧ lies_on_line x l₂ :=
+begin
+  intros h₁ h₂,
+  rw intersect_line at h₂,
+  choose x h₂ using h₂,
+  use x,
+  tidy,
+  symmetry,
+  by_contradiction,
+  have  line_exists := line_exists x y a_2,
+  tidy,
+  have h₃ : l₁ = line_of_points x y a_2,
+  sorry,
+  sorry,
+end
+
+
+
+-- Theorem 2. Through a straight line and a point not lying in it, or
+-- through two distinct straight lines having a common point, one and
+-- only one plane may be made to pass.
 
 
 --Props 
