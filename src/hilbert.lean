@@ -146,10 +146,13 @@ axiom max_one_between (a b c : Point):
 def lies_on_segment (x : Point) (s : Segment) (h : s.p₁ ≠ s.p₂) : Prop :=
   B s.p₁ x s.p₂ ∧ lies_on_line x (line_of_points s.p₁ s.p₂ h)
 -- Criterion for two Segments intersecting at a Point.
-def intersect_segment (s₁ s₂ : Segment) (h1 : s₁.p₁ ≠ s₁.p₂) (h2 : s₂.p₁ ≠ s₂.p₂): Prop :=
+def intersect_segment (s₁ s₂ : Segment) (h1 : s₁.p₁ ≠ s₁.p₂) (h2 : s₂.p₁ ≠ s₂.p₂) : Prop :=
   ∃ x : Point, lies_on_segment x s₁ h1 ∧ lies_on_segment x s₂ h2
+-- Criterion for two Lines intersecting at a Point.
+def intersect_line (l₁ l₂ : Line) : Prop :=
+  ∃ x : Point, lies_on_line x l₁ ∧ lies_on_line x l₂
 -- Criterion for a Segment intersecting with a Line.
-def intersect_line_segment (l: Line) (s : Segment) (H : s.p₁ ≠ s.p₂): Prop :=
+def intersect_line_segment (l: Line) (s : Segment) (H : s.p₁ ≠ s.p₂) : Prop :=
   ∃ x : Point, lies_on_line x l ∧ lies_on_segment x s H
 -- Condition for a Segment to be a part of a given Line.
 def segment_of_line (s : Segment) (l : Line) : Prop :=
