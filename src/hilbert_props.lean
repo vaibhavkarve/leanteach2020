@@ -37,7 +37,6 @@ local infix `⬝`:56   := Segment.mk  -- \ cdot == center-dot
 -/
 
 
-
 --If two distinct lines intersect, then they do so in exactly one point.
 lemma single_intersection (l₁ l₂ : Line) :
      l₁ ≠ l₂
@@ -51,11 +50,13 @@ begin
   tidy,
   symmetry,
   by_contradiction,
-  have  line_exists := line_exists x y a_2,
-  tidy,
+  have line_exists := line_exists x y a_2,
+    tidy,
   have h₃ : l₁ = line_of_points x y a_2,
-  sorry,
-  sorry,
+    { apply line_unique, assumption, assumption},
+  have h₄ : l₂ = line_of_points x y a_2,
+    { apply line_unique, assumption, assumption},
+  cc,
 end
 
 
