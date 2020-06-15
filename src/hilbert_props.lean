@@ -37,7 +37,7 @@ local infix `⬝`:56   := Segment.mk  -- \ cdot == center-dot
 -/
 
 
---If two distinct lines intersect, then they do so in exactly one point.
+-- If two distinct lines intersect, then they do so in exactly one point.
 lemma single_intersection (l₁ l₂ : Line) :
      l₁ ≠ l₂
   → intersect_line l₁ l₂
@@ -60,14 +60,17 @@ begin
 end
 
 
+-- Through any point there exists at least two lines.
+lemma two_lines (p : Point) : ∃ l₁ l₂ : Line,
+  l₁ ≠ l₂ ∧ lies_on_line p l₁ ∧ lies_on_line p l₂ :=
+begin
+  sorry
+end
 
--- Theorem 2. Through a straight line and a point not lying in it, or
--- through two distinct straight lines having a common point, one and
--- only one plane may be made to pass.
 
-
---Props 
---Proposition 1.  To construct an equilateral triangle on a given
+-- # Euclid's Proposition 1
+---------------------------
+-- To construct an equilateral triangle on a given
 -- finite straight line.
 theorem prop1 (s : Segment) :
   ∃ t : Triangle, t.p₁ = s.p₁ ∧ t.p₂ = s.p₂ ∧ equilateral t :=
@@ -79,10 +82,10 @@ begin
     sorry,
 end
 
--- Proposition 2.  To place a straight line equal to a given straight
+-- # Euclid's Proposition 2
+---------------------------
+-- To place a straight line equal to a given straight
 -- line with one end at a given point.
-
-
 theorem prop2 (s : Segment) (h : s.p₁ ≠ s.p₂):
   ∃ s' : Segment, s ≃ s' ∧ s'.p₁ = s.p₁ :=
 begin
