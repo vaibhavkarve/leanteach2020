@@ -51,6 +51,12 @@ axiom line_exists (p₁ p₂ : Point) (h : p₁ ≠ p₂) :
   let l : Line := line_of_points p₁ p₂ h in
   lies_on_line p₁ l ∧ lies_on_line p₂ l
 
+axiom line_unique (p₁ p₂ : Point) (h : p₁ ≠ p₂) (l : Line) :
+     lies_on_line p₁ l
+  → lies_on_line p₂ l
+  → l = line_of_points p₁ p₂ h
+
+
 -- I.3 (part 1)
 axiom two_points_on_line (l : Line):
   ∃ (a b : Point), a ≠ b ∧ lies_on_line a l ∧ lies_on_line b l
@@ -165,8 +171,9 @@ def parallel_lines (l₁ l₂ : Line) : Prop :=
   ¬∃ (a : Point), lies_on_line a l₁ ∧ lies_on_line a l₂
 
 -- II.4 Pasch's axiom
--- This can be interpreted as saying "a line that enters a triangle from  one side,
--- must leave the triangle from one of the reamining two sides."
+-- This can be interpreted as saying "a line that enters a triangle
+-- from one side, must leave the triangle from one of the reamining
+-- two sides."
 axiom pasch (a b c: Point) (l : Line) (hab : a ≠ b) (hbc : b ≠ c) (hac : a ≠ c):
   (¬collinear_points a b c)
   → ¬(lies_on_line a l)
@@ -178,11 +185,8 @@ axiom pasch (a b c: Point) (l : Line) (hab : a ≠ b) (hbc : b ≠ c) (hac : a �
 -- # III. Congruence Axioms
 ---------------------------
 -- III.1 Part 1
--- This says that we can extend a given Segment in only two ways -- one for each side of l.
-
--- VK says: we need to make sure we include the FULL hypotheses in the statement of the constant.
--- I am calling this function "segment_copy" because it is copying a⬝b onto a new segment starting
--- at a'.
+-- This says that we can extend a given Segment in only two ways --
+-- one for each side of l.
 
 constant segment_copy (a b a' : Point) (l l' : Line) :
     lies_on_line a l
@@ -326,5 +330,4 @@ def circumference (c : Circle) : set Point := {x : Point | radius_segment c ≃ 
 
 axiom segment_construct (x y z a b : Point) :
   ∃ z : Point, (B x y z) ∧ (y⬝z ≃ a⬝b)
-
 
