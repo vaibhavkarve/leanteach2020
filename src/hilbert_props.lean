@@ -52,9 +52,9 @@ begin
   by_contradiction,
   have line_exists := line_exists x y a_2,
     tidy,
-  have h₃ : l₁ = line_of_points x y a_2,
+  have h₃ : l₁ = ⟨x, y, a_2⟩,
     { apply line_unique, assumption, assumption},
-  have h₄ : l₂ = line_of_points x y a_2,
+  have h₄ : l₂ = ⟨x, y, a_2⟩,
     { apply line_unique, assumption, assumption},
   cc,
 end
@@ -64,7 +64,27 @@ end
 lemma two_lines (p : Point) : ∃ l₁ l₂ : Line,
   l₁ ≠ l₂ ∧ lies_on_line p l₁ ∧ lies_on_line p l₂ :=
 begin
-  sorry
+  choose a b c h using no_line_on_three_points,
+  by_cases ha : p ≠ a,
+  by_cases hb : p ≠ b,
+  by_cases hc : p ≠ c,
+  set la : Line := ⟨p, a, ha⟩,
+  set lb : Line := ⟨p, b, hb⟩,
+  set lc : Line := ⟨p, c, hc⟩,
+  by_cases hab : la ≠ lb,
+  use la,
+  use lb,
+  have le := line_exists p a ha,
+  split,
+    assumption,
+    split,
+      exact le.1,
+  have le := line_exists p b hb,
+  exact le.1,
+  simp at hab,
+  by_cases hbc : lb ≠ lc,
+  
+  repeat {sorry},
 end
 
 

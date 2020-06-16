@@ -6,8 +6,8 @@ open_locale classical
 
 -- Two undefined types
 constant Point : Type
-constant Line : Type
--- constant Plane : Type  -- We restrict our attention to planar geometry, ignoring solid geometry.
+-- constant Line : Type -- We difine it as a structure instead of a constant.
+--constant Plane : Type -- We restrict our attention to planar geometry, ignoring solid geometry.
 
 -- a Segment is constructed by specifying two points.
 structure Segment: Type := (p₁ p₂ : Point)  -- the  subscripts are written as \ 1 and \ 2.
@@ -21,40 +21,39 @@ constant B (x y z : Point) : Prop
 constant C {A : Type} : A → A → Prop   -- Here, "A" is an implicit argument. Lean figures it out.
                                        -- In other languages this is called overloading.
 
--- There are two "lies-on" relations.
--- We specify lies_on_line here as a constant.
--- lies_on_segment is defined later.
-constant lies_on_line (x : Point) (y: Line) : Prop
-
 -- We are defining our own operators here
 local infix ` ≃ `:55 := C           -- \ equiv == equivalence/congruence
 local infix  `⬝`: 56  := Segment.mk  -- \ cdot == center-dot
 
-/-constant x : Point --- these are fixed points
-constant y : Point
-axiom hxy : x ≠ y
-def L1 : Line := line_of_points x y hxy
-def L2 : Line := line_of_points x y hxy
 
-example : L1 = L2 := rfl -- L1  and L2 are the same according to Lean. i.e. there is a unique Line.
-
-axiom line_through_point (p : Point) : ∃ l : Line, lies_on_line p l-/
-
-
--- # I. Incidence Axioms - Good
+-- # I. Incidence Axioms
 ------------------------
 -- I.1 and I.2
-constant line_of_points (p₁ p₂ : Point) : p₁ ≠ p₂ → Line
+
+-- Hilbert declares that Line is an independent type and then in
+-- Axioms I.1 and I.2 he provides a necessary and sufficient condition
+-- for constructing a Line from two Points.  We believe it is more
+-- efficient to directly define Line as a structure that requires two
+-- distint Points.
+structure Line : Type :=
+(p₁ p₂ : Point)
+(ne : p₁ ≠ p₂)
+
+-- There are two "lies-on" relations.
+-- We specify lies_on_line here as a constant.
+-- lies_on_segment is defined later.
+constant lies_on_line (x : Point) (y : Line) : Prop
+
 
 -- I.1, I.2 is implicit in constant
 axiom line_exists (p₁ p₂ : Point) (h : p₁ ≠ p₂) :
-  let l : Line := line_of_points p₁ p₂ h in
+  let l : Line := ⟨p₁, p₂, h⟩ in
   lies_on_line p₁ l ∧ lies_on_line p₂ l
 
 axiom line_unique (p₁ p₂ : Point) (h : p₁ ≠ p₂) (l : Line) :
      lies_on_line p₁ l
   → lies_on_line p₂ l
-  → l = line_of_points p₁ p₂ h
+  → l = ⟨p₁, p₂, h⟩
 
 
 -- I.3 (part 1)
@@ -71,7 +70,7 @@ structure Ray : Type :=
 
 -- For each Ray, we can define a corresponding Line.
 def line_of_ray (r : Ray) : r.base ≠ r.ext → Line :=
-  line_of_points r.base r.ext
+  Line.mk r.base r.ext
 
 
 -- An Angle is constructed by specifying three Points.
@@ -139,7 +138,7 @@ axiom B_implies_collinear (a b c : Point): B a b c → collinear_points a b c
 
 -- II.2
 axiom line_continuity (a c : Point) (h : a ≠ c):
-  let l : Line := line_of_points a c h in
+  let l : Line := ⟨a, c, h⟩ in
   ∃ (b : Point), lies_on_line b l ∧ B a b c
 
 -- II.3
@@ -150,7 +149,7 @@ axiom max_one_between (a b c : Point):
 -------------------------
 -- Lies-on relation between Point and Segment.
 def lies_on_segment (x : Point) (s : Segment) (h : s.p₁ ≠ s.p₂) : Prop :=
-  B s.p₁ x s.p₂ ∧ lies_on_line x (line_of_points s.p₁ s.p₂ h)
+  B s.p₁ x s.p₂ ∧ lies_on_line x ⟨s.p₁, s.p₂, h⟩
 -- Criterion for two Segments intersecting at a Point.
 def intersect_segment (s₁ s₂ : Segment) (h1 : s₁.p₁ ≠ s₁.p₂) (h2 : s₂.p₁ ≠ s₂.p₂) : Prop :=
   ∃ x : Point, lies_on_segment x s₁ h1 ∧ lies_on_segment x s₂ h2
@@ -302,7 +301,7 @@ axiom parallel_postulate (a : Point) (l : Line) (h: ¬lies_on_line a l): let l' 
 def supplementary_angles (α₁ α₂ : Angle)
   (h₁ : α₁.base ≠ α₁.ext₁) (h₂ : α₂.base ≠ α₂.ext₁) : Prop :=
   α₁.base = α₂.base
-  ∧ line_of_points α₁.base α₁.ext₁ h₁ = line_of_points α₂.base α₂.ext₁ h₂
+  ∧ (⟨α₁.base, α₁.ext₁, h₁⟩ : Line) = ⟨α₂.base, α₂.ext₁, h₂⟩
   ∧ collinear_points α₁.base α₁.ext₂ α₂.ext₂
 
 def mk_supplementary_angle (α : Angle) : Angle := ⟨α.ext₁, α.base, sorry⟩
