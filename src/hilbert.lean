@@ -85,34 +85,19 @@ def rays_of_angle (α : Angle) : Ray × Ray :=
 
 
 -- A Triangle is constructed by specifying three Points.
--- For each Triangle, we get three Segments (its sides) for free.
 structure Triangle : Type :=
 (p₁ p₂ p₃ : Point)
 
-def sides_of_triangle (t : Triangle) : list Segment :=
-  [t.p₁⬝t.p₂, t.p₂⬝t.p₃, t.p₁⬝t.p₃]
-def side1_of_triangle (t : Triangle) : Segment :=
-  t.p₁⬝t.p₂
-def side2_of_triangle (t : Triangle) : Segment :=
-  t.p₂⬝t.p₃
-def side3_of_triangle (t : Triangle) : Segment :=
-  t.p₁⬝t.p₃
 
---- TODO :
--- 1. How do lists work
--- 2. Can we make list.inth work instead of list.nth
--- 3. How do option.none and option.some work?
-
-
-def angles_of_triangle (t : Triangle) : list Angle :=
-[⟨t.p₂, t.p₁, t.p₃⟩, ⟨t.p₁, t.p₂, t.p₃⟩, ⟨t.p₂, t.p₃, t.p₁⟩]
-def angle1_of_triangle (t : Triangle) : Angle :=
-  ⟨t.p₂, t.p₁, t.p₃⟩
-def angle2_of_triangle (t : Triangle) : Angle :=
-  ⟨t.p₁, t.p₂, t.p₃⟩
-def angle3_of_triangle (t : Triangle) : Angle :=
-  ⟨t.p₂, t.p₃, t.p₁⟩
-
+-- For every Triangle, we can define get three Segments (its sides).
+def sides_of_triangle (t : Triangle) : vector Segment 3 :=
+  ⟨[t.p₁⬝t.p₂, t.p₂⬝t.p₃, t.p₁⬝t.p₃], rfl⟩
+-- For every Triangle, we can define get three Segment Angles.
+def angles_of_triangle (t : Triangle) : vector Angle 3 :=
+⟨[⟨t.p₂, t.p₁, t.p₃⟩, ⟨t.p₁, t.p₂, t.p₃⟩, ⟨t.p₂, t.p₃, t.p₁⟩], rfl⟩
+-- Note that elements of a vector v can be accessed as v.nth 0 etc.
+-- Also note that if a vector has lenth n, then asking for element m
+-- where m ≥ n returns element (m mod n)
 
 
 def equilateral (t: Triangle) : Prop :=

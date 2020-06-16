@@ -144,8 +144,8 @@ end
 theorem prop5_part1 (t : Triangle) :
   let sides := sides_of_triangle t in
   let angles := angles_of_triangle t in
-  side1_of_triangle t ≃ side2_of_triangle t
-  → angle1_of_triangle t ≃ angle3_of_triangle t :=
+  sides.nth 0 ≃ sides.nth 1
+  → angles.nth 0 ≃ angles.nth 2 :=
 -- If t := abc
 -- ab = bc
 -- bac ≃ acb
@@ -156,11 +156,6 @@ begin
   set c := t.p₃,
   intros sides angles h,
   have h' := congruent_triangle_SAS b a c b c a,
-  unfold angle1_of_triangle angle3_of_triangle,
-  unfold side1_of_triangle side2_of_triangle at h,
-  set a := t.p₁,
-  set b := t.p₂,
-  set c := t.p₃,
   apply h',
     { have x : b⬝a ≃ a⬝b, symmetry,
       transitivity, symmetry, assumption},

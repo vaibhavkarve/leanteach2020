@@ -113,27 +113,33 @@ structure Angle: Type :=
 
 
 -- A Triangle is constructed by specifying three Points.
--- For every triangle, we get three Segments (sides) for free
 structure Triangle: Type :=
 (p1 p2 p3 : Point)
 
-def sides_of_triangle (t : Triangle) : Segment × Segment × Segment :=
-  (⟨t.p1, t.p2⟩, ⟨t.p2, t.p3⟩, ⟨t.p3, t.p1⟩)
+
+-- For every triangle, we get can define three Segments (its sides).
+def sides_of_triangle (t : Triangle) : vector Segment 3 :=
+  ⟨[⟨t.p1, t.p2⟩, ⟨t.p2, t.p3⟩, ⟨t.p3, t.p1⟩], rfl⟩
+-- Note that elements of a vector v can be accessed as v.nth 0 etc.
+-- Also note that if a vector has lenth n, then asking for element m
+-- where m ≥ n returns element (m mod n)
 
 -- TODO: We need to define the three Angles of a Triangle
 
 def is_equilateral (t : Triangle) : Prop :=
   let sides := sides_of_triangle t in
-  sides.1 ≃ sides.2.1 ∧ sides.2.1 ≃ sides.2.2
+  sides.nth 0 ≃ sides.nth 1 ∧ sides.nth 1 ≃ sides.nth 2
 
 
 lemma equilateral_triangle_all_sides_equal (t : Triangle) :
   let sides := sides_of_triangle t in
-  is_equilateral t → sides.1 ≃ sides.2.2 :=
+  is_equilateral t → sides.nth 0 ≃ sides.nth 3 :=
 begin
   rintros sides ⟨h₁, h₂⟩,
-  transitivity;
-    assumption
+  transitivity,
+    assumption,
+    apply cong_symm,
+    exact h₁,
 end
 
 
@@ -192,5 +198,3 @@ axiom circles_intersect' (c₁ c₂ : Circle)
   (h₂ : (abs (radius c₁ - radius c₂) <= distance c₁.center c₂.center)) :
   let p : Point := circles_intersect c₁ c₂ h₁ h₂ in
   p ∈ circumference c₁ ∧ p ∈ circumference c₂
-
-
