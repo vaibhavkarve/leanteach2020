@@ -327,13 +327,15 @@ axiom distance_between (a b c : Point) : B a b c → μ (a⬝b) + μ (b⬝c) = �
 
 
 -- Theorems that can be proved in "Foundations of geometry" by Borsuk and Szmielew.
-theorem multiple_seg (s₁ s₂ : Segment): ∃ (λ : ℝ | λ > 0), μ s₁ = λ * μ s₂ :=
+theorem distance_multiple (s₁ s₂ : Segment): ∃ (a : ℝ), a > 0 ∧ μ s₁ = a * μ s₂ :=
 begin
   sorry
 end
 
-theorem exists_measure (s : Segment) : ∃ μ s, μ s = λ, (λ : ℝ | λ > 0) :=
-begin
-  sorry
-end
+
+-- VK : I am not sure what you are trying to say here.
+--theorem exists_measure (s : Segment) : ∃ μ s, μ s = λ, (λ : ℝ | λ > 0) :=
+--begin
+--  sorry
+--end
 
