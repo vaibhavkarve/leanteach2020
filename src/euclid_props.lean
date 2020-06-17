@@ -67,12 +67,46 @@ begin
                ... ≃    p ⬝ s.p1 : by symmetry},
 end
 
-
 --Proposition 2
 lemma placeline (s1 : Segment) (p1: Point): ∃ (s2 : Segment), (s1.p1 = s2.p1) ∧ congruent s1 s2 :=
 begin
   sorry
 end
---bruh moment
 
---Proposition 3
+-- # Proposition 3
+lemma prop3 (AB C : Segment) (greater : length AB > length C): ∃ (s : Segment), (length s = length C) ∧ (s.p1 = AB.p1) ∧ (between AB.p1 s.p2 AB.p2) :=
+begin
+  sorry
+end
+
+-- # Proposition 4
+lemma prop4 (tri1 tri2 : Triangle) (dif1 : distinct tri1.p1 tri1.p2 tri1.p3) (dif2 : distinct tri2.p1 tri2.p2 tri2.p3): 
+let angles1 := (angles_of_triangle tri1 dif1) in
+let angles2 := (angles_of_triangle tri2 dif2) in
+(tri1.p1 ⬝ tri1.p2 = tri2.p1 ⬝ tri2.p2) ∧ (tri1.p2 ⬝ tri1.p3 = tri2.p2 ⬝ tri2.p3) ∧ (angles1.1.1 = angles2.1.1) → 
+(tri1.p3 ⬝ tri1.p1 = tri2.p3 ⬝ tri2.p1) ∧ (angles1.2 = angles2.2) ∧ (angles1.1.1 = 1) :=
+begin
+  sorry
+end
+-- # Proposition 5
+-- # Proposition 7
+-- # Proposition 8
+-- # Proposition 10
+-- # Proposition 11
+-- # Proposition 13
+-- # Proposition 14
+-- # Proposition 15
+-- # Proposition 16
+-- # Proposition 18
+-- # Proposition 19
+-- # Proposition 20
+-- # Proposition 22
+-- # Proposition 26
+-- # Proposition 29
+-- # Proposition 31
+-- # Proposition 34
+-- # Proposition 37
+-- # Proposition 41
+-- # Proposition 46
+-- # Proposition 47
+-- # Proposition 48
