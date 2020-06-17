@@ -1,0 +1,222 @@
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ ls
+euclid.lean  euclid_props.lean  hilbert.lean  hilbert_props.lean  leanBroke.lean  propositions.lean  sio2.lean  tarski.lean  terminal.term
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31m.terminal.term-0.term[m
+	[31mterminal.term[m
+
+nothing added to commit but untracked files present (use "git add" to track)
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ touch .gitignore
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ [K]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ [K]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   hilbert_props.lean[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31m.gitignore[m
+	[31m.terminal.term-0.term[m
+	[31mterminal.term[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   hilbert_props.lean[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31m.gitignore[m
+	[31m.terminal.term-0.term[m
+	[31mterminal.term[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   hilbert_props.lean[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31m.gitignore[m
+	[31m.terminal.term-0.term[m
+	[31mterminal.term[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ gut o[K[K[K[K[Kgit push[K[K[K[K[Ksta[K[K[K status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   hilbert.lean[m
+	[31mmodified:   hilbert_props.lean[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31m.gitignore[m
+	[31m.terminal.term-0.term[m
+	[31mterminal.term[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git com[K[K[Kpush
+Username for 'https://github.com': chessgoose
+Password for 'https://chessgoose@github.com': 
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/vaibhavkarve/leanteach2020.git/'
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git push
+Username for 'https://github.com': chesgoose
+Password for 'https://chesgoose@github.com': 
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/vaibhavkarve/leanteach2020.git/'
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ che[K[K[Kgit push
+Username for 'https://github.com': lyzha     lawrence/z          lawrence/z          lyzhao2@illinois.edu
+Password for 'https://lyzhao2@illinois.edu@github.com': 
+To https://github.com/vaibhavkarve/leanteach2020.git
+ ! [rejected]        master -> master (fetch first)
+error: failed to push some refs to 'https://github.com/vaibhavkarve/leanteach2020.git'
+hint: Updates were rejected because the remote contains work that you do
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git pull
+remote: Enumerating objects: 12, done.[K
+remote: Counting objects:   8% (1/12)[Kremote: Counting objects:  16% (2/12)[Kremote: Counting objects:  25% (3/12)[Kremote: Counting objects:  33% (4/12)[Kremote: Counting objects:  41% (5/12)[Kremote: Counting objects:  50% (6/12)[Kremote: Counting objects:  58% (7/12)[Kremote: Counting objects:  66% (8/12)[Kremote: Counting objects:  75% (9/12)[Kremote: Counting objects:  83% (10/12)[Kremote: Counting objects:  91% (11/12)[Kremote: Counting objects: 100% (12/12)[Kremote: Counting objects: 100% (12/12), done.[K
+remote: Compressing objects:  50% (1/2)[Kremote: Compressing objects: 100% (2/2)[Kremote: Compressing objects: 100% (2/2), done.[K
+remote: Total 8 (delta 6), reused 8 (delta 6), pack-reused 0[K
+Unpacking objects:  12% (1/8)   Unpacking objects:  25% (2/8)   Unpacking objects:  37% (3/8)   Unpacking objects:  50% (4/8)   Unpacking objects:  62% (5/8)   Unpacking objects:  75% (6/8)   Unpacking objects:  87% (7/8)   Unpacking objects: 100% (8/8)   Unpacking objects: 100% (8/8), done.
+From https://github.com/vaibhavkarve/leanteach2020
+   2330ecf..f19b14a  master     -> origin/master
+Updating 2330ecf..f19b14a
+Fast-forward
+ src/euclid.lean       | 11 [32m++++++++++[m[31m-[m
+ src/euclid_props.lean | 36 [32m+++++++++++++++++++++++++++++[m[31m-------[m
+ 2 files changed, 39 insertions(+), 8 deletions(-)
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	[31mmodified:   hilbert.lean[m
+	[31mmodified:   hilbert_props.lean[m
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	[31m.gitignore[m
+	[31m.terminal.term-0.term[m
+	[31mterminal.term[m
+
+no changes added to commit (use "git add" and/or "git commit -a")
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git push
+Username for 'https://github.com': c git c     asfd
+Password for 'https://asfd@github.com': 
+remote: Invalid username or password.
+fatal: Authentication failed for 'https://github.com/vaibhavkarve/leanteach2020.git/'
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git commit[Kt
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: empty ident name (for <user@d027698476fe>) not allowed
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git config --global user.email "lyzhao2@ill[Klinois.edi[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K user.email ly[K[K[Kly[K[K lyzhao2@illinois.edu
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git config user.name [K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Kpush[K[K[K[Kcommit
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: empty ident name (for <lyzhao2@illinois.edu>) not allowed
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git commit user.name chessgoose
+error: pathspec 'user.name' did not match any file(s) known to git.
+error: pathspec 'chessgoose' did not match any file(s) known to git.
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git commit
+
+*** Please tell me who you are.
+
+Run
+
+  git config --global user.email "you@example.com"
+  git config --global user.name "Your Name"
+
+to set your account's default identity.
+Omit --global to set the identity only in this repository.
+
+fatal: empty ident name (for <lyzhao2@illinois.edu>) not allowed
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git commit c[Kuser. e[K[Kemail "lawren[K[K[K[K[Kyzhao2@illinois.edu"
+error: pathspec 'user.email' did not match any file(s) known to git.
+error: pathspec 'lyzhao2@illinois.edu' did not match any file(s) known to git.
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git config user.email "lyzhao2@illinois.edu"
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git config user.name "chessgoose"
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ git committ[K
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+	[31mmodified:   hilbert.lean[m
+	[31mmodified:   hilbert_props.lean[m
+
+Untracked files:
+	[31m.gitignore[m
+	[31m.terminal.term-0.term[m
+	[31mterminal.term[m
+
+no changes added to commit
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ gitgi[K[K commit -,[Km "l[Kprop 6 hal[K[K[Kpr[K[Kpr[K[Kminor progess"[K, angle ea[K[K[K m"
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+	[31mmodified:   hilbert.lean[m
+	[31mmodified:   hilbert_props.lean[m
+
+Untracked files:
+	[31m.gitignore[m
+	[31m.terminal.term-0.term[m
+	[31mterminal.term[m
+
+no changes added to commit
+]0;~/leanteach2020/src[01;34m~/leanteach2020/src[00m$ g

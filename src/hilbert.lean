@@ -332,6 +332,12 @@ begin
   sorry
 end
 
+constant θ : Angle → ℝ
+-- Next we define some axioms to work with angles.
+axiom equalAngles (α₁ α₂ : Angle) : θ α₁ = θ α₂ ↔ α₁ ≃ α₂
+
+def is_right_2 (α : Angle) : Prop := θ α = 90
+
 
 -- VK : I am not sure what you are trying to say here.
 --theorem exists_measure (s : Segment) : ∃ μ s, μ s = λ, (λ : ℝ | λ > 0) :=
