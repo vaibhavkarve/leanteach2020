@@ -303,7 +303,7 @@ def is_right (α : Angle) : Prop := α ≃ mk_supplementary_angle α
 -- A → Prop      -- this is a predicate
 -- A → A → Prop  -- this a relation
 
---Copied/modified from Euclid
+
 structure Circle: Type :=
 (center outer : Point)
 
@@ -319,18 +319,29 @@ axiom segment_construct (x y z a b : Point) :
 ----------------------------------
 -- may be necessary to properly state and prove pythagorean theorem in
 -- Lean).  We start by defining a `measure` on Segments.
-constant μ : Segment → ℝ 
+def Measure : Type := Segment → ℝ
 -- Next, we define some axioms for working with distance.
-axiom distance_nonzero (s : Segment) : s.p₁ ≠ s.p₂ → μ s > 0
-axiom distance_congruent (s₁ s₂ : Segment) : s₁ ≃ s₂ → μ s₁ ≃ μ s₂
-axiom distance_between (a b c : Point) : B a b c → μ (a⬝b) + μ (b⬝c) = μ (a⬝c)
+axiom distance_nonzero (μ : Measure) (s : Segment) :
+  s.p₁ ≠ s.p₂ → μ s > 0
+axiom distance_congruent (μ : Measure) (s₁ s₂ : Segment) :
+  s₁ ≃ s₂ → μ s₁ ≃ μ s₂
+axiom distance_between (μ : Measure) (a b c : Point) :
+  B a b c → μ (a⬝b) + μ (b⬝c) = μ (a⬝c)
 
 
--- Theorems that can be proved in "Foundations of geometry" by Borsuk and Szmielew.
-theorem distance_multiple (s₁ s₂ : Segment): ∃ (a : ℝ), a > 0 ∧ μ s₁ = a * μ s₂ :=
+-- Theorems that can be proved in "Foundations of geometry" by Borsuk
+-- and Szmielew.
+theorem distance_scale (μ₁ μ₂ : Measure) (s : Segment) :
+  ∃ k : ℝ, k > 0 ∧ μ₁ s = k * μ₂ s :=
 begin
   sorry
 end
+
+theorem exists_measure (s : Segment) (x : ℝ) : ∃ (μ : Measure), μ s = x :=
+begin
+  sorry
+end
+
 
 constant θ : Angle → ℝ
 -- Next we define some axioms to work with angles.
@@ -340,8 +351,4 @@ def is_right_2 (α : Angle) : Prop := θ α = 90
 
 
 -- VK : I am not sure what you are trying to say here.
---theorem exists_measure (s : Segment) : ∃ μ s, μ s = λ, (λ : ℝ | λ > 0) :=
---begin
---  sorry
---end
 
