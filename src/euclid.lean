@@ -23,8 +23,10 @@ local infix ` ≃ `:55 := congruent  -- typed as \ equiv
 
 -- Missing Axiom(s)
 -------------------
-axiom distance_not_neg (p1 p2 : Point) : distance p1 p2 >= 0
+axiom distance_not_neg (p1 p2 : Point) : distance p1 p2 ≥ 0
+axiom distance_pos (p1 p2 : Point) : p1 ≠ p2 → distance p1 p2 > 0
 axiom distance_is_symm_op : is_symm_op Point ℝ distance
+@[simp] axiom distance_zero_segment (p : Point) : distance p p = 0
 
 @[simp, symm] lemma distance_is_symm : ∀ (p1 p2 : Point),
   distance p1 p2 = distance p2 p1 := distance_is_symm_op.symm_op
@@ -74,10 +76,13 @@ def length (a : Segment) := distance a.p1 a.p2
 -----------------
 local infix `⬝`:56 := Segment.mk  -- typed as \ cdot
 @[symm] axiom segment_symm (p1 p2 : Point) : p1 ⬝ p2 ≃ p2 ⬝ p1
+axiom zero_segment (s : Segment) (p : Point) : s ≃ p⬝p → s.p1 = s.p2
 
 
 def line_of_segment (s : Segment) : s.p1 ≠ s.p2 → Line := line_of_points s.p1 s.p2
 def points_of_segment (s : Segment) : set Point := {c : Point | between s.p1 c s.p2}
+
+
 
 
 -- Postulate II
@@ -227,3 +232,7 @@ axiom circles_intersect' (c₁ c₂ : Circle)
   (h₂ : (abs (radius c₁ - radius c₂) <= distance c₁.center c₂.center)) :
   let p : Point := circles_intersect c₁ c₂ h₁ h₂ in
   p ∈ circumference c₁ ∧ p ∈ circumference c₂
+
+
+def circle_interior (p : Point) (c : Circle) : Prop :=
+  distance c.center p < radius c
