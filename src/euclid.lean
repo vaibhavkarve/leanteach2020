@@ -32,11 +32,18 @@ axiom distance_is_symm_op : is_symm_op Point ℝ distance
 
 -- Congruence is an equivalence relation.
 axiom cong_is_equiv (A : Type) : is_equiv A (≃)
-@[refl] axiom cong_refl {A : Type} (a : A) : congruent a a
-@[symm] axiom cong_symm {A : Type} (a b: A) : congruent a b → congruent b a
-@[trans] axiom cong_trans {A : Type} (a b c: A) : congruent a b → congruent b c → congruent a c
+
+-- TODO: The proof for the following lemmas follows from cong_is_equiv.
+@[refl] lemma cong_refl {A : Type} (a : A) : a ≃ a :=
+  sorry
+@[symm] lemma cong_symm {A : Type} (a b: A) : a ≃ b → b ≃ a :=
+  sorry
+@[trans] lemma cong_trans {A : Type} (a b c: A) : a ≃ b → b ≃ c → a ≃ c :=
+  sorry
+
 lemma cong_equiv {A : Type} : equivalence (@congruent A) :=
-  mk_equivalence congruent cong_refl cong_symm cong_trans  -- The @ makes implicit arguments explicit.
+  -- The @ makes implicit arguments explicit.
+  mk_equivalence congruent cong_refl cong_symm cong_trans
 
 lemma ne_equiv {A : Type} (a b : A): a ≠ b → b ≠ a := ne_comm.mp
 
