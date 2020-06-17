@@ -1,6 +1,5 @@
 -- Hilbert's Axioms Formalized
-
-import tactic
+import data.real.basic tactic
 noncomputable theory
 open_locale classical
 
@@ -316,26 +315,25 @@ axiom segment_construct (x y z a b : Point) :
   ∃ z : Point, (B x y z) ∧ (y⬝z ≃ a⬝b)
 
 
--- Notion of Distance in Hilbert (may be necessary to properly state and prove pythagorean theorem in Lean)
--- This breaks the code right now, not sure how to properly define.
--- axiom distance (μ : Segment → ℝ) : (s.p₁ ≠ s.p₂ → μ s > 0) ∧ (s₁ ≃ s₂ → μ s₁ ≃ μ s₂) ∧ (B a b c → μ (a ⬝ b) + μ (b ⬝ c) = μ (a ⬝ c)) 
+-- # Notion of Distance in Hilbert
+----------------------------------
+-- may be necessary to properly state and prove pythagorean theorem in
+-- Lean).  We start by defining a `measure` on Segments.
+constant μ : Segment → ℝ 
+-- Next, we define some axioms for working with distance.
+axiom distance_nonzero (s : Segment) : s.p₁ ≠ s.p₂ → μ s > 0
+axiom distance_congruent (s₁ s₂ : Segment) : s₁ ≃ s₂ → μ s₁ ≃ μ s₂
+axiom distance_between (a b c : Point) : B a b c → μ (a⬝b) + μ (b⬝c) = μ (a⬝c)
 
--- How to properly define?
-def μ : Segment → ℝ 
 
--- We need to define this function using the following axioms.
-axiom thing (s : Segment) : s.p₁ ≠ s.p₂ → μ s > 0 
-axiom two_segments (s₁ s₂ : Segment) : s₁ ≃ s₂ → μ s₁ ≃ μ s₂
-axiom between_distance (a b c : Point) : B a b c → μ (a ⬝ b) + μ (b ⬝ c) = μ (a ⬝ c)
-
--- Theorems that can be proved in  "Foundations of geometry" by Borsuk and Szmielew.
+-- Theorems that can be proved in "Foundations of geometry" by Borsuk and Szmielew.
 theorem multiple_seg (s₁ s₂ : Segment): ∃ (λ : ℝ | λ > 0), μ s₁ = λ * μ s₂ :=
 begin
-sorry
+  sorry
 end
 
 theorem exists_measure (s : Segment) : ∃ μ s, μ s = λ, (λ : ℝ | λ > 0) :=
 begin
-sorry
+  sorry
 end
 
