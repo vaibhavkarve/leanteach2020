@@ -26,17 +26,19 @@ local infix ` ≃ `:55 := congruent  -- typed as \ equiv
 axiom distance_not_neg (p1 p2 : Point) : distance p1 p2 >= 0
 axiom distance_is_symm_op : is_symm_op Point ℝ distance
 
-@[simp] lemma distance_is_symm : ∀ (p1 p2 : Point), distance p1 p2 = distance p2 p1 := distance_is_symm_op.symm_op
+@[simp, symm] lemma distance_is_symm : ∀ (p1 p2 : Point),
+  distance p1 p2 = distance p2 p1 := distance_is_symm_op.symm_op
 
 
-@[simp, refl] axiom cong_refl {A : Type} (a : A) : congruent a a
+-- Congruence is an equivalence relation.
+axiom cong_is_equiv (A : Type) : is_equiv A (≃)
+@[refl] axiom cong_refl {A : Type} (a : A) : congruent a a
 @[symm] axiom cong_symm {A : Type} (a b: A) : congruent a b → congruent b a
 @[trans] axiom cong_trans {A : Type} (a b c: A) : congruent a b → congruent b c → congruent a c
+lemma cong_equiv {A : Type} : equivalence (@congruent A) :=
+  mk_equivalence congruent cong_refl cong_symm cong_trans  -- The @ makes implicit arguments explicit.
 
-@[simp] lemma cong_equiv {A : Type} : equivalence (@congruent A) := mk_equivalence congruent cong_refl cong_symm cong_trans  -- The @ makes implicit arguments explicit.
---instance cong_is_equiv (A : Type) : is_equiv A (≃):= {symm := cong_symm, refl := cong_refl, trans := cong_trans}
-@[refl, symm, simp] axiom cong_is_equiv (A : Type) : is_equiv A (≃)
-@[simp] lemma ne_equiv {A : Type} (a b : A): a ≠ b → b ≠ a := sorry
+lemma ne_equiv {A : Type} (a b : A): a ≠ b → b ≠ a := ne_comm.mp
 
 
 -- Postulate I
