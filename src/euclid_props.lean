@@ -67,6 +67,21 @@ begin
                ... ≃    p ⬝ s.p1 : by symmetry},
 end
 
+
+-- lemma ray_circle_intersect (AB : Ray) (ne : AB.base ≠ AB.ext) (C : Circle) (center : C.center = AB.base): 
+-- ∃ (p : Point), (p ∈ circumference C) ∧ (p ∈ points_of_ray AB ne) :=
+-- begin
+-- have h := extend (Segment.mk AB.base AB.ext Segment.mk AB.ext ) CD? ne,
+-- end
+--Lemma needed for proposition 2
+lemma ray_circle_intersect (AB : Ray) (ne : AB.base ≠ AB.ext) (C : Circle) (center : C.center = AB.base):
+∃ (p : Point), (p ∈ circumference C) ∧ (p ∈ points_of_ray AB ne) :=
+begin
+  sorry,
+end
+
+
+
 --Proposition 2
 lemma placeline (s1 : Segment) (p1: Point): ∃ (s2 : Segment), (s1.p1 = s2.p1) ∧ congruent s1 s2 :=
 begin
@@ -74,7 +89,8 @@ begin
 end
 
 -- # Proposition 3
-lemma prop3 (AB C : Segment) (greater : length AB > length C): ∃ (s : Segment), (length s = length C) ∧ (s.p1 = AB.p1) ∧ (between AB.p1 s.p2 AB.p2) :=
+lemma prop3 (AB C : Segment) (greater : length AB > length C):
+  ∃ (s : Segment), (length s = length C) ∧ (s.p1 = AB.p1) ∧ (between AB.p1 s.p2 AB.p2) :=
 begin
   sorry
 end
