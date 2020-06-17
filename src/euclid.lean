@@ -130,11 +130,11 @@ structure Triangle: Type :=
 (p1 p2 p3 : Point)
 
 def angle_of_points (a b c : Point) (diffrent : distinct a b c) : Angle :=
-let r1 := Ray.mk b a in
-let r2 := Ray.mk b a in
-let same_base : r1.base = r2.base := begin refl, end in
-let not_opposite : ∀ (h1 : r1.base ≠ r1.ext) (h2 : r2.base ≠ r2.ext), ¬opposite_rays r1 r2 h1 h2 := sorry in
-Angle.mk r1 r2 same_base not_opposite
+  let r1 := Ray.mk b a in
+  let r2 := Ray.mk b a in
+  let same_base : r1.base = r2.base := begin refl, end in
+  let not_opposite : ∀ (h1 : r1.base ≠ r1.ext) (h2 : r2.base ≠ r2.ext), ¬opposite_rays r1 r2 h1 h2 := sorry in
+  Angle.mk r1 r2 same_base not_opposite
 
 -- For every triangle, we get can define three Segments (its sides).
 def sides_of_triangle (t : Triangle): vector Segment 3 :=
@@ -145,14 +145,15 @@ def sides_of_triangle (t : Triangle): vector Segment 3 :=
 
 
 def angles_of_triangle (t : Triangle) (diffrent : distinct t.p1 t.p2 t.p3): vector Angle 3 :=
-let a1 := angle_of_points t.p1 t.p2 t.p3 diffrent in
-let dif2 : distinct t.p2 t.p3 t.p1 := begin apply distinct_shift, exact diffrent, end in
-let a2 := angle_of_points t.p2 t.p3 t.p1 dif2 in
-let dif3 : distinct t.p3 t.p1 t.p2 := begin apply distinct_shift, exact dif2, end in
-let a3 := angle_of_points t.p3 t.p1 t.p2 dif3 in
-⟨[a1, a2, a3], rfl⟩ 
+  let a1 := angle_of_points t.p1 t.p2 t.p3 diffrent in
+  let dif2 : distinct t.p2 t.p3 t.p1 :=
+    begin apply distinct_shift, exact diffrent, end in
+  let a2 := angle_of_points t.p2 t.p3 t.p1 dif2 in
+  let dif3 : distinct t.p3 t.p1 t.p2 :=
+    begin apply distinct_shift, exact dif2, end in
+  let a3 := angle_of_points t.p3 t.p1 t.p2 dif3 in
+  ⟨[a1, a2, a3], rfl⟩ 
 
-  
 
 def is_equilateral (t : Triangle) : Prop :=
   let sides := sides_of_triangle t in
