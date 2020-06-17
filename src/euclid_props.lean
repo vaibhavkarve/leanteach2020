@@ -68,23 +68,50 @@ begin
 end
 
 
+
+lemma ray_cut_length (r : Ray) (s : Segment) (h : r.base ≠ r.ext)
+  : ∃ p : Point, p ∈ points_of_ray r h ∧ r.base ⬝ p ≃ s :=
+begin
+  sorry
+end
+
+
+
 -- lemma ray_circle_intersect (AB : Ray) (ne : AB.base ≠ AB.ext) (C : Circle) (center : C.center = AB.base): 
 -- ∃ (p : Point), (p ∈ circumference C) ∧ (p ∈ points_of_ray AB ne) :=
 -- begin
 -- have h := extend (Segment.mk AB.base AB.ext Segment.mk AB.ext ) CD? ne,
 -- end
---Lemma needed for proposition 2
+-- Lemma needed for proposition 2
 lemma ray_circle_intersect (AB : Ray) (ne : AB.base ≠ AB.ext) (C : Circle) (center : C.center = AB.base):
-∃ (p : Point), (p ∈ circumference C) ∧ (p ∈ points_of_ray AB ne) :=
+  ∃ (p : Point), (p ∈ circumference C) ∧ (p ∈ points_of_ray AB ne) :=
 begin
   sorry,
 end
 
+#print Segment
 
 
 --Proposition 2
-lemma placeline (s1 : Segment) (p1: Point): ∃ (s2 : Segment), (s1.p1 = s2.p1) ∧ congruent s1 s2 :=
+lemma placeline (bc : Segment) (a : Point) :
+  a ≠ bc.p1
+  → ∃ (s : Segment), (bc.p1 = s.p1) ∧ bc ≃ s :=
 begin
+  intros ne_a_b,
+  let ab : Segment := a⬝bc.p1,
+  have construct_equilateral := construct_equilateral ab,
+  choose abd h using construct_equilateral,
+  rcases h with ⟨h₁, h₂, h₃⟩,
+  let da : Ray := ⟨abd.p3, a⟩,
+  let db : Ray := ⟨abd.p3, ab.p2⟩,
+  have ne_d_b : db.base ≠ db.ext,
+    { simp,
+      unfold is_equilateral at h₃,
+      dsimp at h₃,
+      rcases h₃ with ⟨h₄, h₅⟩,
+      intros h,
+    sorry},
+  have ray_circle_intersect := ray_circle_intersect db,
   sorry
 end
 
