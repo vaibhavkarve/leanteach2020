@@ -83,35 +83,57 @@ end
 -- have h := extend (Segment.mk AB.base AB.ext Segment.mk AB.ext ) CD? ne,
 -- end
 -- Lemma needed for proposition 2
-lemma ray_circle_intersect (AB : Ray) (ne : AB.base ≠ AB.ext) (C : Circle) (center : C.center = AB.base):
-  ∃ (p : Point), (p ∈ circumference C) ∧ (p ∈ points_of_ray AB ne) :=
+lemma ray_circle_intersect (AB : Ray) (ne : AB.base ≠ AB.ext) (C : Circle) (p : Point) :
+  circle_interior p C
+  → p ∈ points_of_ray AB ne
+  → ∃ x : Point, x ∈ points_of_ray AB ne ∧ x ∈ circumference C :=
 begin
   sorry,
 end
 
-#print Segment
 
 
 --Proposition 2
 lemma placeline (bc : Segment) (a : Point) :
-  a ≠ bc.p1
+     a ≠ bc.p1
+  → bc.p1 ≠ bc.p2
   → ∃ (s : Segment), (bc.p1 = s.p1) ∧ bc ≃ s :=
 begin
-  intros ne_a_b,
+  intros ne_a_b ne_b_c,
   let ab : Segment := a⬝bc.p1,
   have construct_equilateral := construct_equilateral ab,
   choose abd h using construct_equilateral,
   rcases h with ⟨h₁, h₂, h₃⟩,
   let da : Ray := ⟨abd.p3, a⟩,
   let db : Ray := ⟨abd.p3, ab.p2⟩,
+  let circ : Circle := ⟨bc.p1, bc.p2⟩,
   have ne_d_b : db.base ≠ db.ext,
     { simp,
       unfold is_equilateral at h₃,
       dsimp at h₃,
       rcases h₃ with ⟨h₄, h₅⟩,
       intros h,
-    sorry},
-  have ray_circle_intersect := ray_circle_intersect db,
+      have side_eq_db : (sides_of_triangle abd).nth 1 = bc.p1 ⬝ abd.p3,
+        exact (congr_fun (congr_arg Segment.mk h₂) abd.p3).symm,
+      rw side_eq_db at h₄,
+      simp at h₄,
+      dsimp at *,
+      have h₅ : (sides_of_triangle abd).head = a ⬝ bc.p1,
+        { sorry},
+      have eq_a_b : a = bc.p1,
+        apply zero_segment (a ⬝ bc.p1) abd.p3,
+        rw [h, ← h₅],
+        rw h at h₄,
+        tidy},
+  have b_in_circ : circle_interior bc.p1 circ,
+    { unfold circle_interior,
+      simp,
+      unfold radius,
+      simp,
+      apply distance_pos,
+      --apply distance_not_neg,
+      sorry},
+  have ray_circle_intersect := ray_circle_intersect db ne_d_b circ bc.p1,
   sorry
 end
 
