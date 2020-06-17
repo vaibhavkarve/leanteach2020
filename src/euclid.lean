@@ -145,14 +145,14 @@ def sides_of_triangle (t : Triangle): vector Segment 3 :=
 
 
 def angles_of_triangle (t : Triangle) (diffrent : distinct t.p1 t.p2 t.p3): vector Angle 3 :=
-  let a1 := angle_of_points t.p1 t.p2 t.p3 diffrent in
+  let a123 := angle_of_points t.p1 t.p2 t.p3 diffrent in
   let dif2 : distinct t.p2 t.p3 t.p1 :=
     begin apply distinct_shift, exact diffrent, end in
-  let a2 := angle_of_points t.p2 t.p3 t.p1 dif2 in
+  let a231 := angle_of_points t.p2 t.p3 t.p1 dif2 in
   let dif3 : distinct t.p3 t.p1 t.p2 :=
     begin apply distinct_shift, exact dif2, end in
-  let a3 := angle_of_points t.p3 t.p1 t.p2 dif3 in
-  ⟨[a1, a2, a3], rfl⟩ 
+  let a312 := angle_of_points t.p3 t.p1 t.p2 dif3 in
+  ⟨[a123, a231, a312], rfl⟩ 
 
 
 def is_equilateral (t : Triangle) : Prop :=
