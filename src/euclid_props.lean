@@ -91,6 +91,40 @@ begin
   sorry,
 end
 
+-- Use *have* for introducing new facts. Follow it up with a proof of
+-- said fact.
+-- have x_pos : x > 0, .....
+
+-- Use *let* for introducing new terms (of a given type). Follow it up
+-- with a definition of the term.
+-- Ex: let x : ℕ := 5
+
+-- Use *set* is similar to *let*, but it additionally replaces every term
+-- in the context with the new definition.
+-- Ex: set x : ℕ := 5, -> replace x with 5 everywhere
+
+-- Lemma needed for Proposition 2
+lemma equilateral_triangle_nonzero_side (abc : Triangle) :
+  abc.p1 ≠ abc.p2 → is_equilateral abc
+  → abc.p2 ≠ abc.p3 :=
+begin
+  intros ne_a_b h,
+  unfold is_equilateral at h,
+  rcases h with ⟨h₁, h₂⟩,
+  intros eq_b_c,
+  --have side_eq_db : (sides_of_triangle abc).2.1 = abc.p2 ⬝ abc.p3, by refl,
+  --simp  at h₂,
+  --dsimp at *,
+  --have h₃ : (sides_of_triangle abc).1 = abc.p1 ⬝ abc.p2, by refl,
+  have cong_cc_bc : abc.p3⬝abc.p3 = abc.p2⬝abc.p3, by simp[eq_b_c],
+  have eq_a_b : abc.p1 = abc.p2,
+    { apply zero_segment (abc.p1 ⬝ abc.p2) abc.p3,
+      rw cong_cc_bc,
+      assumption},
+  exact ne_a_b eq_a_b,
+end
+
+
 
 
 --Proposition 2
