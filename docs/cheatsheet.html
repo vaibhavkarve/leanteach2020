@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-18 Thu 13:22 -->
+<!-- 2020-06-18 Thu 13:25 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Cheatsheet for Euclid and Hilbert's axioms</title>
@@ -258,19 +258,19 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga7a6e60">1. hilbert.lean</a>
+<li><a href="#org6c73abe">1. hilbert.lean</a>
 <ul>
-<li><a href="#orga3f1fed">constant</a></li>
-<li><a href="#org64f3473">structure</a></li>
-<li><a href="#org8a27c49">def</a></li>
-<li><a href="#org95ad2b9">axiom</a></li>
-<li><a href="#org82525fe">lemma</a></li>
-<li><a href="#org882b37e">todo</a></li>
+<li><a href="#orgbafcace">constant</a></li>
+<li><a href="#org5e2eb29">structure</a></li>
+<li><a href="#org2a49c06">def</a></li>
+<li><a href="#org2ca25f5">axiom</a></li>
+<li><a href="#orge0f74c8">lemma</a></li>
+<li><a href="#org4421024">todo</a></li>
 </ul>
 </li>
-<li><a href="#org82c8b28">2. <span class="todo TODO">TODO</span> hilbert_props.lean</a></li>
-<li><a href="#orgd0fb3b2">3. <span class="todo TODO">TODO</span> euclid.lean</a></li>
-<li><a href="#org388e01c">4. <span class="todo TODO">TODO</span> euclid_props.lean</a></li>
+<li><a href="#org831fc4d">2. <span class="todo TODO">TODO</span> hilbert_props.lean</a></li>
+<li><a href="#org4fa996d">3. <span class="todo TODO">TODO</span> euclid.lean</a></li>
+<li><a href="#orgb4139ca">4. <span class="todo TODO">TODO</span> euclid_props.lean</a></li>
 </ul>
 </div>
 </div>
@@ -278,19 +278,19 @@ for the JavaScript code in this tag.
 Key:
 </p>
 <ul class="org-ul">
-<li>ne ⇒ refers to a proof that two terms are distint.</li>
+<li>ne ⇒ refers to a proof that two terms are distinct.</li>
 <li>⟨⟩ ⇒ refers to fields of structure.</li>
 <li>(≃) ⇒ signifies a notation we defined.</li>
 <li>^2, ^3, etc. ⇒ superscript refers to repeated arguments of the same type.</li>
 </ul>
 
-<div id="outline-container-orga7a6e60" class="outline-2">
-<h2 id="orga7a6e60"><span class="section-number-2">1</span> hilbert.lean</h2>
+<div id="outline-container-org6c73abe" class="outline-2">
+<h2 id="org6c73abe"><span class="section-number-2">1</span> hilbert.lean</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orga3f1fed" class="outline-3">
-<h3 id="orga3f1fed">constant</h3>
-<div class="outline-text-3" id="text-orga3f1fed">
+<div id="outline-container-orgbafcace" class="outline-3">
+<h3 id="orgbafcace">constant</h3>
+<div class="outline-text-3" id="text-orgbafcace">
 <ul class="org-ul">
 <li>Point : Type</li>
 <li>B : Point → Point → Point</li>
@@ -303,9 +303,9 @@ Key:
 </div>
 </div>
 
-<div id="outline-container-org64f3473" class="outline-3">
-<h3 id="org64f3473">structure</h3>
-<div class="outline-text-3" id="text-org64f3473">
+<div id="outline-container-org5e2eb29" class="outline-3">
+<h3 id="org5e2eb29">structure</h3>
+<div class="outline-text-3" id="text-org5e2eb29">
 <ul class="org-ul">
 <li>Segment (⬝) := ⟨Point, Point⟩</li>
 <li>Line := ⟨Point, Point, ne⟩</li>
@@ -317,9 +317,9 @@ Key:
 </div>
 </div>
 
-<div id="outline-container-org8a27c49" class="outline-3">
-<h3 id="org8a27c49">def</h3>
-<div class="outline-text-3" id="text-org8a27c49">
+<div id="outline-container-org2a49c06" class="outline-3">
+<h3 id="org2a49c06">def</h3>
+<div class="outline-text-3" id="text-org2a49c06">
 <ul class="org-ul">
 <li>line_of_ray : Ray → ne → Line</li>
 <li>rays_of_angle : Angle → Ray<sup>2</sup></li>
@@ -343,106 +343,106 @@ Key:
 </div>
 </div>
 
-<div id="outline-container-org95ad2b9" class="outline-3">
-<h3 id="org95ad2b9">axiom</h3>
-<div class="outline-text-3" id="text-org95ad2b9">
+<div id="outline-container-org2ca25f5" class="outline-3">
+<h3 id="org2ca25f5">axiom</h3>
+<div class="outline-text-3" id="text-org2ca25f5">
 </div>
 <ul class="org-ul">
-<li><a id="org632cc6d"></a>I.1    line_exists : Point<sup>2</sup> → ne → lies_on_line<sup>2</sup><br /></li>
-<li><a id="orgc765bcc"></a>I.2    line_unique : Point<sup>2</sup> → ne → Line → lies_on_line<sup>2</sup> → Line = Line<br /></li>
-<li><a id="org7a2b653"></a>I.3<br />
+<li><a id="orgab8c3e9"></a>I.1    line_exists : Point<sup>2</sup> → ne → lies_on_line<sup>2</sup><br /></li>
+<li><a id="org31bba85"></a>I.2    line_unique : Point<sup>2</sup> → ne → Line → lies_on_line<sup>2</sup> → Line = Line<br /></li>
+<li><a id="org1ee3e86"></a>I.3<br />
 <ul class="org-ul">
-<li><a id="org52c3b97"></a>two_points_on_line : Line → ∃ Point<sup>2</sup>, ne ∧ lies_on_line<sup>2</sup><br /></li>
-<li><a id="org48719b3"></a>no_line_on_three_points : ∃ Points<sup>3</sup>, ∄ Line, lies_on_line<sup>3</sup><br /></li>
+<li><a id="orge1ce778"></a>two_points_on_line : Line → ∃ Point<sup>2</sup>, ne ∧ lies_on_line<sup>2</sup><br /></li>
+<li><a id="org168b857"></a>no_line_on_three_points : ∃ Points<sup>3</sup>, ∄ Line, lies_on_line<sup>3</sup><br /></li>
 </ul>
 </li>
-<li><a id="org13bc210"></a>O.1<br />
+<li><a id="org1ce134e"></a>O.1<br />
 <ul class="org-ul">
-<li><a id="org4a90f5a"></a><b>@[symm]</b> B_symm : Point<sup>3</sup> → B → B<br /></li>
-<li><a id="orgb034dff"></a>B_implies_collinear : Point<sup>3</sup> → B → collinear_points<br /></li>
+<li><a id="orge60b9ad"></a><b>@[symm]</b> B_symm : Point<sup>3</sup> → B → B<br /></li>
+<li><a id="org835045f"></a>B_implies_collinear : Point<sup>3</sup> → B → collinear_points<br /></li>
 </ul>
 </li>
-<li><a id="org09b648a"></a>O.2    line_continuity : Point<sup>2</sup> → ne → ∃ Point, lies_on_line ∧ B<br /></li>
-<li><a id="orgc237d51"></a>O.3    max_one_between : Points<sup>3</sup> → collinear_points → B ⊕ B ⊕ B<br /></li>
-<li><a id="orgf34976b"></a>O.4    pasch : Point<sup>3</sup> → Line → ne<sup>3</sup> → ¬collinear_points → (¬lies_on_line)<sup>3</sup> → intersect_line_segment → intersect_line_segment ⊕ intersect_line_segment<br /></li>
-<li><a id="org36fee82"></a>C.1<br />
+<li><a id="org2650b55"></a>O.2    line_continuity : Point<sup>2</sup> → ne → ∃ Point, lies_on_line ∧ B<br /></li>
+<li><a id="orge1d5248"></a>O.3    max_one_between : Points<sup>3</sup> → collinear_points → B ⊕ B ⊕ B<br /></li>
+<li><a id="orga087201"></a>O.4    pasch : Point<sup>3</sup> → Line → ne<sup>3</sup> → ¬collinear_points → (¬lies_on_line)<sup>3</sup> → intersect_line_segment → intersect_line_segment ⊕ intersect_line_segment<br /></li>
+<li><a id="org4024b12"></a>C.1<br />
 <ul class="org-ul">
-<li><a id="org501fbc2"></a>segment_copy' : Point<sup>3</sup> → Line<sup>2</sup> → lies_on_line<sup>3</sup> → ne ∧ lies_on_line<sup>2</sup> ∧ (Segment ≃ Segment)<sup>2</sup><br /></li>
-<li><a id="org23782e5"></a><b>@[symm]</b> C_segment_symm : Segment<sup>2</sup> → Segment ≃ Segment → Segment ≃ Segment<br /></li>
-<li><a id="org558a4f8"></a>segment_swap : Point<sup>2</sup> → Segment ≃ Segment<br /></li>
+<li><a id="org3b4071a"></a>segment_copy' : Point<sup>3</sup> → Line<sup>2</sup> → lies_on_line<sup>3</sup> → ne ∧ lies_on_line<sup>2</sup> ∧ (Segment ≃ Segment)<sup>2</sup><br /></li>
+<li><a id="org090cc42"></a><b>@[symm]</b> C_segment_symm : Segment<sup>2</sup> → Segment ≃ Segment → Segment ≃ Segment<br /></li>
+<li><a id="org79e45bf"></a>segment_swap : Point<sup>2</sup> → Segment ≃ Segment<br /></li>
 </ul>
 </li>
-<li><a id="orge5ed171"></a>C.2    <b>[@trans]</b> C_segment_trans : Point<sup>6</sup> → (Segment ≃ Segment)<sup>2</sup> → Segment ≃ Segment<br /></li>
-<li><a id="org9c1db42"></a>C.3    C_segment_add_trans : Point<sup>6</sup> → Line<sup>2</sup> → ne<sup>4</sup> → segment_of_line<sup>4</sup> → segment_end_to_end<sup>2</sup> → (Segment ≃ Segment)^2 → Segment ≃ Segment<br /></li>
-<li><a id="org2d2221f"></a>C.4    angle_congruent' : Angle → Point → Ray → eq → ne ∧ eq<sup>2</sup> ∧ (Angle ≃ Angle)<sup>2</sup><br /></li>
-<li><a id="org6e37c3c"></a>C.5<br />
+<li><a id="org0febad4"></a>C.2    <b>[@trans]</b> C_segment_trans : Point<sup>6</sup> → (Segment ≃ Segment)<sup>2</sup> → Segment ≃ Segment<br /></li>
+<li><a id="orgd09ad90"></a>C.3    C_segment_add_trans : Point<sup>6</sup> → Line<sup>2</sup> → ne<sup>4</sup> → segment_of_line<sup>4</sup> → segment_end_to_end<sup>2</sup> → (Segment ≃ Segment)^2 → Segment ≃ Segment<br /></li>
+<li><a id="orgaee2ecc"></a>C.4    angle_congruent' : Angle → Point → Ray → eq → ne ∧ eq<sup>2</sup> ∧ (Angle ≃ Angle)<sup>2</sup><br /></li>
+<li><a id="orgdb7f196"></a>C.5<br />
 <ul class="org-ul">
-<li><a id="orgc6cc053"></a><b>@[trans]</b> C_angle_trans : Angle<sup>3</sup> → (Angle ≃ Angle)<sup>2</sup> → Angle ≃ Angle<br /></li>
-<li><a id="org6a6aebb"></a><b>@[symm]</b> angle_symm : Point<sup>3</sup> → Angle ≃ Angle<br /></li>
+<li><a id="org9f2b5b1"></a><b>@[trans]</b> C_angle_trans : Angle<sup>3</sup> → (Angle ≃ Angle)<sup>2</sup> → Angle ≃ Angle<br /></li>
+<li><a id="orgff3d721"></a><b>@[symm]</b> angle_symm : Point<sup>3</sup> → Angle ≃ Angle<br /></li>
 </ul>
 </li>
-<li><a id="org751f78b"></a><span class="todo TODO">TODO</span> C.6<br /></li>
-<li><a id="org3788d30"></a>P.1 parallel_postulate : Point →  Line → ¬lies_on_line : parallel_lines ∧ lies_on_line<br /></li>
-<li><a id="org16f0e13"></a><span class="todo TODO">TODO</span> K.1<br />
-<div class="outline-text-4" id="text-org16f0e13">
+<li><a id="org3ad9e50"></a><span class="todo TODO">TODO</span> C.6<br /></li>
+<li><a id="org5c1e8a8"></a>P.1 parallel_postulate : Point →  Line → ¬lies_on_line : parallel_lines ∧ lies_on_line<br /></li>
+<li><a id="orgb4621bb"></a><span class="todo TODO">TODO</span> K.1<br />
+<div class="outline-text-4" id="text-orgb4621bb">
 <p>
 Need to add in first axiom of continuity.
 </p>
 </div>
 </li>
-<li><a id="org377dc58"></a><span class="todo TODO">TODO</span> K.2<br />
-<div class="outline-text-4" id="text-org377dc58">
+<li><a id="org33ff0c9"></a><span class="todo TODO">TODO</span> K.2<br />
+<div class="outline-text-4" id="text-org33ff0c9">
 <p>
 Need to add in second axiom of continuity.
 </p>
 </div>
 </li>
 
-<li><a id="org97d6c43"></a>Distance<br />
+<li><a id="org3cdb777"></a>Distance<br />
 <ul class="org-ul">
-<li><a id="org4c485b0"></a>distance_nonzero : Measure → Segment → ne ↔ Measure &gt; 0<br /></li>
-<li><a id="orgb25ca60"></a>distance_congruent : Measure → Segment<sup>2</sup> → Segment ≃ Segment ↔ Distance = Distance<br /></li>
-<li><a id="org6bffc7a"></a>distance_between : Measure → Point<sup>3</sup> → B → Measure + Measure = Measure<br /></li>
+<li><a id="orged04101"></a>distance_nonzero : Measure → Segment → ne ↔ Measure &gt; 0<br /></li>
+<li><a id="orgc083b45"></a>distance_congruent : Measure → Segment<sup>2</sup> → Segment ≃ Segment ↔ Distance = Distance<br /></li>
+<li><a id="org0594e36"></a>distance_between : Measure → Point<sup>3</sup> → B → Measure + Measure = Measure<br /></li>
 </ul>
 </li>
 </ul>
 </div>
-<div id="outline-container-org82525fe" class="outline-3">
-<h3 id="org82525fe">lemma</h3>
-<div class="outline-text-3" id="text-org82525fe">
+<div id="outline-container-orge0f74c8" class="outline-3">
+<h3 id="orge0f74c8">lemma</h3>
+<div class="outline-text-3" id="text-orge0f74c8">
 </div>
 <ul class="org-ul">
-<li><a id="org4a6c930"></a><b>@[refl]</b> C_segment_refl : Point<sup>2</sup> → Segment ≃ Segment<br /></li>
-<li><a id="org4599c9b"></a><span class="todo TODO">TODO</span> angles_of_congruent_triangle : Triangle<sup>2</sup> → congruent_triangle → (Angle ≃ Angle)<sup>3</sup><br /></li>
+<li><a id="org8e857be"></a><b>@[refl]</b> C_segment_refl : Point<sup>2</sup> → Segment ≃ Segment<br /></li>
+<li><a id="org3c3da89"></a><span class="todo TODO">TODO</span> angles_of_congruent_triangle : Triangle<sup>2</sup> → congruent_triangle → (Angle ≃ Angle)<sup>3</sup><br /></li>
 </ul>
 </div>
-<div id="outline-container-org882b37e" class="outline-3">
-<h3 id="org882b37e">todo</h3>
-<div class="outline-text-3" id="text-org882b37e">
+<div id="outline-container-org4421024" class="outline-3">
+<h3 id="org4421024">todo</h3>
+<div class="outline-text-3" id="text-org4421024">
 </div>
 <ul class="org-ul">
-<li><a id="org709eb61"></a><span class="todo TODO">TODO</span> (C.6) congruent_triangle_SAS : Point<sup>6</sup> → (Segment ≃ Segment)<sup>2</sup> → Angle ≃ Angle → congruent_triangle<br /></li>
-<li><a id="org307922c"></a><span class="todo TODO">TODO</span> mk_supplementary_angle : Angle → Angle<br /></li>
-<li><a id="org2127fad"></a><span class="todo TODO">TODO</span> mk_supp_angle_condition : Angle → ne<br /></li>
-<li><a id="orgeed6798"></a><span class="todo TODO">TODO</span> mk_supplementary_angle_is_supplementary : Angle → ne → supplementary_angles<br /></li>
-<li><a id="orgbda8b56"></a><span class="todo TODO">TODO</span> distance_scale : Measure<sup>2</sup> → Segment → ∃ ℝ, ℝ &gt; 0 ∧ Measure = ℝ * Measure<br /></li>
-<li><a id="orgee9abe5"></a><span class="todo TODO">TODO</span> exists_measure : Segment → ℝ → ∃ Measure, Segment = ℝ<br /></li>
+<li><a id="orgce15314"></a><span class="todo TODO">TODO</span> (C.6) congruent_triangle_SAS : Point<sup>6</sup> → (Segment ≃ Segment)<sup>2</sup> → Angle ≃ Angle → congruent_triangle<br /></li>
+<li><a id="org45d656e"></a><span class="todo TODO">TODO</span> mk_supplementary_angle : Angle → Angle<br /></li>
+<li><a id="org3f047a8"></a><span class="todo TODO">TODO</span> mk_supp_angle_condition : Angle → ne<br /></li>
+<li><a id="orga6fbe28"></a><span class="todo TODO">TODO</span> mk_supplementary_angle_is_supplementary : Angle → ne → supplementary_angles<br /></li>
+<li><a id="org1f7c603"></a><span class="todo TODO">TODO</span> distance_scale : Measure<sup>2</sup> → Segment → ∃ ℝ, ℝ &gt; 0 ∧ Measure = ℝ * Measure<br /></li>
+<li><a id="org065625d"></a><span class="todo TODO">TODO</span> exists_measure : Segment → ℝ → ∃ Measure, Segment = ℝ<br /></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org82c8b28" class="outline-2">
-<h2 id="org82c8b28"><span class="section-number-2">2</span> <span class="todo TODO">TODO</span> hilbert_props.lean</h2>
+<div id="outline-container-org831fc4d" class="outline-2">
+<h2 id="org831fc4d"><span class="section-number-2">2</span> <span class="todo TODO">TODO</span> hilbert_props.lean</h2>
 </div>
-<div id="outline-container-orgd0fb3b2" class="outline-2">
-<h2 id="orgd0fb3b2"><span class="section-number-2">3</span> <span class="todo TODO">TODO</span> euclid.lean</h2>
+<div id="outline-container-org4fa996d" class="outline-2">
+<h2 id="org4fa996d"><span class="section-number-2">3</span> <span class="todo TODO">TODO</span> euclid.lean</h2>
 </div>
-<div id="outline-container-org388e01c" class="outline-2">
-<h2 id="org388e01c"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> euclid_props.lean</h2>
+<div id="outline-container-orgb4139ca" class="outline-2">
+<h2 id="orgb4139ca"><span class="section-number-2">4</span> <span class="todo TODO">TODO</span> euclid_props.lean</h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Vaibhav Karve</p>
-<p class="date">Created: 2020-06-18 Thu 13:22</p>
+<p class="date">Created: 2020-06-18 Thu 13:25</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

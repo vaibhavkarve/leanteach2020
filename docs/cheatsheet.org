@@ -3,7 +3,7 @@
 #+SETUPFILE: bigblow.setup
 
 Key:
-- ne ⇒ refers to a proof that two terms are distint.
+- ne ⇒ refers to a proof that two terms are distinct.
 - ⟨⟩ ⇒ refers to fields of structure.
 - (≃) ⇒ signifies a notation we defined.
 - ^2, ^3, etc. ⇒ superscript refers to repeated arguments of the same type.
