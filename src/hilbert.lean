@@ -351,8 +351,16 @@ begin
 end
 
 
--- VK : How are we justifying this definition?
-constant θ : Angle → ℝ
+-- # Continuity Axioms
+
+----------------------
+-- TODO: add continuity axiom 1
+-- TODO: add continuity axiom 2
+
+
+
+-- TODO : VK : How are we justifying this definition?
+-- constant θ : Angle → ℝ
 -- Next we define some axioms to work with angles.
-axiom equalAngles (α₁ α₂ : Angle) : θ α₁ = θ α₂ ↔ α₁ ≃ α₂
-def is_right_2 (α : Angle) : Prop := θ α = 90
+-- axiom equalAngles (α₁ α₂ : Angle) : θ α₁ = θ α₂ ↔ α₁ ≃ α₂
+-- def is_right_2 (α : Angle) : Prop := θ α = 90
