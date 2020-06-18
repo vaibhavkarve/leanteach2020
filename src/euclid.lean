@@ -142,8 +142,8 @@ def angle_of_points (a b c : Point) (diffrent : distinct a b c) : Angle :=
   Angle.mk r1 r2 same_base not_opposite
 
 -- For every triangle, we get can define three Segments (its sides).
-def sides_of_triangle (t : Triangle): vector Segment 3 :=
-  ⟨[⟨t.p1, t.p2⟩, ⟨t.p2, t.p3⟩, ⟨t.p3, t.p1⟩], rfl⟩
+def sides_of_triangle (t : Triangle): Segment × Segment × Segment :=
+  (⟨t.p1, t.p2⟩, ⟨t.p2, t.p3⟩, ⟨t.p3, t.p1⟩)
 -- Note that elements of a vector v can be accessed as v.nth 0 etc.
 -- Also note that if a vector has lenth n, then asking for element m
 -- where m ≥ n returns element (m mod n)
@@ -162,18 +162,17 @@ def angles_of_triangle (t : Triangle) (diffrent : distinct t.p1 t.p2 t.p3): vect
 
 def is_equilateral (t : Triangle) : Prop :=
   let sides := sides_of_triangle t in
-  sides.nth 0 ≃ sides.nth 1 ∧ sides.nth 1 ≃ sides.nth 2
+  sides.1 ≃ sides.2.1 ∧ sides.2.1 ≃ sides.2.2
 
 
 lemma equilateral_triangle_all_sides_equal (t : Triangle) :
   let sides := sides_of_triangle t in
-  is_equilateral t → sides.nth 0 ≃ sides.nth 3 :=
+  is_equilateral t → sides.1 ≃ sides.2.2 :=
 begin
-  rintros sides ⟨h₁, h₂⟩,
+  intros,
+  cases a with h₁ h₂,
   transitivity,
-    assumption,
-    apply cong_symm,
-    exact h₁,
+    repeat {assumption},
 end
 
 
