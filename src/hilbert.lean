@@ -306,7 +306,7 @@ def supplementary_angles (α₁ α₂ : Angle)
 def mk_supplementary_angle (α : Angle) : Angle := ⟨α.ext₁, α.base, sorry⟩
 
 lemma mk_supp_angle_condition (α : Angle):
- (mk_supplementary_angle α).base ≠ (mk_supplementary_angle α).ext₁ := sorry
+  (mk_supplementary_angle α).base ≠ (mk_supplementary_angle α).ext₁ := sorry
 
 lemma mk_supplementary_angle_is_supplementary (α : Angle) (h : α.base ≠ α.ext₁):
   supplementary_angles α (mk_supplementary_angle α) h (mk_supp_angle_condition α) := sorry
@@ -330,9 +330,9 @@ def circumference (c : Circle) : set Point := {x : Point | radius_segment c ≃ 
 def Measure : Type := Segment → ℝ
 -- Next, we define some axioms for working with distance.
 axiom distance_nonzero (μ : Measure) (s : Segment) :
-  s.p₁ ≠ s.p₂ → μ s > 0
+  s.p₁ ≠ s.p₂ ↔ μ s > 0
 axiom distance_congruent (μ : Measure) (s₁ s₂ : Segment) :
-  s₁ ≃ s₂ → μ s₁ ≃ μ s₂
+  s₁ ≃ s₂ ↔ μ s₁ ≃ μ s₂
 axiom distance_between (μ : Measure) (a b c : Point) :
   B a b c → μ (a⬝b) + μ (b⬝c) = μ (a⬝c)
 
