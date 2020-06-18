@@ -205,6 +205,7 @@ begin
     use a,
       symmetry,
       symmetry,
+      repeat {apply segment_swap},
 end
 
 
@@ -272,7 +273,8 @@ axiom congruent_triangle_SAS (a b c a' b' c' : Point) :
     a⬝b ≃ a'⬝b'
   → a⬝c ≃ a'⬝c'
   → (⟨b, a, c⟩ : Angle) ≃ ⟨b', a', c'⟩
-  → (⟨a, b, c⟩ : Angle) ≃ ⟨a', b', c'⟩
+  → congruent_triangle ⟨a, b, c⟩ ⟨a', b', c'⟩
+
 
 
 
