@@ -247,11 +247,22 @@ def congruent_triangle (t₁ t₂ : Triangle) : Prop :=
   ∧ sides1.nth 1 ≃ sides2.nth 1
   ∧ sides1.nth 2 ≃ sides2.nth 2
 
--- TODO: Maybe this should be a Theorem?
--- Corresponding angles in congruent triangles must be congruent
--- ∧ t₁.α₁ ≃ t₂.α₁
--- ∧ t₁.α₂ ≃ t₂.α₂
--- ∧ t₁.α₃ ≃ t₂.α₃
+
+lemma angles_of_congruent_triangle (t₁ t₂ : Triangle) :
+  congruent_triangle t₁ t₂ →
+  let ang₁ := angles_of_triangle t₁ in
+  let ang₂ := angles_of_triangle t₂ in
+    ang₁.nth 0 ≃ ang₂.nth 0
+  ∧ ang₁.nth 1 ≃ ang₂.nth 1
+  ∧ ang₁.nth 2 ≃ ang₂.nth 2 :=
+begin
+  sorry
+end
+
+
+-- III.5 (wikipedia)
+@[trans] axiom C_angle_trans (α β γ : Angle) : α ≃ β → α ≃ γ → β ≃ γ
+@[symm] axiom angle_symm (a b c : Point) : (⟨a, b, c⟩ : Angle) ≃ ⟨c, b, a⟩
 
 
 --- III.5 (from Paper) / III.6 (from wikipedia)
