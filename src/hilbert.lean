@@ -152,6 +152,9 @@ def segments_end_to_end (s₁ s₂ : Segment) (h₁ : s₁.p₁ ≠ s₁.p₂) (
 -- Relationship between two parallel lines
 def parallel_lines (l₁ l₂ : Line) : Prop :=
   ¬∃ (a : Point), lies_on_line a l₁ ∧ lies_on_line a l₂
+-- Condition for two Points to lie on the same side of a Line.
+def lie_on_same_side (a b : Point) (l : Line) (h : a ≠ b) : Prop :=
+   ¬ intersect_line_segment l (a⬝b) h
 
 -- II.4 Pasch's axiom
 -- This can be interpreted as saying "a line that enters a triangle
@@ -303,8 +306,12 @@ def supplementary_angles (α₁ α₂ : Angle)
   ∧ (⟨α₁.base, α₁.ext₁, h₁⟩ : Line) = ⟨α₂.base, α₂.ext₁, h₂⟩
   ∧ collinear_points α₁.base α₁.ext₂ α₂.ext₂
 
--- How to define this rigorously when the point can basically be anywhere
-def mk_supplementary_angle (α : Angle) : Angle := let P : Point := collinear_points α.ext₂ α.base P in ⟨α.ext₁, α.base, P⟩ -- Uses sorry
+-- LZ,AD : How to define this rigorously when the point can basically be
+-- anywhere?
+-- VK : use *segment_copy*.
+def mk_supplementary_angle (α : Angle) : Angle :=
+  let P : Point := collinear_points α.ext₂ α.base P in ⟨α.ext₁, α.base, P⟩
+  -- Uses sorry
 
 lemma mk_supp_angle_condition (α : Angle):
   (mk_supplementary_angle α).base ≠ (mk_supplementary_angle α).ext₁ := sorry
