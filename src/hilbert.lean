@@ -190,10 +190,12 @@ axiom segment_copy' (a b a' : Point) (l l' : Line)
 
 -- III.1 Part 2
 @[symm] axiom C_segment_symm (s₁ s₂ : Segment) : s₁ ≃ s₂ → s₂ ≃ s₁
-@[symm] axiom C_segment_swap (x y : Point) : x⬝y ≃ y⬝x
+axiom segment_swap (x y : Point) : x⬝y ≃ y⬝x
+
 
 -- III.2
 @[trans] axiom C_segment_trans (u v w x y z : Point) : (u⬝v ≃ z⬝w) → (u⬝v ≃ x⬝y) → z⬝w ≃ x⬝y
+
 
 -- Congruence of segments is reflexive
 @[refl] lemma C_segment_refl (a b : Point) : a⬝b ≃ a⬝b :=
