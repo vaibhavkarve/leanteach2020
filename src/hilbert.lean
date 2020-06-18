@@ -310,9 +310,6 @@ lemma mk_supplementary_angle_is_supplementary (α : Angle) (h : α.base ≠ α.e
 -- This specifies a Predicate on the type Angle
 def is_right (α : Angle) : Prop := α ≃ mk_supplementary_angle α
 
--- A : Type
--- A → Prop      -- this is a predicate
--- A → A → Prop  -- this a relation
 
 
 structure Circle: Type :=
@@ -320,10 +317,6 @@ structure Circle: Type :=
 
 def radius_segment (c : Circle) : Segment := ⟨c.center, c.outer⟩
 def circumference (c : Circle) : set Point := {x : Point | radius_segment c ≃ ⟨c.center, x⟩}
-
-
-axiom segment_construct (x y z a b : Point) :
-  ∃ z : Point, (B x y z) ∧ (y⬝z ≃ a⬝b)
 
 
 -- # Notion of Distance in Hilbert
