@@ -1,0 +1,94 @@
+#+title: Cheatsheet for Euclid and Hilbert's axioms
+#+options: H:2 num:1 ^:{}
+#+SETUPFILE: bigblow.setup
+
+Key:
+- ne ⇒ refers to a proof that two terms are distint.
+- ⟨⟩ ⇒ refers to fields of structure.
+- (≃) ⇒ signifies a notation we defined.
+- ^2, ^3, etc. ⇒ superscript refers to repeated arguments of the same type.
+
+* hilbert.lean
+** constant
+- Point : Type
+- B : Point → Point → Point
+- C (≃) : A → A → Type
+- lies_on_line : Point → Line → Prop
+- segment_copy : Point^{3} → Line^{2} → lies_on_line^{3} → Point^{2}
+- angle_congruent : Angle → Point → Ray → eq → Ray^{2}
+- mk_parallel : Point → Line → ¬lies_on_line → Line
+
+** structure
+- Segment (⬝) := ⟨Point, Point⟩
+- Line := ⟨Point, Point, ne⟩ 
+- Ray := ⟨Point, Point⟩
+- Angle := ⟨Point, Point, Point⟩
+- Triangle := ⟨Point, Point, Point⟩
+- Circle := ⟨Point, Point⟩
+
+** def
+- line_of_ray : Ray → ne → Line
+- rays_of_angle : Angle → Ray^{2}
+- sides_of_triangle : Triangle → vector Segment 3
+- angles_of_triangle : Triangle → vector Angle 3
+- equilateral : Triangle → Prop
+- collinear_points : Point^{3} → Prop
+- lies_on_segment : Point → Segment → ne → Prop
+- intersect_segment : Segment^{2} → ne^{2} → Prop
+- intersect_line_segment : Line → Segment → ne → Prop
+- segment_of_line : Segment → Line → Prop
+- segments_end_to_end : Segment^{2} → ne^{2} → Prop
+- parallel_lines : Line^{2} → Prop
+- supplementary_angles : Angle^{2} → ne^{2} → Prop
+- is_right : Angle → Prop
+- radius_segment : Circle → Segment
+- circumference : Circle → set Point
+- congruent_triangle : Triangle^{2} → Prop
+- Measure : Type
+
+** axiom
+*** I.1    line_exists : Point^{2} → ne → lies_on_line^{2}
+*** I.2    line_unique : Point^{2} → ne → Line → lies_on_line^{2} → Line = Line
+*** I.3
+**** two_points_on_line : Line → ∃ Point^{2}, ne ∧ lies_on_line^{2}
+**** no_line_on_three_points : ∃ Points^{3}, ∄ Line, lies_on_line^{3}
+*** O.1
+**** *@[symm]* B_symm : Point^{3} → B → B
+**** B_implies_collinear : Point^{3} → B → collinear_points
+*** O.2    line_continuity : Point^{2} → ne → ∃ Point, lies_on_line ∧ B
+*** O.3    max_one_between : Points^{3} → collinear_points → B ⊕ B ⊕ B
+*** O.4    pasch : Point^{3} → Line → ne^{3} → ¬collinear_points → (¬lies_on_line)^{3} → intersect_line_segment → intersect_line_segment ⊕ intersect_line_segment
+*** C.1
+**** segment_copy' : Point^{3} → Line^{2} → lies_on_line^{3} → ne ∧ lies_on_line^{2} ∧ (Segment ≃ Segment)^{2}
+**** *@[symm]* C_segment_symm : Segment^{2} → Segment ≃ Segment → Segment ≃ Segment
+**** segment_swap : Point^{2} → Segment ≃ Segment
+*** C.2    *[@trans]* C_segment_trans : Point^{6} → (Segment ≃ Segment)^{2} → Segment ≃ Segment
+*** C.3    C_segment_add_trans : Point^{6} → Line^{2} → ne^{4} → segment_of_line^{4} → segment_end_to_end^{2} → (Segment ≃ Segment)^2 → Segment ≃ Segment
+*** C.4    angle_congruent' : Angle → Point → Ray → eq → ne ∧ eq^{2} ∧ (Angle ≃ Angle)^{2}
+*** C.5
+**** *@[trans]* C_angle_trans : Angle^{3} → (Angle ≃ Angle)^{2} → Angle ≃ Angle
+**** *@[symm]* angle_symm : Point^{3} → Angle ≃ Angle
+*** TODO C.6
+*** P.1 parallel_postulate : Point →  Line → ¬lies_on_line : parallel_lines ∧ lies_on_line
+*** TODO K.1
+    Need to add in first axiom of continuity.
+*** TODO K.2
+    Need to add in second axiom of continuity.
+
+*** Distance
+**** distance_nonzero : Measure → Segment → ne ↔ Measure > 0
+**** distance_congruent : Measure → Segment^{2} → Segment ≃ Segment ↔ Distance = Distance
+**** distance_between : Measure → Point^{3} → B → Measure + Measure = Measure
+** lemma
+*** *@[refl]* C_segment_refl : Point^{2} → Segment ≃ Segment
+*** TODO angles_of_congruent_triangle : Triangle^{2} → congruent_triangle → (Angle ≃ Angle)^{3}
+** todo
+*** TODO (C.6) congruent_triangle_SAS : Point^{6} → (Segment ≃ Segment)^{2} → Angle ≃ Angle → congruent_triangle
+*** TODO mk_supplementary_angle : Angle → Angle
+*** TODO mk_supp_angle_condition : Angle → ne
+*** TODO mk_supplementary_angle_is_supplementary : Angle → ne → supplementary_angles
+*** TODO distance_scale : Measure^{2} → Segment → ∃ ℝ, ℝ > 0 ∧ Measure = ℝ * Measure
+*** TODO exists_measure : Segment → ℝ → ∃ Measure, Segment = ℝ
+* TODO hilbert_props.lean
+* TODO euclid.lean
+* TODO euclid_props.lean
