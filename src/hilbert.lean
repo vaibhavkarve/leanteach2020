@@ -315,9 +315,9 @@ lemma mk_supplementary_angle_is_supplementary (α : Angle) (h : α.base ≠ α.e
 def is_right (α : Angle) : Prop := α ≃ mk_supplementary_angle α
 
 
-
 structure Circle: Type :=
 (center outer : Point)
+
 
 def radius_segment (c : Circle) : Segment := ⟨c.center, c.outer⟩
 def circumference (c : Circle) : set Point := {x : Point | radius_segment c ≃ ⟨c.center, x⟩}
@@ -332,7 +332,7 @@ def Measure : Type := Segment → ℝ
 axiom distance_nonzero (μ : Measure) (s : Segment) :
   s.p₁ ≠ s.p₂ ↔ μ s > 0
 axiom distance_congruent (μ : Measure) (s₁ s₂ : Segment) :
-  s₁ ≃ s₂ ↔ μ s₁ ≃ μ s₂
+  s₁ ≃ s₂ ↔ μ s₁ = μ s₂
 axiom distance_between (μ : Measure) (a b c : Point) :
   B a b c → μ (a⬝b) + μ (b⬝c) = μ (a⬝c)
 
