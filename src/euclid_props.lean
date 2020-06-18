@@ -150,6 +150,17 @@ begin
   exact ne_a_b eq_a_b,
 end
 
+lemma radius_non_zero (c : Circle) :
+  c.center ≠ c.outer → 0 < radius c :=
+begin
+  intro,
+  unfold radius,
+  simp,
+  unfold radius_segment,
+  simp,
+  apply distance_pos,
+  apply a,
+end
 
 
 
@@ -196,21 +207,33 @@ begin
       apply distance_pos,
       exact ne_b_c},
   
-  let b_in_bc : db.ext ∈ points_of_ray db ne_d_b :=
-  begin 
-  sorry,
-  end,
+  have b_in_bc : db.ext ∈ points_of_ray db ne_d_b, {
+    sorry,
+  },
   have ray_circle_intersect := ray_circle_intersect db ne_d_b circ bc.p1 b_in_circ b_in_bc,
   rcases ray_circle_intersect with ⟨g, g_in_ray,g_in_circum⟩,
   let c₁ : Circle := ⟨abd.p3, g⟩,
-  have d_in_c₁ : circle_interior abd.p3 c₁,
-  begin sorry, end,
-  have d_in_da : da.base ∈ points_of_ray da ne_d_a :=
-  begin sorry, end,
+  have ne_d_g : abd.p3 ≠ g, {
+    sorry,
+  },
+  have d_in_c₁ : circle_interior abd.p3 c₁, {
+    unfold circle_interior,
+    have center_eq : c₁.center = abd.p3, {refl,},
+    have dist_0 : distance c₁.center abd.p3 = 0, {
+      finish,
+    },
+    rw dist_0,
+    apply radius_non_zero,
+    apply ne_d_g,
+  },
+  have d_in_da : da.base ∈ points_of_ray da ne_d_a, {
+    sorry,
+  },
   have ray_circle_intersect2 := ray_circle_intersect da ne_d_a c₁ abd.p3 d_in_c₁ d_in_da,
   rcases ray_circle_intersect2 with ⟨l, l_in_ray, l_in_circum⟩,
-  have bc_eq_bg : distance bc.p1 g = distance bc.p1 bc.p2 :=
-  begin sorry, end,
+  have bc_eq_bg : distance bc.p1 g = distance bc.p1 bc.p2, {
+    sorry,
+  },
   have al_eq_bg : distance a l = distance bc.p1 bc.p2 :=
   begin sorry, end,
   let al := a ⬝ l,
@@ -258,10 +281,10 @@ lemma prop4 (t1 t2 : Triangle) (dif1 : distinct t1.p1 t1.p2 t1.p3) (dif2 : disti
   let sides2 := (sides_of_triangle t2) in
   let angles1 := (angles_of_triangle t1 dif1) in
   let angles2 := (angles_of_triangle t2 dif2) in
-     (sides1.nth 0 = sides2.nth 0)
-  → (sides1.nth 1 = sides2.nth 1)
-  → (angles1.nth 0 ≃ angles2.nth 0)
-  → (sides1.nth 2 = sides2.nth 2)
+     (sides1.1 = sides2.1)
+  → (sides1.2.1 = sides2.2.1)
+  → (angles1.1 ≃ angles2.1)
+  → (sides1.2.2 = sides2.2.2)
      ∧ (angles1.nth 1 = angles2.nth 1) ∧ (angles1.nth 2 = angles2.nth 2) :=
 begin
   sorry
