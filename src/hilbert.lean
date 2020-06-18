@@ -273,24 +273,17 @@ axiom congruent_triangle_SAS (a b c a' b' c' : Point) :
   → (⟨a, b, c⟩ : Angle) ≃ ⟨a', b', c'⟩
 
 
--- III.5 (wikipedia)
-axiom C_angle_trans (α β γ : Angle) : α ≃ β → α ≃ γ → β ≃ γ
-
--- TODO : Not sure if the following is an axiom or a lemma?
-axiom angle_symm (a b c : Point) : (⟨a, b, c⟩ : Angle) ≃ ⟨c, b, a⟩
-
-
 
 -- # IV. Parallel Axiom
 -----------------------
 
 -- Euclid's parallel postulate. This axioms puts us in a Euclidean geometry
 -- and rules out Elliptical/Spherical/Hyperbolic geometry.
+constant mk_parallel (p : Point) (l : Line): ¬lies_on_line p l → Line
 
--- Idk if this works lmao
-constant p_line (p : Point) (l: Line): ¬ lies_on_line p l → Line
-
-axiom parallel_postulate (a : Point) (l : Line) (h: ¬lies_on_line a l): let l' : Line := p_line a l h in parallel_lines l l' ∧ lies_on_line a l'
+axiom parallel_postulate (a : Point) (l : Line) (h: ¬lies_on_line a l):
+  let l' : Line := mk_parallel a l h in
+  parallel_lines l l' ∧ lies_on_line a l'
 
 -- # V. Angles
 --------------
