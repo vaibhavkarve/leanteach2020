@@ -143,21 +143,28 @@ end
 theorem prop5_part1 (abc : Triangle) :
   let sides := sides_of_triangle abc in
   let angles := angles_of_triangle abc in
-  sides.nth 0 ≃ sides.nth 1
+  sides.nth 0 ≃ sides.nth 1  -- a⬝b ≃ b⬝c
   → angles.nth 0 ≃ angles.nth 2 :=
--- ab = bc
--- bac ≃ acb
--- angles.nth 1 ↔ bac ∈ angles
 begin
   set a := abc.p₁,
   set b := abc.p₂,
   set c := abc.p₃,
   intros sides angles h,
-  apply congruent_triangle_SAS b a c b c a,
-    { have x : b⬝a ≃ a⬝b, symmetry,
-      transitivity, symmetry, assumption},
-    { transitivity, exact h, symmetry},
-    { apply angle_symm}
+  have x : b⬝a ≃ a⬝b,
+    { apply segment_swap},
+  have ba_bc : b⬝a ≃ b⬝c,
+    { apply C_segment_trans,
+      apply C_segment_symm,
+      exact x,
+      exact h},
+  have bc_ba : b⬝c ≃ b⬝a,
+    { apply C_segment_symm,
+      exact ba_bc},
+  have abc_cba : (⟨a, b, c⟩ : Angle) ≃ ⟨c, b, a⟩,
+    by symmetry,
+  have cong_tri := congruent_triangle_SAS b a c b c a ba_bc bc_ba abc_cba,
+  have angles_cong := angles_of_congruent_triangle ⟨b, a, c⟩ ⟨b, c, a⟩ cong_tri,
+  exact angles_cong.2.1,
 end
 
 
