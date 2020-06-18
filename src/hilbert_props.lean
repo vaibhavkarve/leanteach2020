@@ -83,7 +83,6 @@ begin
   exact le.1,
   simp at hab,
   by_cases hbc : lb ≠ lc,
-  
   repeat {sorry},
 end
 
@@ -141,22 +140,20 @@ end
 -- Proposition 5.  In isosceles triangles the angles at the base equal
 -- one another, and, if the equal straight lines are produced further,
 -- then the angles under the base equal one another.
-theorem prop5_part1 (t : Triangle) :
-  let sides := sides_of_triangle t in
-  let angles := angles_of_triangle t in
+theorem prop5_part1 (abc : Triangle) :
+  let sides := sides_of_triangle abc in
+  let angles := angles_of_triangle abc in
   sides.nth 0 ≃ sides.nth 1
   → angles.nth 0 ≃ angles.nth 2 :=
--- If t := abc
 -- ab = bc
 -- bac ≃ acb
 -- angles.nth 1 ↔ bac ∈ angles
 begin
-  set a := t.p₁,
-  set b := t.p₂,
-  set c := t.p₃,
+  set a := abc.p₁,
+  set b := abc.p₂,
+  set c := abc.p₃,
   intros sides angles h,
-  have h' := congruent_triangle_SAS b a c b c a,
-  apply h',
+  apply congruent_triangle_SAS b a c b c a,
     { have x : b⬝a ≃ a⬝b, symmetry,
       transitivity, symmetry, assumption},
     { transitivity, exact h, symmetry},
