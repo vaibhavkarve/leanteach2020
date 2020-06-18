@@ -170,7 +170,6 @@ axiom pasch (a b c: Point) (l : Line) (hab : a ≠ b) (hbc : b ≠ c) (hac : a �
 -- III.1 Part 1
 -- This says that we can extend a given Segment in only two ways --
 -- one for each side of l.
-
 constant segment_copy (a b a' : Point) (l l' : Line) :
     lies_on_line a l
   → lies_on_line b l
