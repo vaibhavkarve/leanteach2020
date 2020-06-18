@@ -104,7 +104,7 @@ end
 -- Ex: set x : ℕ := 5, -> replace x with 5 everywhere
 
 -- Lemma needed for Proposition 2
-lemma equilateral_triangle_nonzero_side (abc : Triangle) :
+lemma equilateral_triangle_nonzero_side_1 (abc : Triangle) :
   abc.p1 ≠ abc.p2 → is_equilateral abc
   → abc.p2 ≠ abc.p3 :=
 begin
@@ -112,15 +112,41 @@ begin
   unfold is_equilateral at h,
   rcases h with ⟨h₁, h₂⟩,
   intros eq_b_c,
-  --have side_eq_db : (sides_of_triangle abc).2.1 = abc.p2 ⬝ abc.p3, by refl,
-  --simp  at h₂,
-  --dsimp at *,
-  --have h₃ : (sides_of_triangle abc).1 = abc.p1 ⬝ abc.p2, by refl,
   have cong_cc_bc : abc.p3⬝abc.p3 = abc.p2⬝abc.p3, by simp[eq_b_c],
   have eq_a_b : abc.p1 = abc.p2,
     { apply zero_segment (abc.p1 ⬝ abc.p2) abc.p3,
       rw cong_cc_bc,
       assumption},
+  exact ne_a_b eq_a_b,
+end
+
+lemma equilateral_triangle_nonzero_side_2 (abc : Triangle) :
+  abc.p1 ≠ abc.p2 → is_equilateral abc
+  → abc.p3 ≠ abc.p1 :=
+begin
+  intros ne_a_b h,
+  unfold is_equilateral at h,
+  rcases h with ⟨h₁, h₂⟩,
+  set sides := sides_of_triangle abc,
+  have h₃ := cong_trans sides.1 sides.2.1 sides.2.2 h₁ h₂,
+  have eq_1_3 : abc.p1 ⬝ abc.p3 ≃ abc.p3 ⬝ abc.p1, {
+      apply seg_symm,
+  },
+  intros eq_b_c,
+  have cong_cc_bc : abc.p3⬝abc.p3 = abc.p1⬝abc.p3, by simp[eq_b_c],
+  have eq_a_b : abc.p1 = abc.p2,
+    { apply zero_segment (abc.p1 ⬝ abc.p2) abc.p3,
+      rw cong_cc_bc,
+      let a := abc.p1 ⬝ abc.p2,
+      let b := abc.p3 ⬝ abc.p1,
+      let c := abc.p1 ⬝ abc.p3,
+      have a_cong : a ≃ b, tidy,
+      have b_cong : b ≃ c, apply seg_symm,
+      have abc_trans : a ≃ c, {
+        apply cong_trans a b c a_cong b_cong,
+      },
+      apply abc_trans,
+    },
   exact ne_a_b eq_a_b,
 end
 
@@ -145,34 +171,31 @@ begin
     have y : db.ext = abd.p2, by tidy,
     symmetry,
     rw [x, y],
-  apply equilateral_triangle_nonzero_side,
-  simp,
-  }
-    { unfold is_equilateral at h₃,
-      rcases h₃ with ⟨h₄, h₅⟩,
-      intros h,
-      have side_eq_db : (sides_of_triangle abd).2.1 = bc.p1 ⬝ abd.p3,
-        by exact (congr_fun (congr_arg Segment.mk h₂) abd.p3).symm,
-      simp [side_eq_db] at h₄,
-      dsimp at *,
-      have h₅ : (sides_of_triangle abd).1 = a ⬝ bc.p1,
-        { simp [sides_of_triangle],
-          split,
-          cases abd,
-          tidy},
-      have eq_a_b : a = bc.p1,
-        apply zero_segment (a ⬝ bc.p1) abd.p3,
-        rw [h, ← h₅],
-        rw h at h₄,
-        tidy},
+    apply equilateral_triangle_nonzero_side_1,
+    have eq_aa : abd.p1 = a, {rw h₁},
+    have eq_bb : abd.p2 = bc.p1, {rw h₂},
+    rw eq_aa,
+    rw eq_bb,
+    exact ne_a_b,
+    exact h₃,
+  },
+  have ne_d_a : da.base ≠ da.ext,
+    { have x : da.base = abd.p3, by refl,
+      have y : da.ext = abd.p1, by tidy,
+      have ne : abd.p1 ≠ abd.p2, {
+        finish,
+      },
+      symmetry,
+      apply ne_symm,
+      rw [x, y],
+      apply equilateral_triangle_nonzero_side_2 abd ne,
+      assumption,
+  },
   have b_in_circ : circle_interior bc.p1 circ,
     { simp [circle_interior, radius],
       apply distance_pos,
       exact ne_b_c},
-  have ne_d_a : da.base ≠ da.ext,
-    { 
-    sorry
-  },
+  
   let b_in_bc : db.ext ∈ points_of_ray db ne_d_b :=
   begin 
   sorry,
@@ -193,26 +216,26 @@ begin
   let al := a ⬝ l,
   let dl := da.base ⬝ l,
   let dg := da.base ⬝ g,
+  let bg := bc.p1 ⬝ g,
   have dl_eq_dg : dl ≃ dg :=
   begin
     let circum := circumference c₁,
     let rad := radius_segment c₁,
-    have dl_eq_rad : rad ≃ dl :=
-    begin
-    tidy,
-    end,
-    have dg_eq_rad : dg ≃ rad :=
-    begin
-    tidy,
-    end,
+    have dl_eq_rad : rad ≃ dl, {tidy},
+    have dg_eq_rad : dg ≃ rad, {tidy},
     have pls_work_trans := cong_trans dg rad dl dg_eq_rad dl_eq_rad,
     apply cong_symm,
-    apply pls_work_trans, -- it worked !! -- yee -- lean slllloooooowwwww
-    -- have pls_symm := cong_symm dl dg pls_work_trans, -- lean stupid
+    apply pls_work_trans,
   end,
   use al,
   simp,
-  sorry,
+  have cong_bc_bg : bc ≃ bg, {
+    sorry,
+  },
+  have cong_bg_al : bg ≃ al, {
+    sorry,
+  },
+  apply cong_trans bc bg al cong_bc_bg cong_bg_al,
 end
 
 -- # Proposition 3

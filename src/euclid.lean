@@ -42,6 +42,10 @@ axiom cong_is_equiv (A : Type) : is_equiv A (≃)
   sorry
 @[trans] lemma cong_trans {A : Type} (a b c: A) : a ≃ b → b ≃ c → a ≃ c :=
   sorry
+@[symm] lemma ne_symm {A : Type} (a b : A) : a ≠ b → b ≠ a :=
+begin
+    finish,
+end
 
 lemma cong_equiv {A : Type} : equivalence (@congruent A) :=
   -- The @ makes implicit arguments explicit.
@@ -62,11 +66,17 @@ axiom line_exists (p₁ p₂ : Point) (h : p₁ ≠ p₂) :
 structure Segment: Type :=
 (p1 p2 : Point)
 
+local infix `⬝`:56 := Segment.mk  -- typed as \ cdot
 
 -- # Helper functions
 ---------------------
 -- condition for 3 terms being distict.
 def distinct {A : Type} (a b c : A) := a ≠ b ∧ b ≠ c ∧ c ≠ a
+
+-- congruence of reordered segments
+@[symm] lemma seg_symm (a b : Point) : a ⬝ b ≃ b ⬝ a :=
+  sorry
+
 
 -- length of a segment
 def length (a : Segment) := distance a.p1 a.p2
@@ -74,16 +84,12 @@ def length (a : Segment) := distance a.p1 a.p2
 
 -- Missing axiom:
 -----------------
-local infix `⬝`:56 := Segment.mk  -- typed as \ cdot
 @[symm] axiom segment_symm (p1 p2 : Point) : p1 ⬝ p2 ≃ p2 ⬝ p1
 axiom zero_segment (s : Segment) (p : Point) : s ≃ p⬝p → s.p1 = s.p2
 
 
 def line_of_segment (s : Segment) : s.p1 ≠ s.p2 → Line := line_of_points s.p1 s.p2
 def points_of_segment (s : Segment) : set Point := {c : Point | between s.p1 c s.p2}
-
-
-
 
 -- Postulate II
 ---------------
