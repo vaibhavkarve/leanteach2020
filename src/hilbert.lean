@@ -306,8 +306,12 @@ def supplementary_angles (α₁ α₂ : Angle)
   ∧ (⟨α₁.base, α₁.ext₁, h₁⟩ : Line) = ⟨α₂.base, α₂.ext₁, h₂⟩
   ∧ collinear_points α₁.base α₁.ext₂ α₂.ext₂
 
--- How to define this rigorously when the point can basically be anywhere
-def mk_supplementary_angle (α : Angle) : Angle := let P : Point := collinear_points α.ext₂ α.base P in ⟨α.ext₁, α.base, P⟩ -- Uses sorry
+-- LZ,AD : How to define this rigorously when the point can basically be
+-- anywhere?
+-- VK : use *segment_copy*.
+def mk_supplementary_angle (α : Angle) : Angle :=
+  let P : Point := collinear_points α.ext₂ α.base P in ⟨α.ext₁, α.base, P⟩
+  -- Uses sorry
 
 lemma mk_supp_angle_condition (α : Angle):
   (mk_supplementary_angle α).base ≠ (mk_supplementary_angle α).ext₁ := sorry
