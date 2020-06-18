@@ -97,7 +97,7 @@ end
 lemma placeline (bc : Segment) (a : Point) :
      a ≠ bc.p1
   → bc.p1 ≠ bc.p2
-  → ∃ (s : Segment), (bc.p1 = s.p1) ∧ bc ≃ s :=
+  → ∃ (s : Segment), (a = s.p1) ∧ bc ≃ s :=
 begin
   intros ne_a_b ne_b_c,
   let ab : Segment := a⬝bc.p1,
@@ -133,8 +133,48 @@ begin
       apply distance_pos,
       --apply distance_not_neg,
       sorry},
-  have ray_circle_intersect := ray_circle_intersect db ne_d_b circ bc.p1,
-  sorry
+  have ne_d_a : da.base ≠ da.ext :=
+  begin sorry, end,
+  let b_in_bc : db.ext ∈ points_of_ray db ne_d_b :=
+  begin 
+  sorry,
+  end,
+  have ray_circle_intersect := ray_circle_intersect db ne_d_b circ bc.p1 b_in_circ b_in_bc,
+  rcases ray_circle_intersect with ⟨g, g_in_ray,g_in_circum⟩,
+  let c₁ : Circle := ⟨abd.p3, g⟩,
+  have d_in_c₁ : circle_interior abd.p3 c₁,
+  begin sorry, end,
+  have d_in_da : da.base ∈ points_of_ray da ne_d_a :=
+  begin sorry, end,
+  have ray_circle_intersect2 := ray_circle_intersect da ne_d_a c₁ abd.p3 d_in_c₁ d_in_da,
+  rcases ray_circle_intersect2 with ⟨l, l_in_ray, l_in_circum⟩,
+  have bc_eq_bg : distance bc.p1 g = distance bc.p1 bc.p2 :=
+  begin sorry, end,
+  have al_eq_bg : distance a l = distance bc.p1 bc.p2 :=
+  begin sorry, end,
+  let al := a ⬝ l,
+  let dl := da.base ⬝ l,
+  let dg := da.base ⬝ g,
+  have dl_eq_dg : dl ≃ dg :=
+  begin
+    let circum := circumference c₁,
+    let rad := radius_segment c₁,
+    have dl_eq_rad : rad ≃ dl :=
+    begin
+    tidy,
+    end,
+    have dg_eq_rad : dg ≃ rad :=
+    begin
+    tidy,
+    end,
+    have pls_work_trans := cong_trans dg rad dl dg_eq_rad dl_eq_rad,
+    apply cong_symm,
+    apply pls_work_trans, -- it worked !! -- yee -- lean slllloooooowwwww
+    -- have pls_symm := cong_symm dl dg pls_work_trans, -- lean stupid
+  end,
+  use al,
+  simp,
+  sorry,
 end
 
 -- # Proposition 3
