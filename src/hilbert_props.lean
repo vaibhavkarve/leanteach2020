@@ -172,23 +172,29 @@ end
 -- ∧ t₁.α₂ ≃ t₂.α₂
 -- ∧ t₁.α₃ ≃ t₂.α₃
 
--- Proposition 6.
---     If in a triangle two angles equal one another, then the sides opposite the equal angles also equal one another.
+-- # Proposition 6
+------------------
+-- If in a triangle two angles equal one another, then the sides
+-- opposite the equal angles also equal one another.
 
 --https://artofproblemsolving.com/wiki/index.php/Base_Angle_Theorem
 
-theorem prop_6 (t : Triangle):
-  let sides := (sides_of_triangle t) in
-  let angles := (angles_of_triangle t) in
+theorem prop_6 (abc : Triangle):
+  let sides := (sides_of_triangle abc) in
+  let angles := (angles_of_triangle abc) in
   angles.nth 0 ≃ angles.nth 2 → sides.nth 0 ≃ sides.nth 1 :=
 begin
-  set a := t.p₁,
-  set b := t.p₂,
-  set c := t.p₃,
+  set a := abc.p₁,
+  set b := abc.p₂,
+  set c := abc.p₃,
   intros sides angles h,
   have h' := congruent_triangle_SAS b a c b c a,
--- since these two triangles are congruent, then ba is congruent to bc and we are done. Can't figure out how to do this in lean
- -- Strategy : prove that BAC BCA congruent, problem is that https://www.math.uci.edu/~ndonalds/math161/ch2.pdf says that proof is in the homework lul
+-- since these two triangles are congruent, then ba is congruent to bc
+ -- and we are done. Can't figure out how to do this in lean Strategy
+ -- : prove that BAC BCA congruent, problem is that
+ -- https://www.math.uci.edu/~ndonalds/math161/ch2.pdf says that proof
+ -- is in the homework lul
+ 
   sorry,
 end
 
