@@ -206,6 +206,7 @@ begin
 end
 
 
+
 -- III.3
 axiom C_segment_add_trans (a b c a' b' c' : Point) (l l' : Line)
   (hab : a ≠ b) (hbc : b ≠ c) (ha'b' : a' ≠ b') (hb'c' : b' ≠ c') :
@@ -224,12 +225,18 @@ axiom C_segment_add_trans (a b c a' b' c' : Point) (l l' : Line)
 -- This axiom says that a given angle can be copied over to a
 -- new location (the point o) in a unique manner (unique as long as we
 -- keep track of which side of the line we are on).
-axiom angle_congruent (α : Angle) (o : Point) (r : Ray) (h : r.base = o) :
-  ∃! (r₁ r₂ : Ray), r₁ ≠ r₂
-                    ∧ r₁.base = o
-                    ∧ r₂.base = o
-                    ∧ α ≃ ⟨r.ext, o, r₁.ext⟩
-                    ∧ α ≃ ⟨r.ext, o, r₂.ext⟩
+constant angle_congruent (α : Angle) (o : Point) (r : Ray) :
+  r.base = o → Ray × Ray
+
+axiom angle_congruent' (α : Angle) (o : Point) (r : Ray) (h : r.base = o) :
+  let rays := angle_congruent α o r h in
+  let r₁ : Ray := rays.1 in
+  let r₂ : Ray := rays.2 in
+    r₁ ≠ r₂
+  ∧ r₁.base = o
+  ∧ r₂.base = o
+  ∧ α ≃ ⟨r.ext, o, r₁.ext⟩
+  ∧ α ≃ ⟨r.ext, o, r₂.ext⟩
 
 
 -- Definition of Congruent Triangles. All sides must be congruent.
