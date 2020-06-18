@@ -42,6 +42,10 @@ axiom cong_is_equiv (A : Type) : is_equiv A (≃)
   sorry
 @[trans] lemma cong_trans {A : Type} (a b c: A) : a ≃ b → b ≃ c → a ≃ c :=
   sorry
+@[symm] lemma ne_symm {A : Type} (a b : A) : a ≠ b → b ≠ a :=
+begin
+    finish,
+end
 
 lemma cong_equiv {A : Type} : equivalence (@congruent A) :=
   -- The @ makes implicit arguments explicit.
@@ -62,11 +66,17 @@ axiom line_exists (p₁ p₂ : Point) (h : p₁ ≠ p₂) :
 structure Segment: Type :=
 (p1 p2 : Point)
 
+local infix `⬝`:56 := Segment.mk  -- typed as \ cdot
 
 -- # Helper functions
 ---------------------
 -- condition for 3 terms being distict.
 def distinct {A : Type} (a b c : A) := a ≠ b ∧ b ≠ c ∧ c ≠ a
+
+-- congruence of reordered segments
+@[symm] lemma seg_symm (a b : Point) : a ⬝ b ≃ b ⬝ a :=
+  sorry
+
 
 -- length of a segment
 def length (a : Segment) := distance a.p1 a.p2
@@ -74,16 +84,12 @@ def length (a : Segment) := distance a.p1 a.p2
 
 -- Missing axiom:
 -----------------
-local infix `⬝`:56 := Segment.mk  -- typed as \ cdot
 @[symm] axiom segment_symm (p1 p2 : Point) : p1 ⬝ p2 ≃ p2 ⬝ p1
 axiom zero_segment (s : Segment) (p : Point) : s ≃ p⬝p → s.p1 = s.p2
 
 
 def line_of_segment (s : Segment) : s.p1 ≠ s.p2 → Line := line_of_points s.p1 s.p2
 def points_of_segment (s : Segment) : set Point := {c : Point | between s.p1 c s.p2}
-
-
-
 
 -- Postulate II
 ---------------
@@ -142,8 +148,8 @@ def angle_of_points (a b c : Point) (diffrent : distinct a b c) : Angle :=
   Angle.mk r1 r2 same_base not_opposite
 
 -- For every triangle, we get can define three Segments (its sides).
-def sides_of_triangle (t : Triangle): vector Segment 3 :=
-  ⟨[⟨t.p1, t.p2⟩, ⟨t.p2, t.p3⟩, ⟨t.p3, t.p1⟩], rfl⟩
+def sides_of_triangle (t : Triangle): Segment × Segment × Segment :=
+  (⟨t.p1, t.p2⟩, ⟨t.p2, t.p3⟩, ⟨t.p3, t.p1⟩)
 -- Note that elements of a vector v can be accessed as v.nth 0 etc.
 -- Also note that if a vector has lenth n, then asking for element m
 -- where m ≥ n returns element (m mod n)
@@ -162,18 +168,17 @@ def angles_of_triangle (t : Triangle) (diffrent : distinct t.p1 t.p2 t.p3): vect
 
 def is_equilateral (t : Triangle) : Prop :=
   let sides := sides_of_triangle t in
-  sides.nth 0 ≃ sides.nth 1 ∧ sides.nth 1 ≃ sides.nth 2
+  sides.1 ≃ sides.2.1 ∧ sides.2.1 ≃ sides.2.2
 
 
 lemma equilateral_triangle_all_sides_equal (t : Triangle) :
   let sides := sides_of_triangle t in
-  is_equilateral t → sides.nth 0 ≃ sides.nth 3 :=
+  is_equilateral t → sides.1 ≃ sides.2.2 :=
 begin
-  rintros sides ⟨h₁, h₂⟩,
+  intros,
+  cases a with h₁ h₂,
   transitivity,
-    assumption,
-    apply cong_symm,
-    exact h₁,
+    repeat {assumption},
 end
 
 

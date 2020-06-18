@@ -91,6 +91,66 @@ begin
   sorry,
 end
 
+-- Use *have* for introducing new facts. Follow it up with a proof of
+-- said fact.
+-- have x_pos : x > 0, .....
+
+-- Use *let* for introducing new terms (of a given type). Follow it up
+-- with a definition of the term.
+-- Ex: let x : ℕ := 5
+
+-- Use *set* is similar to *let*, but it additionally replaces every term
+-- in the context with the new definition.
+-- Ex: set x : ℕ := 5, -> replace x with 5 everywhere
+
+-- Lemma needed for Proposition 2
+lemma equilateral_triangle_nonzero_side_1 (abc : Triangle) :
+  abc.p1 ≠ abc.p2 → is_equilateral abc
+  → abc.p2 ≠ abc.p3 :=
+begin
+  intros ne_a_b h,
+  unfold is_equilateral at h,
+  rcases h with ⟨h₁, h₂⟩,
+  intros eq_b_c,
+  have cong_cc_bc : abc.p3⬝abc.p3 = abc.p2⬝abc.p3, by simp[eq_b_c],
+  have eq_a_b : abc.p1 = abc.p2,
+    { apply zero_segment (abc.p1 ⬝ abc.p2) abc.p3,
+      rw cong_cc_bc,
+      assumption},
+  exact ne_a_b eq_a_b,
+end
+
+lemma equilateral_triangle_nonzero_side_2 (abc : Triangle) :
+  abc.p1 ≠ abc.p2 → is_equilateral abc
+  → abc.p3 ≠ abc.p1 :=
+begin
+  intros ne_a_b h,
+  unfold is_equilateral at h,
+  rcases h with ⟨h₁, h₂⟩,
+  set sides := sides_of_triangle abc,
+  have h₃ := cong_trans sides.1 sides.2.1 sides.2.2 h₁ h₂,
+  have eq_1_3 : abc.p1 ⬝ abc.p3 ≃ abc.p3 ⬝ abc.p1, {
+      apply seg_symm,
+  },
+  intros eq_b_c,
+  have cong_cc_bc : abc.p3⬝abc.p3 = abc.p1⬝abc.p3, by simp[eq_b_c],
+  have eq_a_b : abc.p1 = abc.p2,
+    { apply zero_segment (abc.p1 ⬝ abc.p2) abc.p3,
+      rw cong_cc_bc,
+      let a := abc.p1 ⬝ abc.p2,
+      let b := abc.p3 ⬝ abc.p1,
+      let c := abc.p1 ⬝ abc.p3,
+      have a_cong : a ≃ b, tidy,
+      have b_cong : b ≃ c, apply seg_symm,
+      have abc_trans : a ≃ c, {
+        apply cong_trans a b c a_cong b_cong,
+      },
+      apply abc_trans,
+    },
+  exact ne_a_b eq_a_b,
+end
+
+
 
 
 --Proposition 2
@@ -100,41 +160,42 @@ lemma placeline (bc : Segment) (a : Point) :
   → ∃ (s : Segment), (a = s.p1) ∧ bc ≃ s :=
 begin
   intros ne_a_b ne_b_c,
-  let ab : Segment := a⬝bc.p1,
-  have construct_equilateral := construct_equilateral ab,
-  choose abd h using construct_equilateral,
+  set ab : Segment := a⬝bc.p1,
+  choose abd h using construct_equilateral ab,
   rcases h with ⟨h₁, h₂, h₃⟩,
-  let da : Ray := ⟨abd.p3, a⟩,
-  let db : Ray := ⟨abd.p3, ab.p2⟩,
-  let circ : Circle := ⟨bc.p1, bc.p2⟩,
+  set da : Ray := ⟨abd.p3, a⟩,
+  set db : Ray := ⟨abd.p3, ab.p2⟩,
+  set circ : Circle := ⟨bc.p1, bc.p2⟩,
   have ne_d_b : db.base ≠ db.ext,
-    { simp,
-      unfold is_equilateral at h₃,
-      dsimp at h₃,
-      rcases h₃ with ⟨h₄, h₅⟩,
-      intros h,
-      have side_eq_db : (sides_of_triangle abd).nth 1 = bc.p1 ⬝ abd.p3,
-        exact (congr_fun (congr_arg Segment.mk h₂) abd.p3).symm,
-      rw side_eq_db at h₄,
-      simp at h₄,
-      dsimp at *,
-      have h₅ : (sides_of_triangle abd).head = a ⬝ bc.p1,
-        { sorry},
-      have eq_a_b : a = bc.p1,
-        apply zero_segment (a ⬝ bc.p1) abd.p3,
-        rw [h, ← h₅],
-        rw h at h₄,
-        tidy},
+  { have x : db.base = abd.p3, by refl,
+    have y : db.ext = abd.p2, by tidy,
+    symmetry,
+    rw [x, y],
+    apply equilateral_triangle_nonzero_side_1,
+    have eq_aa : abd.p1 = a, {rw h₁},
+    have eq_bb : abd.p2 = bc.p1, {rw h₂},
+    rw eq_aa,
+    rw eq_bb,
+    exact ne_a_b,
+    exact h₃,
+  },
+  have ne_d_a : da.base ≠ da.ext,
+    { have x : da.base = abd.p3, by refl,
+      have y : da.ext = abd.p1, by tidy,
+      have ne : abd.p1 ≠ abd.p2, {
+        finish,
+      },
+      symmetry,
+      apply ne_symm,
+      rw [x, y],
+      apply equilateral_triangle_nonzero_side_2 abd ne,
+      assumption,
+  },
   have b_in_circ : circle_interior bc.p1 circ,
-    { unfold circle_interior,
-      simp,
-      unfold radius,
-      simp,
+    { simp [circle_interior, radius],
       apply distance_pos,
-      --apply distance_not_neg,
-      sorry},
-  have ne_d_a : da.base ≠ da.ext :=
-  begin sorry, end,
+      exact ne_b_c},
+  
   let b_in_bc : db.ext ∈ points_of_ray db ne_d_b :=
   begin 
   sorry,
@@ -155,26 +216,26 @@ begin
   let al := a ⬝ l,
   let dl := da.base ⬝ l,
   let dg := da.base ⬝ g,
+  let bg := bc.p1 ⬝ g,
   have dl_eq_dg : dl ≃ dg :=
   begin
     let circum := circumference c₁,
     let rad := radius_segment c₁,
-    have dl_eq_rad : rad ≃ dl :=
-    begin
-    tidy,
-    end,
-    have dg_eq_rad : dg ≃ rad :=
-    begin
-    tidy,
-    end,
+    have dl_eq_rad : rad ≃ dl, {tidy},
+    have dg_eq_rad : dg ≃ rad, {tidy},
     have pls_work_trans := cong_trans dg rad dl dg_eq_rad dl_eq_rad,
     apply cong_symm,
-    apply pls_work_trans, -- it worked !! -- yee -- lean slllloooooowwwww
-    -- have pls_symm := cong_symm dl dg pls_work_trans, -- lean stupid
+    apply pls_work_trans,
   end,
   use al,
   simp,
-  sorry,
+  have cong_bc_bg : bc ≃ bg, {
+    sorry,
+  },
+  have cong_bg_al : bg ≃ al, {
+    sorry,
+  },
+  apply cong_trans bc bg al cong_bc_bg cong_bg_al,
 end
 
 -- # Proposition 3
