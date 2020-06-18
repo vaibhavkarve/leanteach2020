@@ -303,7 +303,8 @@ def supplementary_angles (α₁ α₂ : Angle)
   ∧ (⟨α₁.base, α₁.ext₁, h₁⟩ : Line) = ⟨α₂.base, α₂.ext₁, h₂⟩
   ∧ collinear_points α₁.base α₁.ext₂ α₂.ext₂
 
-def mk_supplementary_angle (α : Angle) : Angle := ⟨α.ext₁, α.base, sorry⟩
+-- How to define this rigorously when the point can basically be anywhere
+def mk_supplementary_angle (α : Angle) : Angle := let P : Point := collinear_points α.ext₂ α.base P in ⟨α.ext₁, α.base, P⟩ -- Uses sorry
 
 lemma mk_supp_angle_condition (α : Angle):
   (mk_supplementary_angle α).base ≠ (mk_supplementary_angle α).ext₁ := sorry
@@ -351,12 +352,16 @@ begin
 end
 
 
+
 -- # Continuity Axioms
 
 ----------------------
--- TODO: add continuity axiom 1
--- TODO: add continuity axiom 2
 
+-- Using a combo of the version here and Wikipedia: https://www.math.ust.hk/~mabfchen/Math4221/Hilbert%20Axioms.pdf
+
+axiom Archimedes (s₁ s₂ : Segment) (μ : Measure): ∃ (n : nat) (q : Point), μ (s₁.p₁ ⬝ q) = n * μ s₂ ∧ B s₁.p₁ s₁.p₂ q
+
+-- TODO: add continuity axiom 2
 
 
 -- TODO : VK : How are we justifying this definition?
