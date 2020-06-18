@@ -190,18 +190,16 @@ theorem prop_6 (abc : Triangle):
   let sides := (sides_of_triangle abc) in
   let angles := (angles_of_triangle abc) in
   angles.nth 0 ≃ angles.nth 2 → sides.nth 0 ≃ sides.nth 1 :=
+  -- bac ≃ bca → ab ≃ bc
 begin
   set a := abc.p₁,
   set b := abc.p₂,
   set c := abc.p₃,
   intros sides angles h,
-  have h' := congruent_triangle_SAS b a c b c a,
--- since these two triangles are congruent, then ba is congruent to bc
- -- and we are done. Can't figure out how to do this in lean Strategy
- -- : prove that BAC BCA congruent, problem is that
- -- https://www.math.uci.edu/~ndonalds/math161/ch2.pdf says that proof
- -- is in the homework lul
- 
+  -- BAC === BCA or ACB
+  -- sides: ba = ac
+  -- angle:
+  by_contradiction, -- assume ¬ (ab ≃ bc)
   sorry,
 end
 
