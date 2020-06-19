@@ -162,6 +162,21 @@ begin
   apply a,
 end
 
+lemma radii_equal (c : Circle) (a b : Point) :
+a ∈ circumference c → b ∈ circumference c → c.center ⬝ a ≃ c.center ⬝ b :=
+begin
+  intros h₁ h₂,
+  have eq_a_rad : c.center ⬝ a ≃ radius_segment c, {
+    unfold circumference at h₁,
+    simp at h₁,
+    apply cong_symm,
+    exact h₁,
+  },
+  have eq_b_rad : radius_segment c ≃ c.center ⬝ b, {
+    tidy,
+  }, 
+  apply cong_trans (c.center ⬝ a) (radius_segment c) (c.center ⬝ b) eq_a_rad eq_b_rad,
+end
 
 
 --Proposition 2
@@ -240,24 +255,29 @@ begin
   let dl := da.base ⬝ l,
   let dg := da.base ⬝ g,
   let bg := bc.p1 ⬝ g,
-  have dl_eq_dg : dl ≃ dg :=
-  begin
-    let circum := circumference c₁,
+  have dl_eq_dg : dl ≃ dg, {
+  let circum := circumference c₁,
     let rad := radius_segment c₁,
     have dl_eq_rad : rad ≃ dl, {tidy},
     have dg_eq_rad : dg ≃ rad, {tidy},
     have pls_work_trans := cong_trans dg rad dl dg_eq_rad dl_eq_rad,
     apply cong_symm,
     apply pls_work_trans,
-  end,
-  use al,
-  simp,
-  have cong_bc_bg : bc ≃ bg, {
-    sorry,
+  },
+  have bc_eq_bg : bc ≃ bg, {
+    let circum := circumference circ,
+    let rad := radius_segment circ,
+    have dl_eq_rad : rad ≃ bc, {tidy},
+    have dg_eq_rad : dg ≃ rad, {tidy},
+    have pls_work_trans := cong_trans bg rad dl dg_eq_rad dl_eq_rad,
+    apply cong_symm,
+    apply pls_work_trans,
   },
   have cong_bg_al : bg ≃ al, {
     sorry,
   },
+  use al,
+  simp,
   apply cong_trans bc bg al cong_bc_bg cong_bg_al,
 end
 
