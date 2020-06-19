@@ -155,6 +155,12 @@ def parallel_lines (l₁ l₂ : Line) : Prop :=
 -- Condition for two Points to lie on the same side of a Line.
 def lie_on_same_side (a b : Point) (l : Line) (h : a ≠ b) : Prop :=
    ¬ intersect_line_segment l (a⬝b) h
+-- Condition for two Points to lie on opposite sides of a Line.
+def lie_on_opposite_sides (a b : Point) (l : Line) (h : a ≠ b) : Prop :=
+   ¬ lie_on_same_side a b l h
+def side_of_line (l : Line) (p : Point) : ¬ lies_on_line p l → set Point :=
+  sorry -- {x : Point | lie_on_same_side x p l sorry}
+
 
 -- II.4 Pasch's axiom
 -- This can be interpreted as saying "a line that enters a triangle
