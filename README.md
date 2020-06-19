@@ -1,20 +1,22 @@
 # LeanTeach2020 #
+*Summer 2020 Illinois Geometry Lab (University of Illinois at Urbana-Champaign) + Uni-High research project*
+
 Interactive theorem proving in Lean : teaching mathematics to a computer
 
-*Summer 2020 Illinois Geometry Lab + Uni-High research project*
+## Formalizing Euclid's and Hilbert's axioms in Lean##
+- Euclid's axioms: `euclid.lean`
+- Euclid's propositions using Euclid's axioms : `euclid_props.lean`
+- Hilbert's axioms: `hilbert.lean`
+- Euclid's propositions using Hilbert's axioms : `hilbert_props.lean`
+- Tarski's axioms : `tarski.lean`
 
-
-Wiki: [IllioisWiki for LeanTeach](https://wiki.illinois.edu/wiki/display/LT2020) 
+More mathematical details available at the wiki:
+[IllioisWiki for LeanTeach](https://wiki.illinois.edu/wiki/display/LT2020) 
 
 
 ## Project Goals: ##
 
-Goal 0 : Teach Lean to Humans.
-
-Goal 1 : Teach Math to a Computer.
-
-## Goal 0 ##
-
+### Goal 0 : Teach Lean to Humans.###
 Humans involved : **Alex Dolcos, Edward Kong, Lawrence Zhao, Nicholas
 Phillips, Vaibhav Karve**.
 
@@ -28,7 +30,8 @@ learn about tactics in Lean. We will use Slack for text-based
 communication, Zoom for video meetings and CoCalc for sharing and
 collaboratively editing code.
 
-## Goal 1 ##
+
+### Goal 1 : Teach Math to a Computer.###
 
 The idea is that we can take a piece of familiar mathematics and
 translate it into code that is acceptable to Lean. Lean already
@@ -49,4 +52,4 @@ We settled on formalizing Axiomatic Geometry of three types:
 
 - Euclid's axioms
 - Hilbert's axioms
-- Tarski's axioms
+- Tarski's axioms (partial progress)
