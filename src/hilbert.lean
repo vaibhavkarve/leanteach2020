@@ -196,7 +196,6 @@ axiom segment_copy' (a b a' : Point) (l l' : Line)
     ∧ lies_on_line y l'
     ∧ a⬝b ≃ a'⬝y
 
-
 -- III.1 Part 2
 @[symm] axiom C_segment_symm (s₁ s₂ : Segment) : s₁ ≃ s₂ → s₂ ≃ s₁
 axiom segment_swap (x y : Point) : x⬝y ≃ y⬝x
@@ -318,10 +317,10 @@ def supplementary_angles (α₁ α₂ : Angle)
   
 def mk_supplementary_angle (α : Angle) (h: α.base ≠ α.ext₂): Angle :=
  let l : Line := Line.mk α.base α.ext₂ h in
- let bl := lies_on_line α.base l in
- let el := lies_on_line α.ext₂ l in
- let thing : segment_copy α.base α.ext₂ α.base l l bl el bl in
- --let P : Point := thing.1 in ⟨α.ext₁, α.base, P⟩  --Prop: Type but expects Prop? Doesn't work
+ let bl : lies_on_line α.base l := (line_exists α.base α.ext₂ h).1 in
+ let el : lies_on_line α.ext₂ l := (line_exists α.base α.ext₂ h).2 in
+ let thing := segment_copy α.base α.ext₂ α.base l l bl el bl in
+ let P : Point := thing.1 in ⟨α.ext₁, α.base, P⟩
 
 lemma mk_supp_angle_condition (α : Angle):
   (mk_supplementary_angle α).base ≠ (mk_supplementary_angle α).ext₁ := sorry
