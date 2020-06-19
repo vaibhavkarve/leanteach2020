@@ -250,49 +250,66 @@ axiom angle_congruent' (α : Angle) (o : Point) (r : Ray) (h : r.base = o) :
   ∧ α ≃ ⟨r.ext, o, r₂.ext⟩
 
 
--- Definition of Congruent Triangles. All sides must be congruent.
-def congruent_triangle (t₁ t₂ : Triangle) : Prop :=
-  let sides1 := sides_of_triangle t₁ in
-  let sides2 := sides_of_triangle t₂ in
-  sides1.nth 0 ≃ sides2.nth 0
-  ∧ sides1.nth 1 ≃ sides2.nth 1
-  ∧ sides1.nth 2 ≃ sides2.nth 2
-
-
-lemma angles_of_congruent_triangle (t₁ t₂ : Triangle) :
-  congruent_triangle t₁ t₂ →
-  let ang₁ := angles_of_triangle t₁ in
-  let ang₂ := angles_of_triangle t₂ in
-    ang₁.nth 0 ≃ ang₂.nth 0
-  ∧ ang₁.nth 1 ≃ ang₂.nth 1
-  ∧ ang₁.nth 2 ≃ ang₂.nth 2 :=
-begin
-  set a := t₁.p₁,
-  set b := t₁.p₂,
-  set c := t₁.p₃,
-  set d := t₂.p₁,
-  set e := t₂.p₂,
-  set f := t₂.p₃,
-  intro h,
-  simp,
-  -- Use SAS to show that the angles must be equal
-  repeat {sorry},
-end
-
-
 -- III.5 (wikipedia)
 @[trans] axiom C_angle_trans (α β γ : Angle) : α ≃ β → α ≃ γ → β ≃ γ
 @[symm] axiom angle_symm (a b c : Point) : (⟨a, b, c⟩ : Angle) ≃ ⟨c, b, a⟩
 
 
 --- III.5 (from Paper) / III.6 (from wikipedia)
-axiom congruent_triangle_SAS (a b c a' b' c' : Point) :
-    a⬝b ≃ a'⬝b'
-  → a⬝c ≃ a'⬝c'
-  → (⟨b, a, c⟩ : Angle) ≃ ⟨b', a', c'⟩
-  → congruent_triangle ⟨a, b, c⟩ ⟨a', b', c'⟩
+axiom congruent_triangle_SAS (abc xyz : Triangle) :
+  let angles₁ := angles_of_triangle abc in
+  let angles₂ := angles_of_triangle xyz in
+  abc.p₁⬝abc.p₂ ≃ xyz.p₁⬝xyz.p₂
+  → abc.p₁⬝abc.p₃ ≃ xyz.p₁⬝xyz.p₃
+  → angles₁.nth 0 ≃ angles₂.nth 0
+  → angles₁.nth 1 ≃ angles₂.nth 1 ∧ angles₁.nth 2 ≃ angles₂.nth 2
 
 
+-- Definition of Congruent Triangles. All sides must be congruent.
+def congruent_triangle (t₁ t₂ : Triangle) : Prop :=
+  let sides1 := sides_of_triangle t₁ in
+  let sides2 := sides_of_triangle t₂ in
+  let angles1 := sides_of_triangle t₁ in
+  let angles2 := sides_of_triangle t₂ in
+    sides1.nth 0 ≃ sides2.nth 0
+  ∧ sides1.nth 1 ≃ sides2.nth 1
+  ∧ sides1.nth 2 ≃ sides2.nth 2
+  ∧ angles1.nth 0 ≃ angles2.nth 0
+  ∧ angles1.nth 1 ≃ angles2.nth 1
+  ∧ angles1.nth 2 ≃ angles2.nth 2
+
+
+-- First theorem of congruence for triangles. If, for the two
+-- triangles ABC and A′B′C′, the congruences AB≡A′B′, AC≡A′C′, ∠A≡∠A′
+-- hold, then the two triangles are congruent to each other.
+lemma first_congruence (abc xyz : Triangle) :
+  let sides1 := sides_of_triangle abc in
+  let sides2 := sides_of_triangle xyz in
+  let angles1 := angles_of_triangle abc in
+  let angles2 := angles_of_triangle xyz in
+  let a := abc.p₁ in
+  let b := abc.p₂ in
+  let c := abc.p₃ in
+  let x := xyz.p₁ in
+  let y := xyz.p₂ in
+  let z := xyz.p₃ in
+    sides1.nth 0 ≃ sides2.nth 0
+  → sides1.nth 2 ≃ sides2.nth 2
+  → angles1.nth 0 ≃ angles2.nth 0
+  → congruent_triangle abc xyz :=
+begin
+  intros,
+  unfold congruent_triangle,
+  intros,
+  have SAS := congruent_triangle_SAS abc xyz a_1 a_2 a_3,
+  repeat {split},
+    { assumption},
+    { sorry},
+    { assumption},
+    { assumption},
+    { exact SAS.1},
+    { exact SAS.2},
+end
 
 
 -- # IV. Parallel Axiom
