@@ -70,11 +70,12 @@ def distinct {A : Type} (a b c : A) := a ≠ b ∧ b ≠ c ∧ c ≠ a
 
 -- length of a segment
 def length (a : Segment) := distance a.p1 a.p2
-@[simp] lemma distinct_shift (a b c : Point) : distinct a b c → distinct b c a := sorry
+lemma distinct_swap (a b c : Point) : distinct a b c → distinct b c a :=
+  by tidy
 
 -- Missing axiom:
 -----------------
-@[symm] axiom segment_symm (p1 p2 : Point) : p1 ⬝ p2 ≃ p2 ⬝ p1
+@[symm] axiom segment_symm (p1 p2 : Point) : p1⬝p2 ≃ p2⬝p1
 axiom zero_segment (s : Segment) (p : Point) : s ≃ p⬝p → s.p1 = s.p2
 
 
@@ -114,13 +115,14 @@ def line_of_ray (r : Ray) : r.base ≠ r.ext → Line := line_of_points r.base r
 def points_of_ray (r : Ray) (ne : r.base ≠ r.ext) : set Point :=
      points_of_segment ⟨r.base, r.ext⟩ ∪ {c | lies_on c (line_of_ray r ne) ∧ between r.base r.ext c}
 
--- Two Rays are opposite if they are distict, have the same base Point and the same Line.
+-- Two Rays are opposite if they are distict, have the same base Point
+-- and the same Line.
 def opposite_rays (r1 r2 : Ray) (h1 : r1.base ≠ r1.ext) (h2 : r2.base ≠ r2.ext) : Prop :=
   (r1.base = r2.base) ∧ (r1 ≠ r2) ∧ (line_of_ray r1 h1 = line_of_ray r2 h2)
 
 
--- An Angle is constructed by specifying two Rays based at a common Point and a proof that
--- the Rays are not opposite.
+-- An Angle is constructed by specifying two Rays based at a common
+-- Point and a proof that the Rays are not opposite.
 structure Angle: Type :=
 (r1 r2 : Ray)
 (eq_base : r1.base = r2.base)
