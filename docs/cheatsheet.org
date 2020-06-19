@@ -1,7 +1,7 @@
-
 #+title: Cheatsheet for Euclid and Hilbert's axioms
 #+options: H:2 num:1 ^:{}
-#+SETUPFILE: bigblow.setup
+#+setupfile: bigblow.setup
+#+export_file_name: index.html
 
 Key:
 - ne ⇒ refers to a proof that two terms are distinct.
@@ -41,11 +41,15 @@ Key:
 - segments_end_to_end : Segment^{2} → ne^{2} → Prop
 - parallel_lines : Line^{2} → Prop
 - supplementary_angles : Angle^{2} → ne^{2} → Prop
+- mk_supplementary_angle : Angle → ne → Angle
 - is_right : Angle → Prop
 - radius_segment : Circle → Segment
 - circumference : Circle → set Point
 - congruent_triangle : Triangle^{2} → Prop
 - Measure : Type
+- lie_on_same_side : Point^{2} → Line → ne → Prop
+- lie_on_opposite_sides : Point^{2} → Line → ne → Prop
+
 
 ** axiom
 *** I.1    line_exists : Point^{2} → ne → lies_on_line^{2}
@@ -85,11 +89,12 @@ Key:
 *** TODO angles_of_congruent_triangle : Triangle^{2} → congruent_triangle → (Angle ≃ Angle)^{3}
 ** todo
 *** TODO (C.6) congruent_triangle_SAS : Point^{6} → (Segment ≃ Segment)^{2} → Angle ≃ Angle → congruent_triangle
-*** TODO mk_supplementary_angle : Angle → Angle
-*** TODO mk_supp_angle_condition : Angle → ne
+*** DONE mk_supplementary_angle : Angle → Angle
+*** TODO mk_supp_angle_condition : Angle → ne → Point ≠ Point
 *** TODO mk_supplementary_angle_is_supplementary : Angle → ne → supplementary_angles
 *** TODO distance_scale : Measure^{2} → Segment → ∃ ℝ, ℝ > 0 ∧ Measure = ℝ * Measure
 *** TODO exists_measure : Segment → ℝ → ∃ Measure, Segment = ℝ
+*** TODO side_of_line : Line → Point → ¬ lies_on_line → set Point
 * euclid.lean
 ** constant
 - Point : Type
