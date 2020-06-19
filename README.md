@@ -3,7 +3,7 @@
 
 Interactive theorem proving in Lean : teaching mathematics to a computer
 
-## Formalizing Euclid's and Hilbert's axioms in Lean##
+## Formalizing Euclid's and Hilbert's axioms in Lean ##
 - Euclid's axioms: `euclid.lean`
 - Euclid's propositions using Euclid's axioms : `euclid_props.lean`
 - Hilbert's axioms: `hilbert.lean`
