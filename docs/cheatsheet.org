@@ -1,3 +1,4 @@
+
 #+title: Cheatsheet for Euclid and Hilbert's axioms
 #+options: H:2 num:1 ^:{}
 #+SETUPFILE: bigblow.setup
@@ -89,6 +90,69 @@ Key:
 *** TODO mk_supplementary_angle_is_supplementary : Angle → ne → supplementary_angles
 *** TODO distance_scale : Measure^{2} → Segment → ∃ ℝ, ℝ > 0 ∧ Measure = ℝ * Measure
 *** TODO exists_measure : Segment → ℝ → ∃ Measure, Segment = ℝ
+* euclid.lean
+** constant
+- Point : Type
+- Line : Type
+- lies_on : Point →Line → Prop
+- between : Point^{3} → Prop
+- congruent (≃) : A → A → Prop
+- distance : Point^{3} → Prop
+- line_of_points : Point^{2} → ne → Line
+- extended_segment : Segment^{2} → ne → Point
+
+** structure
+- Segment (⬝) := ⟨Point, Point⟩
+- Circle := ⟨Point, Point⟩
+- Ray := ⟨Point, Point⟩
+- Angle := ⟨Ray, Ray, Point = Point, ¬opposite_rays⟩
+- Triangle := ⟨Point, Point, Point⟩
+
+
+** def
+- distinct : A^{3} → ne^{3}
+- length : Segment → distance
+- line_of_segment : Segment → ne → Line
+- points_of_segment : Segment → set Point
+- radius_segment : Circle → Segment
+- radius : Circle → ℝ
+- circumference : Circle → set Point
+- line_of_ray : Ray → ne → Line
+- points_of_ray : Ray → ne → set Point
+- opposite_rays : Ray^{2} → ne^{2} → Prop
+- sides_of_triangle : Triangle → Segment^{3}
+- angles_of_triangle : Triangle → distinct → vector Angle 3
+- is_equilateral : Triangle → Prop
+
+
+** axiom
+*** Distance
+    These are extra axioms that were not part of Euclid's original.
+- distance_not_neg : Point^{2} → 0 ≤ distance
+- distance_pos : Point^{2} → ne → 0 < distance
+- distance_is_symm_op : is_symm_op Point ℝ distance
+- *@[simp]* distance_zero_segment : Point → distance = 0
+*** Congruence
+- cong_is_equiv : Type → is_equiv A (≃)
+
+
+*** P1 line_exists : Point^{2} → ne → lies_on^{2}
+*** Segment
+- *@[symm]* segment_symm : Point^{2} → Segment ≃ Segment
+- zero_segment : Segment → Point → Segment ≃ Segment → Point = Point
+***  P2 extend : Segment^{2} → ne → lies_on ∧ between ∧ Segment ≃ Segment
+
+
+** lemma
+- *@[simp, symm]* distance_is_symm : Point^{2} → distance = distance
+- cong_equiv : equivalence (≃)
+- distinct_swap : Point^{3} → distinct → distinct
+- equilateral_triangle_all_sides_equal : Triangle → is_equilateral → Segment ≃ Segment
+
+** todo
+*** TODO *@[refl]* cong_refl : A → A ≃ A
+*** TODO *@[symm]* cong_symm : A^{2} → A ≃ A → A ≃ A 
+*** TODO *@[trans]* cong_trans : A^{3} → (A ≃ A)^{2} → A ≃ A
+*** TODO angle_of_points : Point^{3} → distinct → Angle
 * TODO hilbert_props.lean
-* TODO euclid.lean
 * TODO euclid_props.lean
