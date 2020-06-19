@@ -309,9 +309,13 @@ def supplementary_angles (α₁ α₂ : Angle)
 -- LZ,AD : How to define this rigorously when the point can basically be
 -- anywhere?
 -- VK : use *segment_copy*.
-def mk_supplementary_angle (α : Angle) : Angle :=
-  let P : Point := collinear_points α.ext₂ α.base P in ⟨α.ext₁, α.base, P⟩
-  -- Uses sorry
+  
+def mk_supplementary_angle (α : Angle) (h: α.base ≠ α.ext₂): Angle :=
+ let l : Line := Line.mk α.base α.ext₂ h in
+ let bl := lies_on_line α.base l in
+ let el := lies_on_line α.ext₂ l in
+ let thing : segment_copy α.base α.ext₂ α.base l l bl el bl in
+ --let P : Point := thing.1 in ⟨α.ext₁, α.base, P⟩  --Prop: Type but expects Prop? Doesn't work
 
 lemma mk_supp_angle_condition (α : Angle):
   (mk_supplementary_angle α).base ≠ (mk_supplementary_angle α).ext₁ := sorry
