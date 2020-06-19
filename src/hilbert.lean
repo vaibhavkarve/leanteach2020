@@ -388,15 +388,23 @@ end
 
 ----------------------
 
--- Using a combo of the version here and Wikipedia: https://www.math.ust.hk/~mabfchen/Math4221/Hilbert%20Axioms.pdf
+-- Using a combo of the version here and Wikipedia :
+-- https://www.math.ust.hk/~mabfchen/Math4221/Hilbert%20Axioms.pdf
 
-axiom Archimedes (s₁ s₂ : Segment) (μ : Measure): ∃ (n : nat) (q : Point), μ (s₁.p₁ ⬝ q) = n * μ s₂ ∧ B s₁.p₁ s₁.p₂ q
+axiom Archimedes (s₁ s₂ : Segment) (μ : Measure) :
+  ∃ (n : nat) (q : Point), μ (s₁.p₁ ⬝ q) = n * μ s₂ ∧ B s₁.p₁ s₁.p₂ q
 
--- TODO: add continuity axiom 2
+-- Continuity axiom 2
+---------------------
+-- Axiom of Completeness (Vollständigkeit) : To a system of points,
+-- straight lines,and planes, it is impossible to add other elements
+-- in such a manner that the systemthus generalized shall form a new
+-- geometry obeying all of the five groups of axioms.In other words,
+-- the elements of geometry form a system which is not susceptible
+-- ofextension, if we regard the five groups of axioms as valid.
 
+-- This axiom talks about completeness in a way that we are unsure can
+-- be actually implemented.
 
--- TODO : VK : How are we justifying this definition?
--- constant θ : Angle → ℝ
--- Next we define some axioms to work with angles.
--- axiom equalAngles (α₁ α₂ : Angle) : θ α₁ = θ α₂ ↔ α₁ ≃ α₂
--- def is_right_2 (α : Angle) : Prop := θ α = 90
+-- axiom line_completeness (l : Line) (X : set Point) : ¬ ∃ l' : Line,
+--   order_preserved X l l' ∧ cong_preserved X l l'
