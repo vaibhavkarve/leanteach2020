@@ -42,10 +42,7 @@ axiom cong_is_equiv (A : Type) : is_equiv A (≃)
   sorry
 @[trans] lemma cong_trans {A : Type} (a b c: A) : a ≃ b → b ≃ c → a ≃ c :=
   sorry
-@[symm] lemma ne_symm {A : Type} (a b : A) : a ≠ b → b ≠ a :=
-begin
-    finish,
-end
+
 
 lemma cong_equiv {A : Type} : equivalence (@congruent A) :=
   -- The @ makes implicit arguments explicit.
