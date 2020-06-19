@@ -105,77 +105,62 @@ end
 
 -- Lemma needed for Proposition 2
 lemma equilateral_triangle_nonzero_side_1 (abc : Triangle) :
-  abc.p1 ≠ abc.p2 → is_equilateral abc
+  abc.p1 ≠ abc.p2
+  → is_equilateral abc
   → abc.p2 ≠ abc.p3 :=
 begin
-  intros ne_a_b h,
-  unfold is_equilateral at h,
-  rcases h with ⟨h₁, h₂⟩,
-  intros eq_b_c,
-  have cong_cc_bc : abc.p3⬝abc.p3 = abc.p2⬝abc.p3, by simp[eq_b_c],
+  rintros ne_a_b ⟨h₁, h₂⟩ eq_b_c,
+  have cong_cc_bc : abc.p3⬝abc.p3 = abc.p2⬝abc.p3, by simp [eq_b_c],
   have eq_a_b : abc.p1 = abc.p2,
     { apply zero_segment (abc.p1 ⬝ abc.p2) abc.p3,
-      rw cong_cc_bc,
-      assumption},
-  exact ne_a_b eq_a_b,
+      rwa cong_cc_bc},
+  finish,
 end
+
 
 lemma equilateral_triangle_nonzero_side_2 (abc : Triangle) :
-  abc.p1 ≠ abc.p2 → is_equilateral abc
+  abc.p1 ≠ abc.p2
+  → is_equilateral abc
   → abc.p3 ≠ abc.p1 :=
 begin
-  intros ne_a_b h,
-  unfold is_equilateral at h,
-  rcases h with ⟨h₁, h₂⟩,
+  rintros ne_a_b ⟨h₁,  h₂⟩ eq_b_c,
   set sides := sides_of_triangle abc,
   have h₃ := cong_trans sides.1 sides.2.1 sides.2.2 h₁ h₂,
-  have eq_1_3 : abc.p1 ⬝ abc.p3 ≃ abc.p3 ⬝ abc.p1, {
-      apply seg_symm,
-  },
-  intros eq_b_c,
-  have cong_cc_bc : abc.p3⬝abc.p3 = abc.p1⬝abc.p3, by simp[eq_b_c],
+  have eq_1_3 : abc.p1 ⬝ abc.p3 ≃ abc.p3 ⬝ abc.p1, by apply seg_symm,
+  have cong_cc_bc : abc.p3⬝abc.p3 = abc.p1⬝abc.p3, by simp [eq_b_c],
   have eq_a_b : abc.p1 = abc.p2,
     { apply zero_segment (abc.p1 ⬝ abc.p2) abc.p3,
       rw cong_cc_bc,
-      let a := abc.p1 ⬝ abc.p2,
-      let b := abc.p3 ⬝ abc.p1,
-      let c := abc.p1 ⬝ abc.p3,
-      have a_cong : a ≃ b, tidy,
-      have b_cong : b ≃ c, apply seg_symm,
-      have abc_trans : a ≃ c, {
-        apply cong_trans a b c a_cong b_cong,
-      },
-      apply abc_trans,
-    },
-  exact ne_a_b eq_a_b,
+      set a := abc.p1 ⬝ abc.p2,
+      set b := abc.p3 ⬝ abc.p1,
+      set c := abc.p1 ⬝ abc.p3,
+      have a_cong : a ≃ b, by tidy,
+      have b_cong : b ≃ c, by symmetry,
+      have abc_trans : a ≃ c, by apply cong_trans a b c a_cong b_cong,
+      assumption},
+  finish,
 end
 
-lemma radius_non_zero (c : Circle) :
-  c.center ≠ c.outer → 0 < radius c :=
+
+lemma radius_non_zero (c : Circle) : c.center ≠ c.outer → 0 < radius c :=
 begin
-  intro,
-  unfold radius,
-  simp,
-  unfold radius_segment,
-  simp,
+  simp only [radius, radius_segment],
   apply distance_pos,
-  apply a,
 end
 
 lemma radii_equal (c : Circle) (a b : Point) :
-a ∈ circumference c → b ∈ circumference c → c.center ⬝ a ≃ c.center ⬝ b :=
+  a ∈ circumference c
+  → b ∈ circumference c
+  → c.center⬝a ≃ c.center⬝b :=
 begin
   intros h₁ h₂,
-  have eq_a_rad : c.center ⬝ a ≃ radius_segment c, {
-    unfold circumference at h₁,
-    simp at h₁,
-    apply cong_symm,
-    exact h₁,
-  },
-  have eq_b_rad : radius_segment c ≃ c.center ⬝ b, {
-    tidy,
-  }, 
-  apply cong_trans (c.center ⬝ a) (radius_segment c) (c.center ⬝ b) eq_a_rad eq_b_rad,
+  have eq_a_rad : c.center⬝a ≃ radius_segment c,
+    { simp [circumference] at h₁,
+      apply cong_symm,
+      assumption},
+  have eq_b_rad : radius_segment c ≃ c.center⬝b, by tidy, 
+  refine cong_trans (c.center⬝a) (radius_segment c) (c.center⬝b) _ _,
+  repeat {finish},
 end
 
 
@@ -193,86 +178,64 @@ begin
   set db : Ray := ⟨abd.p3, ab.p2⟩,
   set circ : Circle := ⟨bc.p1, bc.p2⟩,
   have ne_d_b : db.base ≠ db.ext,
-  { have x : db.base = abd.p3, by refl,
-    have y : db.ext = abd.p2, by tidy,
-    symmetry,
-    rw [x, y],
-    apply equilateral_triangle_nonzero_side_1,
-    have eq_aa : abd.p1 = a, {rw h₁},
-    have eq_bb : abd.p2 = bc.p1, {rw h₂},
-    rw eq_aa,
-    rw eq_bb,
-    exact ne_a_b,
-    exact h₃,
-  },
-  have ne_d_a : da.base ≠ da.ext,
-    { have x : da.base = abd.p3, by refl,
-      have y : da.ext = abd.p1, by tidy,
-      have ne : abd.p1 ≠ abd.p2, {
-        finish,
-      },
+    { change db.base with abd.p3,
       symmetry,
-      apply ne_symm,
-      rw [x, y],
+      have x : db.ext = abd.p2, by assumption,
+      rw x,
+      apply equilateral_triangle_nonzero_side_1,
+      rw [← h₁, ← h₂], tidy},
+  have ne_d_a : da.base ≠ da.ext,
+    { change da.base with abd.p3,
+      have x : da.ext = abd.p1, by assumption,
+      have ne : abd.p1 ≠ abd.p2, by finish,
+      rw x,
       apply equilateral_triangle_nonzero_side_2 abd ne,
-      assumption,
-  },
+      assumption},
   have b_in_circ : circle_interior bc.p1 circ,
     { simp [circle_interior, radius],
       apply distance_pos,
-      exact ne_b_c},
-  
-  have b_in_bc : db.ext ∈ points_of_ray db ne_d_b, {
-    sorry,
-  },
-  have ray_circle_intersect := ray_circle_intersect db ne_d_b circ bc.p1 b_in_circ b_in_bc,
-  rcases ray_circle_intersect with ⟨g, g_in_ray,g_in_circum⟩,
-  let c₁ : Circle := ⟨abd.p3, g⟩,
-  have ne_d_g : abd.p3 ≠ g, {
-    sorry,
-  },
-  have d_in_c₁ : circle_interior abd.p3 c₁, {
-    unfold circle_interior,
-    have center_eq : c₁.center = abd.p3, {refl,},
-    have dist_0 : distance c₁.center abd.p3 = 0, {
-      finish,
-    },
-    rw dist_0,
-    apply radius_non_zero,
-    apply ne_d_g,
-  },
-  have d_in_da : da.base ∈ points_of_ray da ne_d_a, {
-    sorry,
-  },
-  have ray_circle_intersect2 := ray_circle_intersect da ne_d_a c₁ abd.p3 d_in_c₁ d_in_da,
-  rcases ray_circle_intersect2 with ⟨l, l_in_ray, l_in_circum⟩,
-  have bc_eq_bg : distance bc.p1 g = distance bc.p1 bc.p2, {
-    sorry,
-  },
-  have al_eq_bg : distance a l = distance bc.p1 bc.p2 :=
-  begin sorry, end,
-  let al := a ⬝ l,
-  let dl := da.base ⬝ l,
-  let dg := da.base ⬝ g,
-  let bg := bc.p1 ⬝ g,
-  have dl_eq_dg : dl ≃ dg, {
-  let circum := circumference c₁,
-    let rad := radius_segment c₁,
-    have dl_eq_rad : rad ≃ dl, {tidy},
-    have dg_eq_rad : dg ≃ rad, {tidy},
-    have pls_work_trans := cong_trans dg rad dl dg_eq_rad dl_eq_rad,
-    apply cong_symm,
-    apply pls_work_trans,
-  },
-  have bc_eq_bg : bc ≃ bg, {
-    let circum := circumference circ,
-    let rad := radius_segment circ,
-    have dl_eq_rad : rad ≃ bc, {tidy},
-    have dg_eq_rad : dg ≃ rad, {tidy},
-    have pls_work_trans := cong_trans bg rad dl dg_eq_rad dl_eq_rad,
-    apply cong_symm,
-    apply pls_work_trans,
-  },
+      assumption},
+  have b_in_bc : db.ext ∈ points_of_ray db ne_d_b,
+    { sorry},
+  rcases ray_circle_intersect db ne_d_b circ bc.p1 b_in_circ b_in_bc with ⟨g, g_in_ray, g_in_circum⟩,
+  have ne_d_g : abd.p3 ≠ g,
+    { sorry},
+  set c₁ : Circle := ⟨abd.p3, g⟩,
+  have d_in_c₁ : circle_interior abd.p3 c₁,
+    { change c₁.center with abd.p3,
+      have dist_0 : distance c₁.center abd.p3 = 0, by tidy,
+      rw [circle_interior, dist_0],
+      apply radius_non_zero,
+      assumption},
+  have d_in_da : da.base ∈ points_of_ray da ne_d_a,
+    { sorry},
+  rcases ray_circle_intersect da ne_d_a c₁ abd.p3 d_in_c₁ d_in_da with ⟨l, l_in_ray, l_in_circum⟩,
+  have bc_eq_bg : distance bc.p1 g = distance bc.p1 bc.p2,
+    { sorry},
+  have al_eq_bg : distance a l = distance bc.p1 bc.p2,
+    { sorry},
+  set al := a ⬝ l,
+  set dl := da.base ⬝ l,
+  set dg := da.base ⬝ g,
+  set bg := bc.p1 ⬝ g,
+  have dl_eq_dg : dl ≃ dg,
+    { set circum := circumference c₁,
+      set rad := radius_segment c₁,
+      have dl_eq_rad : rad ≃ dl, by assumption,
+      change dg with rad,
+      apply cong_symm,
+      assumption},
+repeat {sorry},
+end
+#exit
+  have bc_eq_bg : bc ≃ bg,
+    { set circum := circumference circ,
+      set rad := radius_segment circ,
+      have dl_eq_rad : rad ≃ bc, by tidy?,
+      have dg_eq_rad : dg ≃ rad, by tidy?,
+      have pls_work_trans := cong_trans bg rad dl dg_eq_rad dl_eq_rad,
+      apply cong_symm,
+      apply_assumption},
   have cong_bg_al : bg ≃ al, {
     sorry,
   },
