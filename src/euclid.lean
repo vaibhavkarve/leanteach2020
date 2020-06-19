@@ -132,28 +132,26 @@ structure Angle: Type :=
 structure Triangle: Type :=
 (p1 p2 p3 : Point)
 
-def angle_of_points (a b c : Point) (diffrent : distinct a b c) : Angle :=
+def angle_of_points (a b c : Point) (different : distinct a b c) : Angle :=
   let r1 := Ray.mk b a in
   let r2 := Ray.mk b a in
-  let same_base : r1.base = r2.base := begin refl, end in
-  let not_opposite : ∀ (h1 : r1.base ≠ r1.ext) (h2 : r2.base ≠ r2.ext), ¬opposite_rays r1 r2 h1 h2 := sorry in
-  Angle.mk r1 r2 same_base not_opposite
+  let same_base : r1.base = r2.base := rfl in
+  let not_opposite : ∀ (h1 : r1.base ≠ r1.ext) (h2 : r2.base ≠ r2.ext),
+    ¬opposite_rays r1 r2 h1 h2 := sorry in
+  ⟨r1, r2, same_base, not_opposite⟩
 
 -- For every triangle, we get can define three Segments (its sides).
 def sides_of_triangle (t : Triangle): Segment × Segment × Segment :=
   (⟨t.p1, t.p2⟩, ⟨t.p2, t.p3⟩, ⟨t.p3, t.p1⟩)
--- Note that elements of a vector v can be accessed as v.nth 0 etc.
--- Also note that if a vector has lenth n, then asking for element m
--- where m ≥ n returns element (m mod n)
 
 
-def angles_of_triangle (t : Triangle) (diffrent : distinct t.p1 t.p2 t.p3): vector Angle 3 :=
-  let a123 := angle_of_points t.p1 t.p2 t.p3 diffrent in
+def angles_of_triangle (t : Triangle) (different : distinct t.p1 t.p2 t.p3): vector Angle 3 :=
+  let a123 := angle_of_points t.p1 t.p2 t.p3 different in
   let dif2 : distinct t.p2 t.p3 t.p1 :=
-    begin apply distinct_shift, exact diffrent, end in
+    begin apply distinct_swap, exact different, end in
   let a231 := angle_of_points t.p2 t.p3 t.p1 dif2 in
   let dif3 : distinct t.p3 t.p1 t.p2 :=
-    begin apply distinct_shift, exact dif2, end in
+    begin apply distinct_swap, exact dif2, end in
   let a312 := angle_of_points t.p3 t.p1 t.p2 dif3 in
   ⟨[a123, a231, a312], rfl⟩ 
 
@@ -174,18 +172,16 @@ begin
 end
 
 
--- this is a predicate on Type Angle
-constant is_right_angle : Angle → Prop
+-- VK: I am commenting off this entire section.
+-- We need to think more carefully about these definitions.
+/-
 constant make_angle : Line → Line → Angle
 constant add_angle : Angle → Angle → Angle
 constant less_than_angle : Angle → Angle → Prop
 constant equal_angle : Angle → Angle → Prop
 constant in_circle : Point → Circle → Prop
 
-
-constant exists_intersection: Line → Line → Prop
 constant intersection (l1 l2 : Line) (is_inter : exists_intersection l1 l2): Point
-constant is_parallel : Line → Line → Prop
 constant rAngle : Angle
 axiom constant_rAngle : is_right_angle rAngle
 
@@ -195,8 +191,11 @@ def neg_equal (r1 r2 : Ray) := ¬(r1 = r2) → r1 ≠ r2
 def not_equal_point (p1 p2 : Point) := ¬(p1 = p2) → (p1 ≠ p2)
 def construct_ray (a b : Point) (ne : a ≠ b) (points : set Point):= Ray.mk a b
 
+-/
 
--- axiom type_equiv : congruent → equivalence
+def is_right_angle : Angle → Prop := sorry
+def exists_intersection: Line → Line → Prop := sorry
+def is_parallel : Line → Line → Prop := sorry
 @[symm] axiom between_symm (x y z : Point) : between x y z → between z y x
 
 
