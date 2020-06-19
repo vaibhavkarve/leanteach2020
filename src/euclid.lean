@@ -47,9 +47,10 @@ lemma cong_equiv {A : Type} : equivalence (@congruent A) :=
   mk_equivalence congruent cong_refl cong_symm cong_trans
 
 
--- Postulate I
---------------
--- Given two distinct Points, we can construct a unique Line passing through them.
+-- #Postulate I
+---------------
+-- Given two distinct Points, we can construct a unique Line passing
+-- through them.
 constant line_of_points (p₁ p₂ : Point) : p₁ ≠ p₂ → Line
 axiom line_exists (p₁ p₂ : Point) (h : p₁ ≠ p₂) :
   let l : Line := line_of_points p₁ p₂ h in
@@ -65,10 +66,6 @@ local infix `⬝`:56 := Segment.mk  -- typed as \ cdot
 ---------------------
 -- condition for 3 terms being distict.
 def distinct {A : Type} (a b c : A) := a ≠ b ∧ b ≠ c ∧ c ≠ a
-
--- congruence of reordered segments
-@[symm] lemma seg_symm (a b : Point) : a ⬝ b ≃ b ⬝ a :=
-  sorry
 
 
 -- length of a segment
