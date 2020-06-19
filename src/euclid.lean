@@ -23,8 +23,8 @@ local infix ` ≃ `:55 := congruent  -- typed as \ equiv
 
 -- Missing Axiom(s)
 -------------------
-axiom distance_not_neg (p1 p2 : Point) : distance p1 p2 ≥ 0
-axiom distance_pos (p1 p2 : Point) : p1 ≠ p2 → distance p1 p2 > 0
+axiom distance_not_neg (p1 p2 : Point) : 0 ≤ distance p1 p2
+axiom distance_pos (p1 p2 : Point) : p1 ≠ p2 → 0 < distance p1 p2
 axiom distance_is_symm_op : is_symm_op Point ℝ distance
 @[simp] axiom distance_zero_segment (p : Point) : distance p p = 0
 
