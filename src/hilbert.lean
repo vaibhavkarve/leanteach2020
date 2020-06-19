@@ -267,7 +267,16 @@ lemma angles_of_congruent_triangle (t₁ t₂ : Triangle) :
   ∧ ang₁.nth 1 ≃ ang₂.nth 1
   ∧ ang₁.nth 2 ≃ ang₂.nth 2 :=
 begin
-  sorry
+  set a := t₁.p₁,
+  set b := t₁.p₂,
+  set c := t₁.p₃,
+  set d := t₂.p₁,
+  set e := t₂.p₂,
+  set f := t₂.p₃,
+  intro h,
+  simp,
+  -- Use SAS to show that the angles must be equal
+  repeat {sorry},
 end
 
 
