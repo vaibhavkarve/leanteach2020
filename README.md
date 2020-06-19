@@ -4,11 +4,11 @@
 Interactive theorem proving in Lean : teaching mathematics to a computer
 
 ## Formalizing Euclid's and Hilbert's axioms in Lean ##
-- Euclid's axioms: `euclid.lean`
-- Euclid's propositions using Euclid's axioms : `euclid_props.lean`
-- Hilbert's axioms: `hilbert.lean`
-- Euclid's propositions using Hilbert's axioms : `hilbert_props.lean`
-- Tarski's axioms : `tarski.lean`
+- `euclid.lean` : Euclid's axioms
+- `euclid_props.lean` : Euclid's propositions using Euclid's axioms
+- `hilbert.lean` : Hilbert's axioms
+- `hilbert_props.lean` : Euclid's propositions using Hilbert's axioms
+- `tarski.lean` : Tarski's axioms
 
 More mathematical details available at the wiki:
 [IllioisWiki for LeanTeach](https://wiki.illinois.edu/wiki/display/LT2020) 
