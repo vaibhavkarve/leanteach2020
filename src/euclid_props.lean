@@ -70,10 +70,7 @@ end
 
 
 lemma ray_cut_length (r : Ray) (s : Segment) (h : r.base ≠ r.ext)
-  : ∃ p : Point, p ∈ points_of_ray r h ∧ r.base ⬝ p ≃ s :=
-begin
-  sorry
-end
+  : ∃ p : Point, p ∈ points_of_ray r h ∧ r.base ⬝ p ≃ s := sorry
 
 
 
@@ -86,10 +83,8 @@ end
 lemma ray_circle_intersect (AB : Ray) (ne : AB.base ≠ AB.ext) (C : Circle) (p : Point) :
   circle_interior p C
   → p ∈ points_of_ray AB ne
-  → ∃ x : Point, x ∈ points_of_ray AB ne ∧ x ∈ circumference C :=
-begin
-  sorry,
-end
+  → ∃ x : Point, x ∈ points_of_ray AB ne ∧ x ∈ circumference C := sorry
+
 
 -- Use *have* for introducing new facts. Follow it up with a proof of
 -- said fact.
@@ -110,6 +105,9 @@ lemma equilateral_triangle_nonzero_side_1 (abc : Triangle) :
   → abc.p2 ≠ abc.p3 :=
 begin
   rintros ne_a_b ⟨h₁, h₂⟩ eq_b_c,
+  change (sides_of_triangle abc).fst with abc.p1⬝abc.p2 at h₁,
+  change (sides_of_triangle abc).snd.fst with abc.p2⬝abc.p3 at h₁ h₂,
+  change (sides_of_triangle abc).snd.snd with abc.p3⬝abc.p1 at h₁ h₂,
   have cong_cc_bc : abc.p3⬝abc.p3 = abc.p2⬝abc.p3, by simp [eq_b_c],
   have eq_a_b : abc.p1 = abc.p2,
     { apply zero_segment (abc.p1 ⬝ abc.p2) abc.p3,
@@ -126,7 +124,7 @@ begin
   rintros ne_a_b ⟨h₁,  h₂⟩ eq_b_c,
   set sides := sides_of_triangle abc,
   have h₃ := cong_trans sides.1 sides.2.1 sides.2.2 h₁ h₂,
-  have eq_1_3 : abc.p1 ⬝ abc.p3 ≃ abc.p3 ⬝ abc.p1, by apply seg_symm,
+  have eq_1_3 : abc.p1 ⬝ abc.p3 ≃ abc.p3 ⬝ abc.p1, by apply segment_symm,
   have cong_cc_bc : abc.p3⬝abc.p3 = abc.p1⬝abc.p3, by simp [eq_b_c],
   have eq_a_b : abc.p1 = abc.p2,
     { apply zero_segment (abc.p1 ⬝ abc.p2) abc.p3,
@@ -183,7 +181,7 @@ begin
       have x : db.ext = abd.p2, by assumption,
       rw x,
       apply equilateral_triangle_nonzero_side_1,
-      rw [← h₁, ← h₂], tidy},
+      rw [← h₁, ← h₂], repeat {assumption}},
   have ne_d_a : da.base ≠ da.ext,
     { change da.base with abd.p3,
       have x : da.ext = abd.p1, by assumption,
@@ -218,31 +216,30 @@ begin
   set dl := da.base ⬝ l,
   set dg := da.base ⬝ g,
   set bg := bc.p1 ⬝ g,
-  have dl_eq_dg : dl ≃ dg,
+  have cong_bc_bg : bc ≃ bg,
+     set circum := circumference circ,
+     set rad := radius_segment circ,
+      --have dl_eq_rad : rad ≃ bc, by tidy,
+      --have dg_eq_rad : dg ≃ rad, by tidy?,
+      --have pls_work_trans := cong_trans bg rad dl dg_eq_rad dl_eq_rad,
+      --apply cong_symm,
+      --apply_assumption
+     sorry,
+have dl_eq_dg : dl ≃ dg,
     { set circum := circumference c₁,
       set rad := radius_segment c₁,
       have dl_eq_rad : rad ≃ dl, by assumption,
       change dg with rad,
       apply cong_symm,
       assumption},
-repeat {sorry},
-end
-#exit
-  have bc_eq_bg : bc ≃ bg,
-    { set circum := circumference circ,
-      set rad := radius_segment circ,
-      have dl_eq_rad : rad ≃ bc, by tidy?,
-      have dg_eq_rad : dg ≃ rad, by tidy?,
-      have pls_work_trans := cong_trans bg rad dl dg_eq_rad dl_eq_rad,
-      apply cong_symm,
-      apply_assumption},
-  have cong_bg_al : bg ≃ al, {
-    sorry,
-  },
+  have cong_bg_al : bg ≃ al,
+    { sorry},
   use al,
-  simp,
+  simp only [true_and, eq_self_iff_true],
   apply cong_trans bc bg al cong_bc_bg cong_bg_al,
 end
+#exit
+
 
 -- # Proposition 3
 lemma prop3 (AB C : Segment) (greater : length AB > length C):
