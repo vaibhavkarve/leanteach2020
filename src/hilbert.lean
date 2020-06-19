@@ -320,10 +320,16 @@ def mk_supplementary_angle (α : Angle) (h: α.base ≠ α.ext₂): Angle :=
  let bl : lies_on_line α.base l := (line_exists α.base α.ext₂ h).1 in
  let el : lies_on_line α.ext₂ l := (line_exists α.base α.ext₂ h).2 in
  let thing := segment_copy α.base α.ext₂ α.base l l bl el bl in
- let P : Point := thing.1 in ⟨α.ext₁, α.base, P⟩
+ let P : Point := thing.1 in
+ ⟨α.ext₁, α.base, P⟩
 
-lemma mk_supp_angle_condition (α : Angle):
-  (mk_supplementary_angle α).base ≠ (mk_supplementary_angle α).ext₁ := sorry
+lemma mk_supp_angle_condition (α : Angle) (h : α.base ≠ α.ext₂) :
+  (mk_supplementary_angle α h).base ≠ (mk_supplementary_angle α h).ext₁ :=
+begin
+  unfold mk_supplementary_angle,
+  simp,
+  sorry
+end
 
 lemma mk_supplementary_angle_is_supplementary (α : Angle) (h : α.base ≠ α.ext₁):
   supplementary_angles α (mk_supplementary_angle α) h (mk_supp_angle_condition α) := sorry
