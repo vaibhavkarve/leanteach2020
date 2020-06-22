@@ -91,7 +91,7 @@ end
 ---------------------------
 -- To construct an equilateral triangle on a given
 -- finite straight line.
-theorem prop1 (s : Segment) :
+theorem construct_equilateral (s : Segment) :
   ∃ t : Triangle, t.p₁ = s.p₁ ∧ t.p₂ = s.p₂ ∧ equilateral t :=
 begin
     let a : Point := s.p₁,
@@ -105,7 +105,7 @@ end
 ---------------------------
 -- To place a straight line equal to a given straight
 -- line with one end at a given point.
-theorem prop2 (s : Segment) (h : s.p₁ ≠ s.p₂):
+theorem segment_move (s : Segment) (h : s.p₁ ≠ s.p₂):
   ∃ s' : Segment, s ≃ s' ∧ s'.p₁ = s.p₁ :=
 begin
     sorry,
@@ -140,7 +140,9 @@ end
 -- Proposition 5.  In isosceles triangles the angles at the base equal
 -- one another, and, if the equal straight lines are produced further,
 -- then the angles under the base equal one another.
-theorem prop5_part1 (abc : Triangle) :
+----------------------------------------------------------------------
+-- Part 1 of Prop 5
+theorem isosceles_triangle_base_angle (abc : Triangle) :
   let sides := sides_of_triangle abc in
   let angles := angles_of_triangle abc in
   sides.nth 0 ≃ sides.nth 1  -- a⬝b ≃ b⬝c
@@ -179,14 +181,13 @@ end
 -- ∧ t₁.α₂ ≃ t₂.α₂
 -- ∧ t₁.α₃ ≃ t₂.α₃
 
+
 -- # Proposition 6
 ------------------
 -- If in a triangle two angles equal one another, then the sides
 -- opposite the equal angles also equal one another.
-
---https://artofproblemsolving.com/wiki/index.php/Base_Angle_Theorem
-
-theorem prop_6 (abc : Triangle):
+-- https://artofproblemsolving.com/wiki/index.php/Base_Angle_Theorem
+theorem sides_opposite_equal_angles_are_equal (abc : Triangle):
   let sides := (sides_of_triangle abc) in
   let angles := (angles_of_triangle abc) in
   angles.nth 0 ≃ angles.nth 2 → sides.nth 0 ≃ sides.nth 1 :=

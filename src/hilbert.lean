@@ -259,7 +259,7 @@ axiom angle_congruent' (α : Angle) (o : Point) (r : Ray) (h : r.base = o) :
 axiom congruent_triangle_SAS (abc xyz : Triangle) :
   let angles₁ := angles_of_triangle abc in
   let angles₂ := angles_of_triangle xyz in
-  abc.p₁⬝abc.p₂ ≃ xyz.p₁⬝xyz.p₂
+     abc.p₁⬝abc.p₂ ≃ xyz.p₁⬝xyz.p₂
   → abc.p₁⬝abc.p₃ ≃ xyz.p₁⬝xyz.p₃
   → angles₁.nth 0 ≃ angles₂.nth 0
   → angles₁.nth 1 ≃ angles₂.nth 1 ∧ angles₁.nth 2 ≃ angles₂.nth 2

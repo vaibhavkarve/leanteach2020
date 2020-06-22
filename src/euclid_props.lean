@@ -42,7 +42,7 @@ lemma hypothesis2_about_circles_radius (s : Segment) :
 
 -- # Proposition 1
 ------------------
-lemma construct_equilateral (a b : Point) :
+theorem construct_equilateral (a b : Point) :
   ∃ (c : Point),
   let abc : Triangle := ⟨a, b, c⟩ in
   is_equilateral abc :=
@@ -71,12 +71,6 @@ begin
 end
 
 
-
-lemma ray_cut_length (r : Ray) (s : Segment) (h : r.base ≠ r.ext)
-  : ∃ p : Point, p ∈ points_of_ray r h ∧ r.base ⬝ p ≃ s := sorry
-
-
-
 -- Lemma needed for proposition 2
 lemma line_circle_intersect (a b : Point) (ne : a ≠ b) (C : Circle) :
      circle_interior a C
@@ -98,45 +92,26 @@ lemma line_circle_intersect (a b : Point) (ne : a ≠ b) (C : Circle) :
 -- Ex: set x : ℕ := 5, -> replace x with 5 everywhere
 
 -- Lemma needed for Proposition 2
-lemma equilateral_triangle_nonzero_side_1 (a b c : Point) :
+lemma equilateral_triangle_nonzero_sides (a b c : Point) :
      a ≠ b
   → is_equilateral ⟨a, b, c⟩
-  → b ≠ c :=
+  → b ≠ c ∧ c ≠ a :=
 begin
   set abc : Triangle := ⟨a, b, c⟩,
-  rintros ne_a_b ⟨h₁, h₂⟩ eq_b_c,
+  rintros ne_a_b ⟨h₁, h₂⟩,
   set sides := sides_of_triangle abc,
   change sides.fst with a⬝b at h₁ h₂,
   change sides.snd.fst with b⬝c at h₁ h₂,
   change sides.snd.snd with c⬝a at h₁ h₂,
-  subst eq_b_c,
-  have eq_a_b : a = b := zero_segment _ _ h₁,
-  cc,
-end
-
-
-lemma equilateral_triangle_nonzero_side_2 (a b c : Point) :
-     a ≠ b
-  → is_equilateral ⟨a, b, c⟩
-  → c ≠ a :=
-begin
-  set abc : Triangle := ⟨a, b, c⟩,
-  rintros ne_a_b ⟨h₁, h₂⟩ eq_b_c,
-  set sides := sides_of_triangle abc,
-  change sides.fst with a⬝b at h₁ h₂,
-  change sides.snd.fst with b⬝c at h₁ h₂,
-  change sides.snd.snd with c⬝a at h₁ h₂,
-  subst eq_b_c,
-  have eq_b_c : b = c := zero_segment _ _ h₂,
-  cc,
-end
-
-
-lemma radius_nonzero (c : Circle) : c.center ≠ c.outer → 0 < radius c :=
-begin
-  simp only [radius, radius_segment],
-  rw ← distance_pos c.center c.outer,
-  tauto,
+  split,
+    { intros eq_b_c,
+      subst eq_b_c,
+      have eq_a_b : a = b := zero_segment _ _ h₁,
+      cc},
+    { intros eq_c_a,
+      subst eq_c_a,
+      have eq_b_c : b = c := zero_segment _ _ h₂,
+      cc},    
 end
 
 
@@ -153,8 +128,9 @@ begin
 end
 
 
--- Proposition 2
-lemma placeline (a b c : Point) :
+--! # Proposition 2
+-------------------
+theorem placeline (a b c : Point) :
      a ≠ b
   → b ≠ c
   → ∃ (s : Segment), (a = s.p1) ∧ (s ≃ b⬝c) :=
@@ -165,7 +141,7 @@ begin
 
   have ne_d_b : d ≠ b,
     { symmetry,
-      apply equilateral_triangle_nonzero_side_1 a b d _ _,
+      apply (equilateral_triangle_nonzero_sides a b d _ _).1,
       repeat {assumption}},
   have b_in_c₁ : circle_interior b c₁,
     by simpa [circle_interior, radius, radius_segment, ← distance_pos],
@@ -175,7 +151,7 @@ begin
 
   set c₂ : Circle := ⟨d, g⟩,
   have ne_d_a : d ≠ a,
-    { apply equilateral_triangle_nonzero_side_2 a b d _ _,
+    { apply (equilateral_triangle_nonzero_sides a b d _ _).2,
       repeat {assumption}},
   have ne_d_g : d ≠ g,
     { rw [distance_pos, distance_is_symm, ((distance_between g b d).1 bet_g_b_d).symm],

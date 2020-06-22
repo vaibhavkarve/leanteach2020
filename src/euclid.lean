@@ -33,7 +33,7 @@ axiom distance_is_symm_op : is_symm_op Point ℝ distance
 axiom distance_between (a b c : Point) : between a b c ↔ distance a b + distance b c = distance a c
 axiom between_refl_left (a b : Point) : between a a b
 axiom between_refl_right (a b : Point) : between a b b
-
+@[symm] axiom between_symm (x y z : Point) : between x y z → between z y x
 
 
 -- Congruence is an equivalence relation.
@@ -131,7 +131,8 @@ def opposite_rays (r1 r2 : Ray) (h1 : r1.base ≠ r1.ext) (h2 : r2.base ≠ r2.e
 structure Angle: Type :=
 (r1 r2 : Ray)
 (eq_base : r1.base = r2.base)
-(not_opposite (h1 : r1.base ≠ r1.ext) (h2 : r2.base ≠ r2.ext) : ¬ opposite_rays r1 r2 h1 h2)
+(not_opposite (h1 : r1.base ≠ r1.ext) (h2 : r2.base ≠ r2.ext) :
+  ¬ opposite_rays r1 r2 h1 h2)
 
 -- A Triangle is constructed by specifying three Points.
 structure Triangle: Type :=
@@ -201,10 +202,7 @@ def construct_ray (a b : Point) (ne : a ≠ b) (points : set Point):= Ray.mk a b
 def is_right_angle : Angle → Prop := sorry
 def exists_intersection: Line → Line → Prop := sorry
 def is_parallel : Line → Line → Prop := sorry
-@[symm] axiom between_symm (x y z : Point) : between x y z → between z y x
 
-
-axiom straight_line (p1 p2 : Point) (not_equal : Prop → (p1 ≠ p2)): Line
 axiom right_angle (a1 a2 : Angle) : is_right_angle a1 ∧ is_right_angle a2 → a1 ≃ a2
 axiom parallel (l1 l2 : Line) : ¬ exists_intersection l1 l2 → is_parallel l1 l2
 -- does not mean equadistant
@@ -223,9 +221,8 @@ axiom parallel (l1 l2 : Line) : ¬ exists_intersection l1 l2 → is_parallel l1 
 --https://mathcs.clarku.edu/~djoyce/java/elements/bookI/propI1.html
 -- TODO: Find a reference for this. Or find a justification using Coordinate geometry.
 constant circles_intersect (c₁ c₂ : Circle) :
-  (radius c₁ + radius c₂ >= distance c₁.center c₂.center)
-
-→ (abs (radius c₁ - radius c₂) <= distance c₁.center c₂.center)
+     distance c₁.center c₂.center ≤ radius c₁ + radius c₂ 
+  → (abs (radius c₁ - radius c₂) ≤ distance c₁.center c₂.center)
   → Point
 
 axiom circles_intersect' (c₁ c₂ : Circle)
@@ -239,4 +236,4 @@ def circle_interior (p : Point) (c : Circle) : Prop :=
   distance c.center p < radius c
 
 def circle_exterior (p : Point) (c : Circle) : Prop :=
-  distance c.center p > radius c
+  radius c < distance c.center p
