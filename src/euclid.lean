@@ -237,3 +237,6 @@ axiom circles_intersect' (c₁ c₂ : Circle)
 
 def circle_interior (p : Point) (c : Circle) : Prop :=
   distance c.center p < radius c
+
+def circle_exterior (p : Point) (c : Circle) : Prop :=
+  distance c.center p > radius c
