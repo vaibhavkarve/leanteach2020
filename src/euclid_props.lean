@@ -132,106 +132,114 @@ begin
 end
 
 
-lemma radius_non_zero (c : Circle) : c.center ≠ c.outer → 0 < radius c :=
+lemma radius_nonzero (c : Circle) : c.center ≠ c.outer → 0 < radius c :=
 begin
   simp only [radius, radius_segment],
-  apply distance_pos,
+  rw ← distance_pos c.center c.outer,
+  tauto,
 end
 
+
 lemma radii_equal (c : Circle) (a b : Point) :
-  a ∈ circumference c
+     a ∈ circumference c
   → b ∈ circumference c
   → c.center⬝a ≃ c.center⬝b :=
 begin
   intros h₁ h₂,
-  have eq_a_rad : c.center⬝a ≃ radius_segment c,
-    { simp [circumference] at h₁,
-      apply cong_symm,
-      assumption},
-  have eq_b_rad : radius_segment c ≃ c.center⬝b, by tidy, 
-  refine cong_trans (c.center⬝a) (radius_segment c) (c.center⬝b) _ _,
-  repeat {finish},
+  simp [circumference] at *,
+  apply cong_trans,
+  replace h₁ := cong_symm _ _ h₁,
+  repeat {assumption},
 end
 
 
---Proposition 2
-lemma placeline (bc : Segment) (a : Point) :
-     a ≠ bc.p1
-  → bc.p1 ≠ bc.p2
-  → ∃ (s : Segment), (a = s.p1) ∧ bc ≃ s :=
+-- Proposition 2
+lemma placeline (a b c : Point) :
+     a ≠ b
+  → b ≠ c
+  → ∃ (s : Segment), (a = s.p1) ∧ (s ≃ b⬝c) :=
 begin
   intros ne_a_b ne_b_c,
-  set ab : Segment := a⬝bc.p1,
-  choose abd h using construct_equilateral ab,
-  rcases h with ⟨h₁, h₂, h₃⟩,
-  set da : Ray := ⟨abd.p3, a⟩,
-  set db : Ray := ⟨abd.p3, ab.p2⟩,
-  set circ : Circle := ⟨bc.p1, bc.p2⟩,
-  have ne_d_b : db.base ≠ db.ext,
-    { change db.base with abd.p3,
-      symmetry,
-      have x : db.ext = abd.p2, by assumption,
-      rw x,
-      apply equilateral_triangle_nonzero_side_1,
-      rw [← h₁, ← h₂], repeat {assumption}},
-  have ne_d_a : da.base ≠ da.ext,
-    { change da.base with abd.p3,
-      have x : da.ext = abd.p1, by assumption,
-      have ne : abd.p1 ≠ abd.p2, by finish,
-      rw x,
-      apply equilateral_triangle_nonzero_side_2 abd ne,
-      assumption},
-  have b_in_circ : circle_interior bc.p1 circ,
-    { simp [circle_interior, radius],
-      apply distance_pos,
-      assumption},
-  have b_in_bc : db.ext ∈ points_of_ray db ne_d_b,
-    { sorry},
-  rcases ray_circle_intersect db ne_d_b circ bc.p1 b_in_circ b_in_bc with ⟨g, g_in_ray, g_in_circum⟩,
-  have ne_d_g : abd.p3 ≠ g,
-    { sorry},
-  set c₁ : Circle := ⟨abd.p3, g⟩,
-  have d_in_c₁ : circle_interior abd.p3 c₁,
-    { change c₁.center with abd.p3,
-      have dist_0 : distance c₁.center abd.p3 = 0, by tidy,
-      rw [circle_interior, dist_0],
-      apply radius_non_zero,
-      assumption},
-  have d_in_da : da.base ∈ points_of_ray da ne_d_a,
-    { sorry},
-  rcases ray_circle_intersect da ne_d_a c₁ abd.p3 d_in_c₁ d_in_da with ⟨l, l_in_ray, l_in_circum⟩,
-  have bc_eq_bg : distance bc.p1 g = distance bc.p1 bc.p2,
-    { sorry},
-  have al_eq_bg : distance a l = distance bc.p1 bc.p2,
-    { sorry},
-  set al := a ⬝ l,
-  set dl := da.base ⬝ l,
-  set dg := da.base ⬝ g,
-  set bg := bc.p1 ⬝ g,
-  have cong_bc_bg : bc ≃ bg,
-     set circum := circumference circ,
-     set rad := radius_segment circ,
-      --have dl_eq_rad : rad ≃ bc, by tidy,
-      --have dg_eq_rad : dg ≃ rad, by tidy?,
-      --have pls_work_trans := cong_trans bg rad dl dg_eq_rad dl_eq_rad,
-      --apply cong_symm,
-      --apply_assumption
-     sorry,
-have dl_eq_dg : dl ≃ dg,
-    { set circum := circumference c₁,
-      set rad := radius_segment c₁,
-      have dl_eq_rad : rad ≃ dl, by assumption,
-      change dg with rad,
-      apply cong_symm,
-      assumption},
-  have cong_bg_al : bg ≃ al,
-    { sorry},
-  use al,
-  simp only [true_and, eq_self_iff_true],
-  apply cong_trans bc bg al cong_bc_bg cong_bg_al,
-end
-#exit
+  choose d h using construct_equilateral a b,
+  set c₁ : Circle := ⟨b, c⟩,
 
+  have ne_d_b : d ≠ b,
+    { symmetry,
+      apply equilateral_triangle_nonzero_side_1 a b d _ _,
+      repeat {assumption}},
+  have b_in_c₁ : circle_interior b c₁,
+    by simpa [circle_interior, radius, radius_segment, ← distance_pos],
+
+  have db_intersect_c₁ := line_circle_intersect b d ne_d_b.symm c₁ b_in_c₁,
+  rcases db_intersect_c₁ with ⟨g, g_on_bd, g_in_circum_c₁, bet_g_b_d⟩,
+
+  set c₂ : Circle := ⟨d, g⟩,
+  have ne_d_a : d ≠ a,
+    { apply equilateral_triangle_nonzero_side_2 a b d _ _,
+      repeat {assumption}},
+  have ne_d_g : d ≠ g,
+    { rw [distance_pos, distance_is_symm, ((distance_between g b d).1 bet_g_b_d).symm],
+      have h₁ : distance b d > 0 := (distance_pos b d).1 ne_d_b.symm,
+      have h₂ : distance g b ≥ 0 := distance_not_neg g b,
+      linarith},
+  have d_in_c₂ : circle_interior d c₂,
+    { simpa [circle_interior, radius, radius_segment, ← distance_pos]},
+  have c_in_circum_c₁ : c ∈ circumference c₁,
+    by simp [circumference, radius_segment],
+  have a_in_c₂ : circle_interior a c₂,
+    { simp [circle_interior, radius, radius_segment],
+      rw [distance_is_symm d g, ← (distance_between g b d).1 bet_g_b_d],
+      rcases h with ⟨h₁, h₂⟩,
+      have eq_ad_bd : a⬝d ≃ b⬝d,
+        change (sides_of_triangle ⟨a, b, d⟩).snd.fst with b⬝d at h₂,
+        change (sides_of_triangle ⟨a, b, d⟩).snd.snd with d⬝a at h₂,
+        apply cong_symm,
+        apply cong_trans,
+        assumption,
+        apply segment_symm,
+        replace eq_ad_bd := (distance_congruent _ _).1 eq_ad_bd,
+        simp [length] at eq_ad_bd,
+        simp [eq_ad_bd],
+        have re := radii_equal c₁ g c g_in_circum_c₁ c_in_circum_c₁,
+        simp [distance_congruent, length] at re,
+        rwa [re, ← distance_pos b c]},
+
+  have da_intersect_c₂ := line_circle_intersect a d ne_d_a.symm c₂ a_in_c₂,
+  rcases da_intersect_c₂ with ⟨l, l_on_ad, l_in_circum_c₂, bet_l_a_d⟩,
+
+  have dl_eq_al_da : length (d⬝l) = length (d⬝a) + length (a⬝l),
+    { simp [length],
+      rw [distance_is_symm a l, add_comm, (distance_between l a d).1 bet_l_a_d],
+      symmetry},
+  have dg_eq_bd_bg : length (d⬝g) = length (b⬝d) + length (b⬝g),
+    { simp [length],
+      rw [distance_is_symm b g, add_comm, (distance_between g b d).1 bet_g_b_d],
+      symmetry},
+
+  have g_in_circum_c₂ : g ∈ circumference c₂,
+    by simp [circumference, radius_segment],
+  have c_in_circum_c₁ : c ∈ circumference c₁,
+    by simp [circumference, radius_segment],
+
+  use a⬝l,
+  rcases h with ⟨h₁, h₂⟩,
+  change (sides_of_triangle {p1 := a, p2 := b, p3 := d}).fst with a⬝ b at h₁ h₂,
+  change (sides_of_triangle {p1 := a, p2 := b, p3 := d}).snd.fst with b⬝d at h₁ h₂,
+  change (sides_of_triangle {p1 := a, p2 := b, p3 := d}).snd.snd with d⬝a at h₁ h₂,
+  split,
+    { refl},
+    { show a⬝l ≃ b⬝c,
+      rw distance_congruent,
+      calc length (a⬝l) = length (d⬝l) - length (d⬝a) : by simp [dl_eq_al_da]
+                    ... = length (d⬝l) - length (b⬝d) :
+                          by rw (distance_congruent _ _).1 h₂
+                    ... = length (d⬝g) - length (b⬝d) :
+                          by rw (distance_congruent _ _).1
+                                (radii_equal c₂ l g l_in_circum_c₂ g_in_circum_c₂)
+                    ... = length (b⬝g) : by simp [dg_eq_bd_bg]
+                    ... = length (b⬝c) : by rw (distance_congruent _ _).1
+                                (radii_equal c₁ g c g_in_circum_c₁ c_in_circum_c₁)}
+end
 
 -- # Proposition 3
 lemma prop3 (AB C : Segment) (greater : length AB > length C):
