@@ -65,12 +65,12 @@ axiom line_exists (p₁ p₂ : Point) (ne : p₁ ≠ p₂) (l : Line) :
 
 
 -- I.3 (part 1)
-axiom two_points_on_line (l : Line):
-  ∃ (a b : Point), a ≠ b ∧ lies_on_line a l ∧ lies_on_line b l
+-- This axiom is implicit in the definition of Line as a structure.
+-- We do not need to formalize this separately.
 -- I.3 (part 2)
 axiom no_line_on_three_points:
-  ∃ (a b c : Point), ¬∃ (l : Line), (lies_on_line a l) ∧ (lies_on_line b l) ∧ (lies_on_line c l)
-
+  ∃ (a b c : Point), ¬∃ (l : Line),
+  (lies_on_line a l) ∧ (lies_on_line b l) ∧ (lies_on_line c l)
 
 -- A Ray is constructed by specifying two Points.
 structure Ray : Type :=
