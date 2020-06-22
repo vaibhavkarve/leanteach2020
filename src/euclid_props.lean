@@ -98,20 +98,20 @@ lemma line_circle_intersect (a b : Point) (ne : a ≠ b) (C : Circle) :
 -- Ex: set x : ℕ := 5, -> replace x with 5 everywhere
 
 -- Lemma needed for Proposition 2
-lemma equilateral_triangle_nonzero_side_1 (abc : Triangle) :
-  abc.p1 ≠ abc.p2
-  → is_equilateral abc
-  → abc.p2 ≠ abc.p3 :=
+lemma equilateral_triangle_nonzero_side_1 (a b c : Point) :
+     a ≠ b
+  → is_equilateral ⟨a, b, c⟩
+  → b ≠ c :=
 begin
+  set abc : Triangle := ⟨a, b, c⟩,
   rintros ne_a_b ⟨h₁, h₂⟩ eq_b_c,
-  change (sides_of_triangle abc).fst with abc.p1⬝abc.p2 at h₁,
-  change (sides_of_triangle abc).snd.fst with abc.p2⬝abc.p3 at h₁ h₂,
-  change (sides_of_triangle abc).snd.snd with abc.p3⬝abc.p1 at h₁ h₂,
-  have cong_cc_bc : abc.p3⬝abc.p3 = abc.p2⬝abc.p3, by simp [eq_b_c],
-  have eq_a_b : abc.p1 = abc.p2,
-    { apply zero_segment (abc.p1 ⬝ abc.p2) abc.p3,
-      rwa cong_cc_bc},
-  finish,
+  set sides := sides_of_triangle abc,
+  change sides.fst with a⬝b at h₁ h₂,
+  change sides.snd.fst with b⬝c at h₁ h₂,
+  change sides.snd.snd with c⬝a at h₁ h₂,
+  subst eq_b_c,
+  have eq_a_b : a = b := zero_segment _ _ h₁,
+  cc,
 end
 
 
