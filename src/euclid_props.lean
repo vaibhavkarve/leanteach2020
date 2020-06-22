@@ -12,7 +12,7 @@ local infix `⬝`:56 := Segment.mk  -- typed as \ cdot
 lemma hypothesis1_about_circles_radius (s : Segment) :
   let c₁ : Circle := ⟨s.p1, s.p2⟩ in
   let c₂ : Circle := ⟨s.p2, s.p1⟩ in
-  radius c₁ + radius c₂ >= distance c₁.center c₂.center :=
+  distance c₁.center c₂.center ≤ radius c₁ + radius c₂ := 
 begin
   intros,
   show distance s.p1 s.p2 ≤ radius c₁ + radius c₂,
