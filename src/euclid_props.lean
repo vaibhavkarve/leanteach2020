@@ -42,29 +42,32 @@ lemma hypothesis2_about_circles_radius (s : Segment) :
 
 -- # Proposition 1
 ------------------
-lemma construct_equilateral (s : Segment) : ∃ (tri: Triangle),
-  s.p1 = tri.p1 ∧ s.p2 = tri.p2 ∧ is_equilateral tri :=
+lemma construct_equilateral (a b : Point) :
+  ∃ (c : Point),
+  let abc : Triangle := ⟨a, b, c⟩ in
+  is_equilateral abc :=
 begin
-  set c₁ : Circle := ⟨s.p1, s.p2⟩,
-  set c₂ : Circle := ⟨s.p2, s.p1⟩,
-  have h₁ := (hypothesis1_about_circles_radius s),
-  have h₂ := hypothesis2_about_circles_radius s,
-  set p : Point := circles_intersect c₁ c₂ h₁ h₂,
-  have hp₁ : p ∈ circumference c₁, from (circles_intersect' c₁ c₂ h₁ h₂).1,
-  have hp₂ : p ∈ circumference c₂, from (circles_intersect' c₁ c₂ h₁ h₂).2,
-  use ⟨s.p1, s.p2, p⟩,
+  set c₁ : Circle := ⟨a, b⟩,
+  set c₂ : Circle := ⟨b, a⟩,
+  have h₁ := hypothesis1_about_circles_radius (a⬝b),
+  have h₂ := hypothesis2_about_circles_radius (a⬝b),
+  set c := circles_intersect c₁ c₂ h₁ h₂,
+  use c,
+  simp,
+  have hp₁ : c ∈ circumference c₁, from (circles_intersect' c₁ c₂ h₁ h₂).1,
+  have hp₂ : c ∈ circumference c₂, from (circles_intersect' c₁ c₂ h₁ h₂).2,
   --- Cleaning up the context ---
-    tidy;
+    tidy,
     unfold circumference radius_segment at hp₁ hp₂;
     unfold sides_of_triangle;
     dsimp * at *,
   --- Cleaning done ---
-    {calc s.p1 ⬝ s.p2 ≃ s.p2 ⬝ s.p1 : by symmetry
-                  ... ≃ s.p2 ⬝ p    : by assumption},
-    {calc s.p2 ⬝ p ≃ s.p2 ⬝ s.p1 : by {apply cong_symm, assumption}
-               ... ≃ s.p1 ⬝ s.p2 : by apply segment_symm
-               ... ≃ s.p1 ⬝ p    : by assumption
-               ... ≃    p ⬝ s.p1 : by symmetry},
+    {calc a⬝b ≃ b⬝a : by symmetry
+          ... ≃ b⬝c : by assumption},
+    {calc b⬝c ≃ b⬝a : by {apply cong_symm, assumption}
+          ... ≃ a⬝b : by apply segment_symm
+          ... ≃ a⬝c : by assumption
+          ... ≃ c⬝a : by symmetry},
 end
 
 
