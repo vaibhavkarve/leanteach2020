@@ -239,20 +239,17 @@ axiom C_segment_add_trans (a b c a' b' c' : Point) (l l' : Line)
 
 -- III.4
 -- This axiom says that a given angle can be copied over to a
--- new location (the point o) in a unique manner (unique as long as we
+-- new location (the point base) in a unique manner (unique as long as we
 -- keep track of which side of the line we are on).
-constant angle_congruent (α : Angle) (o : Point) (r : Ray) :
-  r.base = o → Ray × Ray
+constant angle_congruent (α : Angle) (base ext : Point) : Point × Point
 
-axiom angle_congruent' (α : Angle) (o : Point) (r : Ray) (h : r.base = o) :
-  let rays := angle_congruent α o r h in
-  let r₁ : Ray := rays.1 in
-  let r₂ : Ray := rays.2 in
+axiom angle_congruent' (α : Angle) (base ext : Point) :
+  let exts := angle_congruent α base ext in
+  let r₁ : Ray := ⟨base, exts.1⟩ in
+  let r₂ : Ray := ⟨base, exts.2⟩ in  
     r₁ ≠ r₂
-  ∧ r₁.base = o
-  ∧ r₂.base = o
-  ∧ α ≃ ⟨r.ext, o, r₁.ext⟩
-  ∧ α ≃ ⟨r.ext, o, r₂.ext⟩
+  ∧ α ≃ ⟨r₁.ext, base, ext⟩
+  ∧ α ≃ ⟨r₂.ext, base, ext⟩
 
 
 -- III.5 (wikipedia)
@@ -261,57 +258,63 @@ axiom angle_congruent' (α : Angle) (o : Point) (r : Ray) (h : r.base = o) :
 
 
 --- III.5 (from Paper) / III.6 (from wikipedia)
-axiom congruent_triangle_SAS (abc xyz : Triangle) :
-  let angles₁ := angles_of_triangle abc in
-  let angles₂ := angles_of_triangle xyz in
-     abc.p₁⬝abc.p₂ ≃ xyz.p₁⬝xyz.p₂
-  → abc.p₁⬝abc.p₃ ≃ xyz.p₁⬝xyz.p₃
-  → angles₁.nth 0 ≃ angles₂.nth 0
-  → angles₁.nth 1 ≃ angles₂.nth 1 ∧ angles₁.nth 2 ≃ angles₂.nth 2
+axiom congruent_triangle_SAS (a b c x y z : Point) :
+  let abc : Triangle := ⟨a, b, c⟩ in
+  let xyz : Triangle := ⟨x, y, z⟩ in
+  let ang_abc := angles_of_triangle abc in
+  let ang_xyz := angles_of_triangle xyz in
+     a⬝b ≃ x⬝y
+  → a⬝c ≃ x⬝z
+  → ang_abc.nth 0 ≃ ang_xyz.nth 0
+  → ang_abc.nth 1 ≃ ang_xyz.nth 1 ∧ ang_abc.nth 2 ≃ ang_xyz.nth 2
 
 
 -- Definition of Congruent Triangles. All sides must be congruent.
-def congruent_triangle (t₁ t₂ : Triangle) : Prop :=
-  let sides1 := sides_of_triangle t₁ in
-  let sides2 := sides_of_triangle t₂ in
-  let angles1 := sides_of_triangle t₁ in
-  let angles2 := sides_of_triangle t₂ in
-    sides1.nth 0 ≃ sides2.nth 0
-  ∧ sides1.nth 1 ≃ sides2.nth 1
-  ∧ sides1.nth 2 ≃ sides2.nth 2
-  ∧ angles1.nth 0 ≃ angles2.nth 0
-  ∧ angles1.nth 1 ≃ angles2.nth 1
-  ∧ angles1.nth 2 ≃ angles2.nth 2
+def congruent_triangle (a b c x y z : Point) : Prop :=
+    a⬝b ≃ x⬝y
+  ∧ b⬝c ≃ y⬝z
+  ∧ a⬝c ≃ x⬝z
+  ∧ (⟨b, a, c⟩ : Angle) ≃ ⟨y, x, z⟩
+  ∧ (⟨a, b, c⟩ : Angle) ≃ ⟨x, y, z⟩
+  ∧ (⟨b, c, a⟩ : Angle) ≃ ⟨y, z, x⟩
 
 
 -- First theorem of congruence for triangles. If, for the two
 -- triangles ABC and A′B′C′, the congruences AB≡A′B′, AC≡A′C′, ∠A≡∠A′
 -- hold, then the two triangles are congruent to each other.
-lemma first_congruence (abc xyz : Triangle) :
-  let sides1 := sides_of_triangle abc in
-  let sides2 := sides_of_triangle xyz in
-  let angles1 := angles_of_triangle abc in
-  let angles2 := angles_of_triangle xyz in
-  let a := abc.p₁ in
-  let b := abc.p₂ in
-  let c := abc.p₃ in
-  let x := xyz.p₁ in
-  let y := xyz.p₂ in
-  let z := xyz.p₃ in
-    sides1.nth 0 ≃ sides2.nth 0
-  → sides1.nth 2 ≃ sides2.nth 2
-  → angles1.nth 0 ≃ angles2.nth 0
-  → congruent_triangle abc xyz :=
+lemma first_congruence (a b c x y z : Point) :
+     a⬝b ≃ x⬝y
+  → a⬝c ≃ x⬝z
+  → (⟨b, a, c⟩ : Angle) ≃ ⟨y, x, z⟩
+  → congruent_triangle a b c x y z :=
 begin
   intros,
   unfold congruent_triangle,
   intros,
-  have SAS := congruent_triangle_SAS abc xyz a_1 a_2 a_3,
-  repeat {split},
-    { assumption},
-    { sorry},
-    { assumption},
-    { assumption},
+  have ne_b_c : b ≠ c, sorry,
+  have ne_y_z : y ≠ z, sorry,
+  set bc : Line := ⟨b, c, ne_b_c⟩,
+  set yz : Line := ⟨y, z, ne_y_z⟩,
+  have b_on_bc : lies_on_line b bc, sorry,
+  have c_on_bc : lies_on_line c bc, sorry,
+  have y_on_yz : lies_on_line y yz, sorry,
+  
+  repeat {split}; try {assumption},
+    { by_contradiction,
+      have sc' := segment_copy' _ _ _ _ _ b_on_bc c_on_bc y_on_yz,
+      simp at sc',
+      set sc := segment_copy _ _ _ _ _ b_on_bc c_on_bc y_on_yz,
+      rcases sc' with ⟨h₁, h₂, h₃, h₄, h₅⟩,
+      set z₁ : Point := sc.1,
+      set z₂ : Point := sc.2,
+      have SAS := (congruent_triangle_SAS b a c y x z₁ _ h₃ _).1,
+      have h₆ : (⟨y, x, z⟩ : Angle) ≃ ⟨y, x, z₁⟩,
+        transitivity,
+        exact a_3,
+        assumption,
+      have angle_congruent := angle_congruent,
+    sorry},
+  have SAS := congruent_triangle_SAS a b c x y z a_1 a_2 a_3,
     { exact SAS.1},
     { exact SAS.2},
 end
