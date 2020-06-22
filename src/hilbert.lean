@@ -3,46 +3,59 @@ import data.real.basic tactic
 noncomputable theory
 open_locale classical
 
--- Two undefined types
+/- Hilbert uses three undefined types: Points, Lines and Planes.
+
+   We define Point as a constant. Lines we define as Structures
+   instead of Constants.  We do not define Planes since here, we
+   restrict our attention to planar geometry, ignoring solid
+   geometry.-/
+
 constant Point : Type
--- constant Line : Type -- We difine it as a structure instead of a constant.
---constant Plane : Type -- We restrict our attention to planar geometry, ignoring solid geometry.
 
--- a Segment is constructed by specifying two points.
-structure Segment: Type := (p₁ p₂ : Point)  -- the  subscripts are written as \ 1 and \ 2.
+/- A Segment is constructed by specifying two points. The subscripts
+   are written as \1 and \2. -/
 
--- This is the Betweenness relation.
--- It says "y" is in between "x" and "z".
+structure Segment: Type := (p₁ p₂ : Point)
+
+
+/- This is the Betweenness relation.  It says the Point "y" is in
+   between Point "x" and "z".-/
+
 constant B (x y z : Point) : Prop
 
--- Polymorphism => make it work for multiple types at the same time
--- For every type A, there is a congruence relation C.
-constant C {A : Type} : A → A → Prop   -- Here, "A" is an implicit argument. Lean figures it out.
-                                       -- In other languages this is called overloading.
+/- Polymorphism ⇒ make it work for multiple types at the same time.
+   For every type A, we assume there is a congruence relation C.
+   Here, "A" is an implicit argument. Lean will figure it out by
+   reading the type signatures of other arguments.  In other languages
+   this is called over-loading.-/
 
--- We are defining our own operators here
-local infix ` ≃ `:55 := C           -- \ equiv == equivalence/congruence
-local infix  `⬝`: 56  := Segment.mk  -- \ cdot == center-dot
+constant C {A : Type} : A → A → Prop   
+                                       
+/- We define our own operators here. \equiv is used to denote
+   equivalence/congruence.  \cdot is used for making Segments.-/
+
+local infix ` ≃ `:55 := C
+local infix  `⬝`: 56 := Segment.mk
 
 
--- # I. Incidence Axioms
-------------------------
--- I.1 and I.2
+/- # I. Incidence Axioms
+   =====================
 
--- Hilbert declares that Line is an independent type and then in
--- Axioms I.1 and I.2 he provides a necessary and sufficient condition
--- for constructing a Line from two Points.  We believe it is more
--- efficient to directly define Line as a structure that requires two
--- distint Points.
+   I.1 and I.2
+   -----------
+
+   Hilbert declares that Line is an independent type and then in
+   Axioms I.1 and I.2 he provides a necessary and sufficient condition
+   for constructing a Line from two Points.  We believe it is more
+   efficient to directly define Line as a structure that requires two
+   distint Points. -/
+
 structure Line : Type :=
 (p₁ p₂ : Point)
 (ne : p₁ ≠ p₂)
 
--- There are two "lies-on" relations.
--- We specify lies_on_line here as a constant.
--- lies_on_segment is defined later.
-constant lies_on_line (x : Point) (y : Line) : Prop
-
+/- There are two "lies-on" relations.  We specify lies_on_line here as
+   a constant.  lies_on_segment is defined later.-/
 
 -- I.1, I.2 is implicit in constant
 axiom line_exists (p₁ p₂ : Point) (h : p₁ ≠ p₂) :
