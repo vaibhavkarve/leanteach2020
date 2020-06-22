@@ -77,8 +77,8 @@ structure Ray : Type :=
 (base ext : Point)
 
 -- For each Ray, we can define a corresponding Line.
-def line_of_ray (r : Ray) : r.base ≠ r.ext → Line :=
-  Line.mk r.base r.ext
+def line_of_ray (r : Ray) (ne : r.base ≠ r.ext) : Line :=
+  ⟨r.base, r.ext, ne⟩
 
 
 -- An Angle is constructed by specifying three Points.
@@ -108,7 +108,7 @@ def angles_of_triangle (t : Triangle) : vector Angle 3 :=
 -- where m ≥ n returns element (m mod n)
 
 
-def equilateral (t: Triangle) : Prop :=
+def equilateral (t : Triangle) : Prop :=
   let sides := sides_of_triangle t in
   sides.nth 0 ≃ sides.nth 1 ∧ sides.nth 1 ≃ sides.nth 2
 
@@ -217,12 +217,8 @@ axiom segment_swap (x y : Point) : x⬝y ≃ y⬝x
 -- Congruence of segments is reflexive
 @[refl] lemma C_segment_refl (a b : Point) : a⬝b ≃ a⬝b :=
 begin
-  fapply C_segment_trans,
-    use b,
-    use a,
-      symmetry,
-      symmetry,
-      repeat {apply segment_swap},
+  transitivity,
+  repeat {apply segment_swap},
 end
 
 
