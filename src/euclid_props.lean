@@ -115,27 +115,20 @@ begin
 end
 
 
-lemma equilateral_triangle_nonzero_side_2 (abc : Triangle) :
-  abc.p1 ≠ abc.p2
-  → is_equilateral abc
-  → abc.p3 ≠ abc.p1 :=
+lemma equilateral_triangle_nonzero_side_2 (a b c : Point) :
+     a ≠ b
+  → is_equilateral ⟨a, b, c⟩
+  → c ≠ a :=
 begin
-  rintros ne_a_b ⟨h₁,  h₂⟩ eq_b_c,
+  set abc : Triangle := ⟨a, b, c⟩,
+  rintros ne_a_b ⟨h₁, h₂⟩ eq_b_c,
   set sides := sides_of_triangle abc,
-  have h₃ := cong_trans sides.1 sides.2.1 sides.2.2 h₁ h₂,
-  have eq_1_3 : abc.p1 ⬝ abc.p3 ≃ abc.p3 ⬝ abc.p1, by apply segment_symm,
-  have cong_cc_bc : abc.p3⬝abc.p3 = abc.p1⬝abc.p3, by simp [eq_b_c],
-  have eq_a_b : abc.p1 = abc.p2,
-    { apply zero_segment (abc.p1 ⬝ abc.p2) abc.p3,
-      rw cong_cc_bc,
-      set a := abc.p1 ⬝ abc.p2,
-      set b := abc.p3 ⬝ abc.p1,
-      set c := abc.p1 ⬝ abc.p3,
-      have a_cong : a ≃ b, by tidy,
-      have b_cong : b ≃ c, by symmetry,
-      have abc_trans : a ≃ c, by apply cong_trans a b c a_cong b_cong,
-      assumption},
-  finish,
+  change sides.fst with a⬝b at h₁ h₂,
+  change sides.snd.fst with b⬝c at h₁ h₂,
+  change sides.snd.snd with c⬝a at h₁ h₂,
+  subst eq_b_c,
+  have eq_b_c : b = c := zero_segment _ _ h₂,
+  cc,
 end
 
 
