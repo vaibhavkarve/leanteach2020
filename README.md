@@ -16,7 +16,7 @@ More mathematical details available at the wiki:
 
 ## Project Goals: ##
 
-### Goal 0 : Teach Lean to Humans.###
+### Goal 0 : Teach Lean to Humans. ###
 Humans involved : **Alex Dolcos, Edward Kong, Lawrence Zhao, Nicholas
 Phillips, Vaibhav Karve**.
 
@@ -31,7 +31,7 @@ communication, Zoom for video meetings and CoCalc for sharing and
 collaboratively editing code.
 
 
-### Goal 1 : Teach Math to a Computer.###
+### Goal 1 : Teach Math to a Computer. ###
 
 The idea is that we can take a piece of familiar mathematics and
 translate it into code that is acceptable to Lean. Lean already
