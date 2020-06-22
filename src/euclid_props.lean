@@ -77,16 +77,12 @@ lemma ray_cut_length (r : Ray) (s : Segment) (h : r.base ≠ r.ext)
 
 
 
--- lemma ray_circle_intersect (AB : Ray) (ne : AB.base ≠ AB.ext) (C : Circle) (center : C.center = AB.base): 
--- ∃ (p : Point), (p ∈ circumference C) ∧ (p ∈ points_of_ray AB ne) :=
--- begin
--- have h := extend (Segment.mk AB.base AB.ext Segment.mk AB.ext ) CD? ne,
--- end
 -- Lemma needed for proposition 2
-lemma ray_circle_intersect (AB : Ray) (ne : AB.base ≠ AB.ext) (C : Circle) (p : Point) :
-  circle_interior p C
-  → p ∈ points_of_ray AB ne
-  → ∃ x : Point, x ∈ points_of_ray AB ne ∧ x ∈ circumference C := sorry
+lemma line_circle_intersect (a b : Point) (ne : a ≠ b) (C : Circle) :
+     circle_interior a C
+  → ∃ x : Point, lies_on x (line_of_points a b ne)
+                ∧ x ∈ circumference C
+                ∧ between x a b := sorry
 
 
 -- Use *have* for introducing new facts. Follow it up with a proof of
