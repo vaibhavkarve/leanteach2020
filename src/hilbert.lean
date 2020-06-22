@@ -57,15 +57,11 @@ structure Line : Type :=
 /- There are two "lies-on" relations.  We specify lies_on_line here as
    a constant.  lies_on_segment is defined later.-/
 
--- I.1, I.2 is implicit in constant
-axiom line_exists (p₁ p₂ : Point) (h : p₁ ≠ p₂) :
-  let l : Line := ⟨p₁, p₂, h⟩ in
-  lies_on_line p₁ l ∧ lies_on_line p₂ l
+constant lies_on_line (p : Point) (l : Line) : Prop
 
-axiom line_unique (p₁ p₂ : Point) (h : p₁ ≠ p₂) (l : Line) :
-     lies_on_line p₁ l
-  → lies_on_line p₂ l
-  → l = ⟨p₁, p₂, h⟩
+/- I.1, I.2 is implicit in the following axiom. -/
+axiom line_exists (p₁ p₂ : Point) (ne : p₁ ≠ p₂) (l : Line) :
+     lies_on_line p₁ l ∧ lies_on_line p₂ l ↔ l = ⟨p₁, p₂, ne⟩
 
 
 -- I.3 (part 1)
