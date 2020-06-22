@@ -76,6 +76,7 @@ def distinct {A : Type} (a b c : A) := a ≠ b ∧ b ≠ c ∧ c ≠ a
 def length (a : Segment) := distance a.p1 a.p2
 lemma distinct_swap (a b c : Point) : distinct a b c → distinct b c a :=
   by tidy
+axiom distance_congruent (s₁ s₂ : Segment) : s₁ ≃ s₂ ↔ length s₁ = length s₂ 
 
 -- Missing axiom:
 -----------------
