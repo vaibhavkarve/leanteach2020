@@ -237,14 +237,10 @@ end
 
 
 -- III.3
-axiom C_segment_add_trans (a b c a' b' c' : Point) (l l' : Line)
-  (hab : a ≠ b) (hbc : b ≠ c) (ha'b' : a' ≠ b') (hb'c' : b' ≠ c') :
-     segment_of_line (a⬝b) l
-  → segment_of_line (b⬝c) l
-  → segments_end_to_end (a⬝b) (b⬝c) hab hbc
-  → segment_of_line (a'⬝b') l'
-  → segment_of_line (b'⬝c') l'
-  → segments_end_to_end (a'⬝b') (b'⬝c') ha'b' hb'c'
+axiom C_segment_add_trans (a b c a' b' c' : Point)
+  (ne_ab : a ≠ b) (ne_bc : b ≠ c) (ne_a'b' : a' ≠ b') (ne_b'c' : b' ≠ c') :
+     segments_hinge (a⬝b) (b⬝c) ne_ab ne_bc
+  → segments_hinge (a'⬝b') (b'⬝c') ne_a'b' ne_b'c'
   → a⬝b ≃ a'⬝b'
   → b⬝c ≃ b'⬝c'
   → a⬝c ≃ a'⬝c'
