@@ -199,13 +199,13 @@ def is_in_interior_of_angle (α : Angle) (p : Point) (ne1 : α.base ≠ α.ext�
 -- This can be interpreted as saying "a line that enters a triangle
 -- from one side, must leave the triangle from one of the reamining
 -- two sides."
-axiom pasch (a b c: Point) (l : Line) (hab : a ≠ b) (hbc : b ≠ c) (hac : a ≠ c):
-  (¬collinear_points a b c)
-  → ¬(lies_on_line a l)
-  → ¬(lies_on_line b l)
-  → ¬(lies_on_line c l)
-  → intersect_line_segment l (a⬝b) hab
-  → intersect_line_segment l (a⬝c) hac ∨ intersect_line_segment l (b⬝c) hbc
+axiom pasch (a b c : Point) (l : Line) (ne_ab : a ≠ b) (ne_bc : b ≠ c) (ne_ac : a ≠ c) :
+     ¬ collinear_points a b c
+  → ¬ lies_on_line a l
+  → ¬ lies_on_line b l
+  → ¬ lies_on_line c l
+  → intersect_line_segment l (a⬝b) ne_ab
+  → intersect_line_segment l (a⬝c) ne_ac ∨ intersect_line_segment l (b⬝c) ne_bc
 
 -- # III. Congruence Axioms
 ---------------------------
