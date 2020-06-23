@@ -11,20 +11,32 @@
 ------# Video Starts -----------------
 
 
-2. ??
+2. Introduce gloals
+- Formalize euclid, hilbert, tarski
+- Learn lean
+
+
+3. Explain euclid
 
 
 
-3.
+4. Explore challenges of formalizing euclid in lean
+- missing axioms 
+- verbose proofs
+- lean being too slow
 
 
 
-4.
+
+5. Explain hilbert
 
 
 
+6. Explain hilbert in lean
 
-5.
+
+
+7. Future directions
 
 
 
