@@ -68,8 +68,7 @@ axiom line_exists (p₁ p₂ : Point) (ne : p₁ ≠ p₂) (l : Line) :
 -- This axiom is implicit in the definition of Line as a structure.
 -- We do not need to formalize this separately.
 -- I.3 (part 2)
-axiom no_line_on_three_points:
-  ∃ (a b c : Point), ¬∃ (l : Line),
+axiom no_line_on_three_points: ∃ (a b c : Point), ¬ ∃ (l : Line),
   (lies_on_line a l) ∧ (lies_on_line b l) ∧ (lies_on_line c l)
 
 -- A Ray is constructed by specifying two Points.
@@ -97,9 +96,10 @@ structure Triangle : Type :=
 (p₁ p₂ p₃ : Point)
 
 
--- For every Triangle, we can define get three Segments (its sides).
+-- For every Triangle, we get three Segments (its sides).
 def sides_of_triangle (t : Triangle) : vector Segment 3 :=
   ⟨[t.p₁⬝t.p₂, t.p₂⬝t.p₃, t.p₁⬝t.p₃], rfl⟩
+
 -- For every Triangle, we can define get three Segment Angles.
 def angles_of_triangle (t : Triangle) : vector Angle 3 :=
 ⟨[⟨t.p₂, t.p₁, t.p₃⟩, ⟨t.p₁, t.p₂, t.p₃⟩, ⟨t.p₂, t.p₃, t.p₁⟩], rfl⟩
@@ -108,21 +108,23 @@ def angles_of_triangle (t : Triangle) : vector Angle 3 :=
 -- where m ≥ n returns element (m mod n)
 
 
-def equilateral (t : Triangle) : Prop :=
-  let sides := sides_of_triangle t in
-  sides.nth 0 ≃ sides.nth 1 ∧ sides.nth 1 ≃ sides.nth 2
+def equilateral (abc : Triangle) : Prop :=
+  let sides := sides_of_triangle abc in
+  let ab := sides.nth 0 in
+  let bc := sides.nth 1 in
+  let ac := sides.nth 2 in
+  ab ≃ bc ∧ bc ≃ ac
 
--- # II. Order Axioms (Good)
+-- # II. Order Axioms
 ---------------------
 def collinear_points (a b c : Point) : Prop :=
   ∃ (l : Line), lies_on_line a l ∧ lies_on_line b l ∧ lies_on_line c l
 
 /- Note:
-   -----
-   I.1 and I.2 guarantee that a Line exists between each pair of points,
-   but it does not guarantee that the Lines corresponding to ab, ac, and bc are all
-   the same. For that, we need another axiom (II.1).
--/
+   ----- I.1 and I.2 guarantee that a Line exists between each pair of
+   points, but it does not guarantee that the Lines corresponding to
+   ab, ac, and bc are all the same. For that, we need another axiom
+   (II.1).  -/
 
 -- II.1 (part 1)
 @[symm] axiom B_symm (a b c : Point) : B a b c → B c b a
@@ -130,8 +132,8 @@ def collinear_points (a b c : Point) : Prop :=
 axiom B_implies_collinear (a b c : Point): B a b c → collinear_points a b c
 
 -- II.2
-axiom line_continuity (a c : Point) (h : a ≠ c):
-  let l : Line := ⟨a, c, h⟩ in
+axiom line_continuity (a c : Point) (ne : a ≠ c):
+  let l : Line := ⟨a, c, ne⟩ in
   ∃ (b : Point), lies_on_line b l ∧ B a b c
 
 -- II.3
@@ -140,18 +142,22 @@ axiom max_one_between (a b c : Point):
 
 -- ## Helpful definitions
 -------------------------
+
 -- Lies-on relation between Point and Segment.
-def lies_on_segment (x : Point) (s : Segment) (h : s.p₁ ≠ s.p₂) : Prop :=
-  B s.p₁ x s.p₂ ∧ lies_on_line x ⟨s.p₁, s.p₂, h⟩
+def lies_on_segment (x : Point) (s : Segment) (ne : s.p₁ ≠ s.p₂) : Prop :=
+  B s.p₁ x s.p₂ ∧ lies_on_line x ⟨s.p₁, s.p₂, ne⟩
+
 -- Criterion for two Segments intersecting at a Point.
-def intersect_segment (s₁ s₂ : Segment) (h1 : s₁.p₁ ≠ s₁.p₂) (h2 : s₂.p₁ ≠ s₂.p₂) : Prop :=
-  ∃ x : Point, lies_on_segment x s₁ h1 ∧ lies_on_segment x s₂ h2
+def intersect_segment (s₁ s₂ : Segment) (ne1 : s₁.p₁ ≠ s₁.p₂) (ne2 : s₂.p₁ ≠ s₂.p₂) : Prop :=
+  ∃ x : Point, lies_on_segment x s₁ ne1 ∧ lies_on_segment x s₂ ne2
+
 -- Criterion for two Lines intersecting at a Point.
 def intersect_line (l₁ l₂ : Line) : Prop :=
   ∃ x : Point, lies_on_line x l₁ ∧ lies_on_line x l₂
+
 -- Criterion for a Segment intersecting with a Line.
-def intersect_line_segment (l: Line) (s : Segment) (H : s.p₁ ≠ s.p₂) : Prop :=
-  ∃ x : Point, lies_on_line x l ∧ lies_on_segment x s H
+def intersect_line_segment (l: Line) (s : Segment) (ne : s.p₁ ≠ s.p₂) : Prop :=
+  ∃ x : Point, lies_on_line x l ∧ lies_on_segment x s ne
 -- Condition for a Segment to be a part of a given Line.
 def segment_of_line (s : Segment) (l : Line) : Prop :=
   lies_on_line s.p₁ l ∧ lies_on_line s.p₂ l
