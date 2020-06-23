@@ -219,12 +219,12 @@ axiom segment_copy' (a b p marker : Point) (ne_a_b : a ≠ b) (ne_p_mark : p ≠
     lies_on_line q pm ∧ a⬝b ≃ p⬝q
 
 -- III.1 Part 2
-@[symm] axiom C_segment_symm (s₁ s₂ : Segment) : s₁ ≃ s₂ → s₂ ≃ s₁
-axiom segment_swap (x y : Point) : x⬝y ≃ y⬝x
+@[symm] axiom C_segment_symm {s₁ s₂ : Segment} : s₁ ≃ s₂ → s₂ ≃ s₁
+axiom segment_swap {x y : Point} : x⬝y ≃ y⬝x
 
 
 -- III.2
-@[trans] axiom C_segment_trans (u v w x y z : Point) : (u⬝v ≃ z⬝w) → (u⬝v ≃ x⬝y) → z⬝w ≃ x⬝y
+@[trans] axiom C_segment_trans {u v w x y z : Point} : (u⬝v ≃ z⬝w) → (u⬝v ≃ x⬝y) → z⬝w ≃ x⬝y
 
 
 -- Congruence of segments is reflexive
