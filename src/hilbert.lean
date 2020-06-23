@@ -209,25 +209,14 @@ axiom pasch (a b c : Point) (l : Line) (ne_ab : a ≠ b) (ne_bc : b ≠ c) (ne_a
 
 -- # III. Congruence Axioms
 ---------------------------
--- III.1 Part 1
--- This says that we can extend a given Segment in only two ways --
--- one for each side of l.
-constant segment_copy (a b a' : Point) (l l' : Line) :
-    lies_on_line a l
-  → lies_on_line b l
-  → lies_on_line a' l'
-  → Point × Point
+-- III.1 Part 1 This says that we can extend a given Segment `a⬝b` in
+-- only two ways: one for each side of `p`.
+constant segment_copy {a b p marker : Point} : a ≠ b → p ≠ marker → Point
 
-axiom segment_copy' (a b a' : Point) (l l' : Line)
-  (hal : lies_on_line a l) (hbl: lies_on_line b l) (ha'l' : lies_on_line a' l') :
-  let points :=  segment_copy a b a' l l' hal hbl ha'l' in
-  let x : Point := points.1 in
-  let y : Point := points.2 in
-      x ≠ y
-    ∧ lies_on_line x l'
-    ∧ a⬝b ≃ a'⬝x
-    ∧ lies_on_line y l'
-    ∧ a⬝b ≃ a'⬝y
+axiom segment_copy' (a b p marker : Point) (ne_a_b : a ≠ b) (ne_p_mark : p ≠ marker) :
+  let q : Point :=  segment_copy ne_a_b ne_p_mark in
+  let pm : Line := ⟨p, marker, ne_p_mark⟩ in
+    lies_on_line q pm ∧ a⬝b ≃ p⬝q
 
 -- III.1 Part 2
 @[symm] axiom C_segment_symm (s₁ s₂ : Segment) : s₁ ≃ s₂ → s₂ ≃ s₁
