@@ -190,6 +190,11 @@ def side_of_line (l : Line) (marker : Point) (x : Point) : Prop :=
 def side_of_point (p marker : Point) (ne : p ≠ marker) : set Point :=
   {x : Point | B p marker x ∨ B p x marker}
 
+-- Interior points of an Angle
+def is_in_interior_of_angle (α : Angle) (p : Point) (ne1 : α.base ≠ α.ext₁) (ne2 : α.base ≠ α.ext₂) : Prop :=
+    side_of_line ⟨α.base, α.ext₁, ne1⟩ α.ext₂ p
+  ∧ side_of_line ⟨α.base, α.ext₂, ne2⟩ α.ext₁ p
+
 -- II.4 Pasch's axiom
 -- This can be interpreted as saying "a line that enters a triangle
 -- from one side, must leave the triangle from one of the reamining
