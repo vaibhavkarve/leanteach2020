@@ -180,6 +180,15 @@ def lie_on_same_side (a b : Point) (l : Line) : Prop :=
 def lie_on_opposite_sides (a b : Point) (l : Line) : Prop :=
    ¬ lie_on_same_side a b l
 
+-- Define a particular side of a Line (using a Point `marker` to mark
+-- our choice of side).
+def side_of_line (l : Line) (marker : Point) (x : Point) : Prop :=
+  lie_on_same_side x marker l
+
+-- Define a particular side of a Point `p` on a Line `⟨p, marker, ne⟩`
+-- (using a Point `marker` to mark our choice of side).
+def side_of_point (p marker : Point) (ne : p ≠ marker) : set Point :=
+  {x : Point | B p marker x ∨ B p x marker}
 
 -- II.4 Pasch's axiom
 -- This can be interpreted as saying "a line that enters a triangle
