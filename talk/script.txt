@@ -1,0 +1,32 @@
+#+TITLE: Script for presentation of LeanTeach 2020
+
+1. Vaibhav (opening remarks)
+   - just one or two sentences about the project.
+
+------# Video Starts -----------------
+
+
+2. ??
+
+
+
+3.
+
+
+
+4.
+
+
+
+
+5.
+
+
+
+
+
+------# Video Ends -----------------
+
+6. Vaibhav : Q&A moderation
+
+
