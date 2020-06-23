@@ -246,19 +246,17 @@ axiom C_segment_add_trans (a b c a' b' c' : Point)
   → a⬝c ≃ a'⬝c'
 
 
--- III.4
--- This axiom says that a given angle can be copied over to a
--- new location (the point base) in a unique manner (unique as long as we
--- keep track of which side of the line we are on).
-constant angle_congruent (α : Angle) (base ext : Point) : Point × Point
+-- III.4 This axiom says that a given angle can be copied over to a
+-- new location (the point base) in a unique manner (unique as long as
+-- we keep track of which side of the Line `⟨base, p1⟩` we are on).
+-- We keep track of the side using `marker`.
+constant angle_copy (α : Angle) (base p1 marker : Point) : Point
 
-axiom angle_congruent' (α : Angle) (base ext : Point) :
-  let exts := angle_congruent α base ext in
-  let r₁ : Ray := ⟨base, exts.1⟩ in
-  let r₂ : Ray := ⟨base, exts.2⟩ in  
-    r₁ ≠ r₂
-  ∧ α ≃ ⟨r₁.ext, base, ext⟩
-  ∧ α ≃ ⟨r₂.ext, base, ext⟩
+axiom angle_copy' (α : Angle) (base p1 marker : Point) (ne1 : base ≠ p1) :
+  let p2 : Point := angle_copy α base p1 marker in
+  let α' : Angle := ⟨p1, base, p2⟩ in
+  decidable.by_cases 
+  α ≃ α' ∧ ∀ x : Point, is_in_interior_of_angle α' x ne1
 
 
 -- III.5 (wikipedia)
