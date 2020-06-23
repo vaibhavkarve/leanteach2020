@@ -171,14 +171,14 @@ def segments_hinge (s₁ s₂ : Segment) (ne₁ : s₁.p₁ ≠ s₁.p₂) (ne�
 -- Dinifinition of parallel Lines.
 def parallel_lines (l₁ l₂ : Line) : Prop :=
   ¬∃ (a : Point), lies_on_line a l₁ ∧ lies_on_line a l₂
+
 -- Condition for two Points to lie on the same side of a Line.
-def lie_on_same_side (a b : Point) (l : Line) (h : a ≠ b) : Prop :=
-   ¬ intersect_line_segment l (a⬝b) h
+def lie_on_same_side (a b : Point) (l : Line) : Prop :=
+  decidable.by_cases (λ eq : a = b, true) (λ ne, ¬ intersect_line_segment l (a⬝b) ne)
+
 -- Condition for two Points to lie on opposite sides of a Line.
-def lie_on_opposite_sides (a b : Point) (l : Line) (h : a ≠ b) : Prop :=
-   ¬ lie_on_same_side a b l h
-def side_of_line (l : Line) (p : Point) : ¬ lies_on_line p l → set Point :=
-  sorry -- {x : Point | lie_on_same_side x p l sorry}
+def lie_on_opposite_sides (a b : Point) (l : Line) : Prop :=
+   ¬ lie_on_same_side a b l
 
 
 -- II.4 Pasch's axiom
