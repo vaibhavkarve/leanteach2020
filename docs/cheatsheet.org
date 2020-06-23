@@ -15,8 +15,8 @@ Key:
 - B : Point → Point → Point
 - C (≃) : A → A → Type
 - lies_on_line : Point → Line → Prop
-- segment_copy : Point^{3} → Line^{2} → lies_on_line^{3} → Point^{2}
-- angle_congruent : Angle → Point → Ray → eq → Ray^{2}
+- segment_copy : Point^{4} → ne^{2} → Point
+- angle_copy : Angle → Point^{3} → Point
 - mk_parallel : Point → Line → ¬lies_on_line → Line
 
 ** structure
@@ -38,7 +38,7 @@ Key:
 - intersect_segment : Segment^{2} → ne^{2} → Prop
 - intersect_line_segment : Line → Segment → ne → Prop
 - segment_of_line : Segment → Line → Prop
-- segments_end_to_end : Segment^{2} → ne^{2} → Prop
+- segments_hinge : Segment^{2} → ne^{2} → Prop
 - parallel_lines : Line^{2} → Prop
 - supplementary_angles : Angle^{2} → ne^{2} → Prop
 - mk_supplementary_angle : Angle → ne → Angle
@@ -47,9 +47,11 @@ Key:
 - circumference : Circle → set Point
 - congruent_triangle : Triangle^{2} → Prop
 - Measure : Type
-- lie_on_same_side : Point^{2} → Line → ne → Prop
-- lie_on_opposite_sides : Point^{2} → Line → ne → Prop
-
+- lie_on_same_side : Point^{2} → Line → Prop
+- lie_on_opposite_sides : Point^{2} → Line → Prop
+- side_of_line : Line → Point^{2} → Prop
+- side_of_point : Point^{2} → ne → set Point
+- is_in_interior_of_angle : Angle → Point → ne^{2} → Prop
 
 ** axiom
 *** I.1 line_exists : Point^{2} →Line → ne → (lies_on_line^{2} ↔ Line = Line)
@@ -61,12 +63,12 @@ Key:
 *** O.3 max_one_between : Points^{3} → collinear_points → B ⊕ B ⊕ B
 *** O.4 pasch : Point^{3} → Line → ne^{3} → ¬collinear_points → (¬lies_on_line)^{3} → intersect_line_segment → intersect_line_segment ⊕ intersect_line_segment
 *** C.1
-**** segment_copy' : Point^{3} → Line^{2} → lies_on_line^{3} → ne ∧ lies_on_line^{2} ∧ (Segment ≃ Segment)^{2}
+**** segment_copy' : Point^{4} → ne^{2} → lies_on_line ∧ Segment ≃ Segment
 **** *@[symm]* C_segment_symm : Segment^{2} → Segment ≃ Segment → Segment ≃ Segment
 **** segment_swap : Point^{2} → Segment ≃ Segment
 *** C.2 *[@trans]* C_segment_trans : Point^{6} → (Segment ≃ Segment)^{2} → Segment ≃ Segment
-*** C.3 C_segment_add_trans : Point^{6} → Line^{2} → ne^{4} → segment_of_line^{4} → segment_end_to_end^{2} → (Segment ≃ Segment)^2 → Segment ≃ Segment
-*** C.4 angle_congruent' : Angle → Point^{2} → ne ∧ (Angle ≃ Angle)^{2}
+*** C.3 C_segment_add_trans : Point^{6} → ne^{4} → segment_hinge^{2} → (Segment ≃ Segment)^2 → Segment ≃ Segment
+*** TODO C.4 angle_copy' : Angle → Point^{3} → ??
 *** C.5
 **** *@[trans]* C_angle_trans : Angle^{3} → (Angle ≃ Angle)^{2} → Angle ≃ Angle
 **** *@[symm]* angle_symm : Point^{3} → Angle ≃ Angle
