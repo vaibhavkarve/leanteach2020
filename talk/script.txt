@@ -1,7 +1,12 @@
 #+TITLE: Script for presentation of LeanTeach 2020
 
 1. Vaibhav (opening remarks)
-   - just one or two sentences about the project.
+
+- I am pleased to introduce our project of formalizing Geometry in Lean.
+- This project was interesting because it uses a completely new
+  programming language called Lean -- we will have more details in
+  the video.
+- This reseach was a combination of Mathematics and CS.
 
 ------# Video Starts -----------------
 
