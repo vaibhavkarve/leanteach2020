@@ -158,13 +158,17 @@ def intersect_line (l₁ l₂ : Line) : Prop :=
 -- Criterion for a Segment intersecting with a Line.
 def intersect_line_segment (l: Line) (s : Segment) (ne : s.p₁ ≠ s.p₂) : Prop :=
   ∃ x : Point, lies_on_line x l ∧ lies_on_segment x s ne
+
 -- Condition for a Segment to be a part of a given Line.
 def segment_of_line (s : Segment) (l : Line) : Prop :=
   lies_on_line s.p₁ l ∧ lies_on_line s.p₂ l
--- Condition for two segments being on the same line end-to-end.
-def segments_end_to_end (s₁ s₂ : Segment) (h₁ : s₁.p₁ ≠ s₁.p₂) (h₂ : s₂.p₁ ≠ s₂.p₂) : Prop :=
-  (s₁.p₂ = s₂.p₁) ∧ (∀ x : Point, lies_on_segment x s₁ h₁ ∧ lies_on_segment x s₂ h₂ → x = s₁.p₂)
--- Relationship between two parallel lines
+
+-- Condition for two segments to have only one point in common.  We
+-- can think of these segments as being end-to-end (forming an angle).
+def segments_hinge (s₁ s₂ : Segment) (ne₁ : s₁.p₁ ≠ s₁.p₂) (ne₂ : s₂.p₁ ≠ s₂.p₂) : Prop :=
+  ∀ x : Point, lies_on_segment x s₁ ne₁ ∧ lies_on_segment x s₂ ne₂ → x = s₁.p₂ ∧ x = s₂.p₁
+
+-- Dinifinition of parallel Lines.
 def parallel_lines (l₁ l₂ : Line) : Prop :=
   ¬∃ (a : Point), lies_on_line a l₁ ∧ lies_on_line a l₂
 -- Condition for two Points to lie on the same side of a Line.
