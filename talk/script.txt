@@ -22,7 +22,7 @@
 
 
 
-4. Explore challenges of formalizing euclid in lean (NIcholas)
+4. Explore challenges of formalizing euclid in lean (Nicholas)
 - missing axioms 
 - verbose proofs
 - lean being too slow
@@ -31,7 +31,12 @@
 
 
 5. Explain hilbert (Lawrence)
-
+- Hilbert established a set of 20 assumptions as a foundation for a
+  modern examination of Euclidean geometry,
+- Most of these axioms relate to planar geometry, and we were
+  formalize almost all of those into Lean.
+- Hilbert's axioms create a synthetic geometry system, so he tends to
+  avoid certain definitions in proofs (such as distance)
 
 
 6. Explain hilbert in lean (Lawrence)
@@ -39,7 +44,36 @@
 
 
 7. Challenges (Edward)
+- In trying to formalize these axioms and propositions in Lean, we ran
+  into several problems.
+- Cooperative Platforms in Lean were difficult to handle: Examples
+  including CoCalc and VsCode Liveshare.
+- While Cocalc became extremely slow when multiple people worked on it
+  at once, Liveshare required frequent restarts because of bugs in
+  lean.
+- In addition, liveshare would only display the Lean Info or the
+  tactic state to the host, making it difficult to understand what
+  errors were occuring to everyone else.
+- Missing axioms and propositions were required to prove the
+  propositions that both Euclid and Hilbert created.
+- It especially became difficult trying to teach Lean the concept of
+  "length" or "distance".
+- Lastly, while writing proofs in Lean was easy, making new
+  definitions for those proofs was arduous.
+
+
 8. Future directions (Edward)
+- In the future, it woud be best to first streamline the definitions
+  of Euclid's and Hilbert's axioms
+- And as shown, many more propositions need to be proven.
+- The final goal in all of this is to utilize these propositions to
+  finally prove the pythagorean theorem through Lean.
+- Following, we plan to add axioms of other mathematicians such as
+  Tarski and Birkhoff.
+- In mastering plane geometry, we also hope to move to explore more
+  advanced geometry like hyperbolic and spherical geometry.
+- In the end, Lean is also one of many proof-checkers.  We plan to
+  also explore others of different syntax such as Coq and HOL-Light.
 
 
 
@@ -47,6 +81,6 @@
 
 ------# Video Ends -----------------
 
-6. Vaibhav : Q&A moderation
+9. Vaibhav : Q&A moderation
 
 
