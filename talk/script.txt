@@ -3,9 +3,11 @@
 * Opening remarks (Vaibhav)
 - I am pleased to introduce our project of formalizing Geometry in
   Lean.
+
 - This project was interesting because it uses a completely new
   programming language called Lean -- we will have more details in the
   video.
+
 - This reseach was a combination of Mathematics and CS.
 
 
@@ -15,7 +17,9 @@
 * Introduce goals (Alex)
 - Introduce Interactive Theorem Proving, Curry-Howard Isomorphism, and
   Lean
+
 - Learn lean
+
 - Formalize euclid, hilbert, tarski
 
 
@@ -23,14 +27,18 @@
 * Explain Euclid (Nicholas)
 - Historically, this was the first successful attempt at creating a
   foundation of geometry.
+
 - Euclid based his definition of geometry on physical constructions
   with just a compass and straightedge, allowing him to define points,
   lines, rays, and circles.
+
 - Euclid also defined a set of fundamental relations, like
   betweenness, congruence, and interesection.
+
 - He did not define any coordinate system or units of distance like we
   use in analytical geometry, he only defined ways to compare line
   segments as less than, equal to, or greater than each other.
+
 - Euclid also defined a set of axioms for 3 dimensional geometry, but
   we focused on 2 dimensional geometry for this project.
 
@@ -39,26 +47,37 @@
 * Explore challenges of formalizing Euclid in Lean (Nicholas)
 - When formalizing euclidian geometry in lean we ran into several
   challenges.
+
 - First, Euclid relied on physical drawings to define relations.
+
 - He assumes that two circles intersect when they their centers lie on
   each other's radii, as the diagram shows, but Euclid never defined an
   axiom stating this to be true or gave any justification for it.
+
 - We had to introduce axioms for intersections between circles and
   other primative objects to account for this.
+
 - Euclid also does not rigorusly define distance, instead relying on
   out understanding of distance as it works in the real world.
+
 - We had to introduce axioms stating that distance is a non negative
   real number to formalize euclid's understanding.
+
 - Once we formalized all of euclid's assumptions, we ran into problems
   with lean.
+
 - Euclid's proofs are based on construction with a compass
   and straightedge.
+
 - When translating his proofs into the linear grammar of lean they
   became very verbose.
+
 - Euclids's more complicated postulates take more thank 150 lines of
   code per proposition to formalize!
+
 - As we wrote longer proofs, lean became slower to the point that it
   would take 10 seconds to see the results of our changes.
+
 - Eventually, lean became unusable slow for long proofs and we had to
   transition to from using cloud platforms to using local Lean
   installations on Github.
@@ -67,43 +86,65 @@
 * Explain hilbert (Lawrence)
 - Parallel to formalizing Euclid's work in Lean, we were
   simultaneously working on Hilbert's axioms as well.
+
 - Given the old age of Euclid's formalization of geometry, at the
   beginning of the 20th century Hilbert established a set of 20
-  assumptions as a foundation for a modern examination of Euclidean
-  geometry and several basic relationships, like congruence and
-  whether a point "lies on" a line.
-- Hilbert included axioms for higher dimensional geometry, but for
-  this project we decided to focus on 2D geometry, which the majority
-  of his axioms relate to.
-- With some slight modifications, we were formalize almost all of the
-  axioms relating to planar geometry into Lean, except the last, which
-  we are unsure can actually be implemented.
-- Like Euclid, Hilbert's axioms create a synthetic geometry system, so
-  he tends to avoid certain definitions (such as distance). So, we
-  introduced these notions in ways that built on his system.
+  assumptions as a foundation for a more modern examination of Euclidean
+  geometry.
+
+- Just like in the case of Euclid, we only focused on 2D geometry in
+  Hilbert's case.
+
+- With some slight modifications, we were able to formalize all but
+  one of the axioms relating to planar geometry into Lean.
+
+- Hilbert's axioms create a synthetic geometry system, so he tends to
+  avoid certain definitions (such as distance). We had to introduce
+  these notions in ways that were compatible with his system.
 
 * Explain hilbert in lean (Lawrence)
-- In order to prove more complicated facts in Lean, we needed to create various structures and relations in the context of Hilbert's primitive ideas.
-- For example, we needed to define triangles and a supplementary relationship between angles.
-- Proofs in Lean involved using a combination of proof tactics built into the language and the axioms we formalized.
-- As in Euclidean geometry, we found that proofs in Lean for Hilbert's geometry were quite verbose. Proofs that may appear to be easy to prove on paper sometimes were challenging to prove to a computer.
-- To illustrate, here is a proof of the fact that if two distinct lines intersect, they do so at exactly one point.
+- In order to prove more complicated facts in Lean, we needed to
+  create various structures and relations in the context of Hilbert's
+  primitive ideas.
+
+- For example, we needed to define triangles and a definition of
+  supplementary angles.
+
+- Proofs in Lean involved using a combination of proof tactics built
+  into the language and the axioms we formalized.  We can think of
+  these as commands like "simplify" or "rewrite using hypothesis" that
+  we can give to lean and lean then reports back the results of these
+  operations to us.
+
+- As in Euclidean geometry, we found that proofs in Lean for Hilbert's
+  geometry were quite verbose. Proofs that may appear to be easy to
+  prove on paper sometimes were challenging to prove to a computer.
+
+- To illustrate, here is a proof of the fact that if two distinct
+  lines intersect, they do so at exactly one point.
+
 
 * Challenges (Edward)
 - In trying to formalize these axioms and propositions in Lean, we ran
   into several problems.
+
 - Cooperative Platforms in Lean were difficult to handle: Examples
   including CoCalc and VsCode Liveshare.
+
 - While Cocalc became extremely slow when multiple people worked on it
   at once, Liveshare required frequent restarts because of bugs in
   lean.
+
 - In addition, liveshare would only display the Lean Info or the
   tactic state to the host, making it difficult to understand what
   errors were occuring to everyone else.
+
 - Missing axioms and propositions were required to prove the
   propositions that both Euclid and Hilbert created.
+
 - It especially became difficult trying to teach Lean the concept of
   "length" or "distance".
+
 - Lastly, while writing proofs in Lean was easy, making new
   definitions for those proofs was arduous.
 
