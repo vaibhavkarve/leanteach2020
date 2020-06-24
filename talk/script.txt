@@ -11,16 +11,18 @@
 ------# Video Starts -----------------
 
 
-2. Introduce gloals
-- Formalize euclid, hilbert, tarski
+2. Introduce goals (Alex)
+- Introduce Interactive Theorem Proving, Curry-Howard Isomorphism, and Lean 
 - Learn lean
-
-
-3. Explain euclid
+- Formalize euclid, hilbert, tarski
 
 
 
-4. Explore challenges of formalizing euclid in lean
+3. Explain euclid (Nicholas)
+
+
+
+4. Explore challenges of formalizing euclid in lean (NIcholas)
 - missing axioms 
 - verbose proofs
 - lean being too slow
@@ -28,15 +30,16 @@
 
 
 
-5. Explain hilbert
+5. Explain hilbert (Lawrence)
 
 
 
-6. Explain hilbert in lean
+6. Explain hilbert in lean (Lawrence)
 
 
 
-7. Future directions
+7. Challenges (Edward)
+8. Future directions (Edward)
 
 
 
