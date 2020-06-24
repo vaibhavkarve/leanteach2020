@@ -6,23 +6,67 @@
 
 - This project was interesting because it uses a completely new
   programming language called Lean -- we will have more details in the
-  video.
+  video -- and because it is required students to lean learn both math
+  and CS concepts to make progress.
 
-- This reseach was a combination of Mathematics and CS.
-
+- I'll now hand it over to Alex, Nicholas, Lawrence and Edward to
+  explain the project in their video.
 
 * ------# Video Starts -----------------
 
 
 * Introduce goals (Alex)
-- Introduce Interactive Theorem Proving, Curry-Howard Isomorphism, and
-  Lean
+- Hello everyone, this is our presentation on Interactive Theorem
+  Proving in Lean.
 
-- Learn lean
+- An Interactive Theorem Prover is a software tool that can help us
+  write and check a formal proof.  Its goal is to bridge the gap
+  between manual human proving and automatic theorem proving.
 
-- Formalize euclid, hilbert, tarski
+- But how does this really work? Well, the theory behind it it boils
+  down to something called the Curry-Howard Isomorphism.
 
+- On one side we have pure mathematics which deals with Propositions,
+  or logical expressions, in the context of Set Theory.
 
+- On the other hand, we have computer science which deals with
+  programs made up of Types, like integers, booleans etc.
+
+- What the Curry-Howard equivalence does is equate these propositions
+  from pure math with the types from computer science by saying that
+  given a proposition, we can always associate a type or program that
+  proves it.
+
+- This next slide shows a figure that helps better visualize how Lean
+  balances ideas from Math and Computer Science. Moving on, Lean also
+  has its drawbacks.
+
+- And the specific Interactive Theorem Prover that we used was Lean, a
+  newer theorem prover compared to more established ones like Coq and
+  Isabelle.
+
+- Using the Curry-Howard idea, Lean operates by having a human user
+  define a mathematical proof, while a computer checks its accuracy.
+
+- And the special thing about Lean is that if the computer proves or
+  disproves any part of the statement, it is always correct.  Lean
+  makes it impossible to enter incorrect mathematics the program.  So
+  we have a guarantee that we can trust the math we are putting into
+  Lean.
+
+- For instance, the code behind simple mathematical results is often
+  tedious and difficult. And this influenced our project of choice. We
+  wanted to study a topic that is highly familiar to us, so that the
+  process of transitioning between written proof and code is much
+  easier. We also wanted to study a topic that isn't already included
+  in Mathlib (which is Lean’s math documentation).
+
+- For reference, Lean already understands several different fields of
+  mathematics.
+
+- We decided to focus our efforts on formalizing axiomatic geometry of
+  3 types into Lean syntax: Euclid's axioms, Hilbert's axioms, and
+  Tarski's axioms.
 
 * Explain Euclid (Nicholas)
 - Historically, this was the first successful attempt at creating a
