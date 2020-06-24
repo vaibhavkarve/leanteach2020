@@ -102,6 +102,7 @@
   avoid certain definitions (such as distance). We had to introduce
   these notions in ways that were compatible with his system.
 
+
 * Explain hilbert in lean (Lawrence)
 - In order to prove more complicated facts in Lean, we needed to
   create various structures and relations in the context of Hilbert's
@@ -126,21 +127,24 @@
 
 * Challenges (Edward)
 - In trying to formalize these axioms and propositions in Lean, we ran
-  into several problems.
+  into several challenges.
 
-- Cooperative Platforms in Lean were difficult to handle: Examples
-  including CoCalc and VsCode Liveshare.
+- Online platforms that offered collaborative editing of Lean code
+  were difficult to handle: we tried using CoCalc, VsCode Liveshare
+  and simple Zoom screensharing.
 
 - While Cocalc became extremely slow when multiple people worked on it
   at once, Liveshare required frequent restarts because of bugs in
-  lean.
+  lean.  These tools let everyone see the code but did not give us
+  fast and responsive feedback needed for code development.
 
-- In addition, liveshare would only display the Lean Info or the
-  tactic state to the host, making it difficult to understand what
-  errors were occuring to everyone else.
+- We managed to solve this issue only by moving to Github and sharing
+  our code with each other via Git commits.
 
-- Missing axioms and propositions were required to prove the
-  propositions that both Euclid and Hilbert created.
+- On the mathematical side of things, there were several missing
+  axioms and propositions. We had to figure out exactly what was
+  missing and what needed to be added so we could complete proofs of
+  propositions in both the Euclid and Hilbert system.
 
 - It especially became difficult trying to teach Lean the concept of
   "length" or "distance".
@@ -150,17 +154,26 @@
 
 
 * Future directions (Edward)
-- In the future, it woud be best to first streamline the definitions
-  of Euclid's and Hilbert's axioms
-- And as shown, many more propositions need to be proven.
+- future work would involve streamlining the definitions of Euclid's
+  and Hilbert's axioms.
+
+- And we mentioned, Euclid proved 48 different propositions using his
+  axioms. We have many more propositions that we need to be proven.
+
 - The final goal in all of this is to utilize these propositions to
-  finally prove the pythagorean theorem through Lean.
-- Following, we plan to add axioms of other mathematicians such as
-  Tarski and Birkhoff.
-- In mastering plane geometry, we also hope to move to explore more
-  advanced geometry like hyperbolic and spherical geometry.
-- In the end, Lean is also one of many proof-checkers.  We plan to
-  also explore others of different syntax such as Coq and HOL-Light.
+  prove the pythagorean theorem in Lean (this is Proposition #48 of
+  Euclid).
+
+- Later, we can also add other geometry axioms systems like those of
+  Tarski and Birkhoff.  It will be great if we are able to build a
+  single unified API for all these systems -- Euclid, Hilbert, Tarski,
+  and Birkhoff.
+
+- After formalizing plane geometry, we could also explore more
+  advanced geometries like hyperbolic and spherical geometry.
+
+- In the end, Lean is one of many proof-checkers.  It could prove
+  useful to explore other systems like Coq and HOL-Light.
 
 
 * ------# Video Ends -----------------
