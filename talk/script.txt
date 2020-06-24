@@ -1,62 +1,95 @@
 #+TITLE: Script for presentation of LeanTeach 2020
 
-1. Vaibhav (opening remarks)
-
-- I am pleased to introduce our project of formalizing Geometry in Lean.
+* Opening remarks (Vaibhav)
+- I am pleased to introduce our project of formalizing Geometry in
+  Lean.
 - This project was interesting because it uses a completely new
-  programming language called Lean -- we will have more details in
-  the video.
+  programming language called Lean -- we will have more details in the
+  video.
 - This reseach was a combination of Mathematics and CS.
 
-------# Video Starts -----------------
+
+* ------# Video Starts -----------------
 
 
-2. Introduce goals (Alex)
-- Introduce Interactive Theorem Proving, Curry-Howard Isomorphism, and Lean 
+* Introduce goals (Alex)
+- Introduce Interactive Theorem Proving, Curry-Howard Isomorphism, and
+  Lean
 - Learn lean
 - Formalize euclid, hilbert, tarski
 
 
 
-3. Explain euclid (Nicholas)
-- Euclidian geometry was the first foundation of geometry.
-- Euclid based his definition of geometry on physical constructions with just a compass and straightedge, allowing him to define points, lines, rays, and circles.
-- Euclid also defined a set of fundamental relations, like betweenness, congruence, and interesection.
-- He did not define any coordiante system or units of distance like we use in anyalitical geometry, he only defined ways to compare line segments as less than, equal to, or greater than eachother.
-- Euclid also defined a set of axioms for 3 dimensional geometry, but we focused on 2 dimensional geometry for this project.
+* Explain Euclid (Nicholas)
+- Historically, this was the first successful attempt at creating a
+  foundation of geometry.
+- Euclid based his definition of geometry on physical constructions
+  with just a compass and straightedge, allowing him to define points,
+  lines, rays, and circles.
+- Euclid also defined a set of fundamental relations, like
+  betweenness, congruence, and interesection.
+- He did not define any coordinate system or units of distance like we
+  use in analytical geometry, he only defined ways to compare line
+  segments as less than, equal to, or greater than each other.
+- Euclid also defined a set of axioms for 3 dimensional geometry, but
+  we focused on 2 dimensional geometry for this project.
 
 
 
-4. Explore challenges of formalizing euclid in lean (Nicholas)
-- When formalizing euclidian geometry in lean we ran in to several challenges.
-- First, euclid relied on physical drawings to define relations.
-- He assumes that two circles intersect when they their centers lie on eachother's radii, as the diagram shows, but Euclid never defined an axiom stating this to be true.
-- We had to introduce axioms for intersections between circles and other primative objects to account for this.
-- Euclid also does not rigorusly define distance, instead relying on out understanding of distance as it works in the real world.
-- We had to introduce axioms stating that distance is a non negative real number to formalize euclid's understanding.
-- Once we formalized all of euclid's assumptions, we ran into problems with lean.
-- By nature, euclid's proofs are based on construction with a compass and straightedge.
-- When translating his proofs into the linear grammar of lean they became very verbose.
-- Euclids more complicated postulates took over a page of lean code to formalize.
-- As we wrote longer proofs, lean became slower to the point that it would take 10 seconds to see the results of our changes.
-- Eventually, lean became unusable slow for long proofs.
+* Explore challenges of formalizing Euclid in Lean (Nicholas)
+- When formalizing euclidian geometry in lean we ran into several
+  challenges.
+- First, Euclid relied on physical drawings to define relations.
+- He assumes that two circles intersect when they their centers lie on
+  each other's radii, as the diagram shows, but Euclid never defined an
+  axiom stating this to be true or gave any justification for it.
+- We had to introduce axioms for intersections between circles and
+  other primative objects to account for this.
+- Euclid also does not rigorusly define distance, instead relying on
+  out understanding of distance as it works in the real world.
+- We had to introduce axioms stating that distance is a non negative
+  real number to formalize euclid's understanding.
+- Once we formalized all of euclid's assumptions, we ran into problems
+  with lean.
+- Euclid's proofs are based on construction with a compass
+  and straightedge.
+- When translating his proofs into the linear grammar of lean they
+  became very verbose.
+- Euclids's more complicated postulates take more thank 150 lines of
+  code per proposition to formalize!
+- As we wrote longer proofs, lean became slower to the point that it
+  would take 10 seconds to see the results of our changes.
+- Eventually, lean became unusable slow for long proofs and we had to
+  transition to from using cloud platforms to using local Lean
+  installations on Github.
 
 
-5. Explain hilbert (Lawrence)
-- Given the old age of Euclid's formalization of geometry, at the beginning of the 20th century Hilbert established a set of 20 assumptions as a foundation for a modern examination of Euclidean geometry and several basic relationships, like congruence and whether a point "lies on" a line.
-- Hilbert included axioms for higher dimensional geometry, but for this project we decided to focus on 2D geometry, which the majority of his axioms relate to.
-- With some slight modifications, we were formalize almost all of the axioms relating to planar geometry into Lean, except the last, which we are unsure can actually be implemented.
-- Like Euclid, Hilbert's axioms create a synthetic geometry system, so he tends to avoid certain definitions (such as distance). So, we introduced these notions in ways that built on his system.
+* Explain hilbert (Lawrence)
+- Parallel to formalizing Euclid's work in Lean, we were
+  simultaneously working on Hilbert's axioms as well.
+- Given the old age of Euclid's formalization of geometry, at the
+  beginning of the 20th century Hilbert established a set of 20
+  assumptions as a foundation for a modern examination of Euclidean
+  geometry and several basic relationships, like congruence and
+  whether a point "lies on" a line.
+- Hilbert included axioms for higher dimensional geometry, but for
+  this project we decided to focus on 2D geometry, which the majority
+  of his axioms relate to.
+- With some slight modifications, we were formalize almost all of the
+  axioms relating to planar geometry into Lean, except the last, which
+  we are unsure can actually be implemented.
+- Like Euclid, Hilbert's axioms create a synthetic geometry system, so
+  he tends to avoid certain definitions (such as distance). So, we
+  introduced these notions in ways that built on his system.
 
-6. Explain hilbert in lean (Lawrence)
-
+* Explain hilbert in lean (Lawrence)
 - In order to prove more complicated facts in Lean, we needed to create various structures and relations in the context of Hilbert's primitive ideas.
 - For example, we needed to define triangles and a supplementary relationship between angles.
 - Proofs in Lean involved using a combination of proof tactics built into the language and the axioms we formalized.
 - As in Euclidean geometry, we found that proofs in Lean for Hilbert's geometry were quite verbose. Proofs that may appear to be easy to prove on paper sometimes were challenging to prove to a computer.
 - To illustrate, here is a proof of the fact that if two distinct lines intersect, they do so at exactly one point.
 
-7. Challenges (Edward)
+* Challenges (Edward)
 - In trying to formalize these axioms and propositions in Lean, we ran
   into several problems.
 - Cooperative Platforms in Lean were difficult to handle: Examples
@@ -75,7 +108,7 @@
   definitions for those proofs was arduous.
 
 
-8. Future directions (Edward)
+* Future directions (Edward)
 - In the future, it woud be best to first streamline the definitions
   of Euclid's and Hilbert's axioms
 - And as shown, many more propositions need to be proven.
@@ -89,11 +122,8 @@
   also explore others of different syntax such as Coq and HOL-Light.
 
 
+* ------# Video Ends -----------------
 
-
-
-------# Video Ends -----------------
-
-9. Vaibhav : Q&A moderation
+* Vaibhav : Q&A moderation
 
 
