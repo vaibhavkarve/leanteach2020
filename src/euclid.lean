@@ -82,8 +82,8 @@ axiom distance_congruent {a b c d : Point} :
 
 -- Missing axiom:
 -----------------
-@[symm] axiom segment_symm (p1 p2 : Point) : p1⬝p2 ≃ p2⬝p1
-axiom zero_segment (s : Segment) (p : Point) : s ≃ p⬝p → s.p1 = s.p2
+axiom segment_symm {p1 p2 : Point} : p1⬝p2 = p2⬝p1
+axiom zero_segment {s : Segment} {p : Point} : s ≃ p⬝p → s.p1 = s.p2
 
 
 def line_of_segment (s : Segment) : s.p1 ≠ s.p2 → Line := line_of_points s.p1 s.p2
@@ -180,27 +180,6 @@ begin
 end
 
 
--- VK: I am commenting off this entire section.
--- We need to think more carefully about these definitions.
-/-
-constant make_angle : Line → Line → Angle
-constant add_angle : Angle → Angle → Angle
-constant less_than_angle : Angle → Angle → Prop
-constant equal_angle : Angle → Angle → Prop
-constant in_circle : Point → Circle → Prop
-
-constant intersection (l1 l2 : Line) (is_inter : exists_intersection l1 l2): Point
-constant rAngle : Angle
-axiom constant_rAngle : is_right_angle rAngle
-
-
-def reorder_between (x z y : Point) := between x y z
-def neg_equal (r1 r2 : Ray) := ¬(r1 = r2) → r1 ≠ r2
-def not_equal_point (p1 p2 : Point) := ¬(p1 = p2) → (p1 ≠ p2)
-def construct_ray (a b : Point) (ne : a ≠ b) (points : set Point):= Ray.mk a b
-
--/
-
 def is_right_angle : Angle → Prop := sorry
 def exists_intersection: Line → Line → Prop := sorry
 def is_parallel : Line → Line → Prop := sorry
@@ -209,9 +188,6 @@ axiom right_angle (a1 a2 : Angle) : is_right_angle a1 ∧ is_right_angle a2 → 
 axiom parallel (l1 l2 : Line) : ¬ exists_intersection l1 l2 → is_parallel l1 l2
 -- does not mean equadistant
 -- constant lies_on : Point → Line → Prop
-
---Propositions moded to euclidProps.lean
-
 
 -- axiom intersect (l1 l2 l3: Line) : ((make_angle l1 l3) + (make_angle l2 l3)) < (rAngle + rAngle) → on_side (Sides_of_line l3).2 (intersection l1 l2)
 -- if the angle beteween two lines is less than 2 right angles, the lines meet on that side
@@ -222,15 +198,15 @@ axiom parallel (l1 l2 : Line) : ¬ exists_intersection l1 l2 → is_parallel l1 
 --If the sum of the radii of two circles is greater than the line joining their centers, then the two circles intersect
 --https://mathcs.clarku.edu/~djoyce/java/elements/bookI/propI1.html
 -- TODO: Find a reference for this. Or find a justification using Coordinate geometry.
-constant circles_intersect (c₁ c₂ : Circle) :
+constant circles_intersect {c₁ c₂ : Circle} :
      distance c₁.center c₂.center ≤ radius c₁ + radius c₂ 
   → (abs (radius c₁ - radius c₂) ≤ distance c₁.center c₂.center)
   → Point
 
-axiom circles_intersect' (c₁ c₂ : Circle)
+axiom circles_intersect' {c₁ c₂ : Circle}
   (h₁ : radius c₁ + radius c₂ >= distance c₁.center c₂.center)
   (h₂ : (abs (radius c₁ - radius c₂) <= distance c₁.center c₂.center)) :
-  let p : Point := circles_intersect c₁ c₂ h₁ h₂ in
+  let p : Point := circles_intersect h₁ h₂ in
   p ∈ circumference c₁ ∧ p ∈ circumference c₂
 
 
