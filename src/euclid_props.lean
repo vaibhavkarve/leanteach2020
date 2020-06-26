@@ -128,7 +128,7 @@ begin
       apply (equilateral_triangle_nonzero_sides a b d _ _).1,
       repeat {assumption}},
   have b_in_c₁ : circle_interior b c₁,
-    by simpa [circle_interior, radius, radius_segment, ← distance_pos],
+    by simpa [circle_interior, radius, ←distance_pos],
 
   have db_intersect_c₁ := line_circle_intersect b d ne_d_b.symm c₁ b_in_c₁,
   rcases db_intersect_c₁ with ⟨g, g_on_bd, g_in_circum_c₁, bet_g_b_d⟩,
@@ -138,9 +138,9 @@ begin
     { apply (equilateral_triangle_nonzero_sides a b d _ _).2,
       repeat {assumption}},
   have ne_d_g : d ≠ g,
-    { rw [distance_pos, distance_is_symm, ((distance_between g b d).1 bet_g_b_d).symm],
-      have h₁ : distance b d > 0 := (distance_pos b d).1 ne_d_b.symm,
-      have h₂ : distance g b ≥ 0 := distance_not_neg g b,
+    { rw [distance_pos, distance_is_symm, ←distance_between.1 bet_g_b_d],
+      have h₁ : distance b d > 0 := distance_pos.1 ne_d_b.symm,
+      have h₂ : distance g b ≥ 0 := distance_not_neg,
       linarith},
   have d_in_c₂ : circle_interior d c₂,
     { simpa [circle_interior, radius, radius_segment, ← distance_pos]},
@@ -148,57 +148,53 @@ begin
     by simp [circumference, radius_segment],
   have a_in_c₂ : circle_interior a c₂,
     { simp [circle_interior, radius, radius_segment],
-      rw [distance_is_symm d g, ← (distance_between g b d).1 bet_g_b_d],
+      rw [distance_is_symm d g, ← distance_between.1 bet_g_b_d],
       rcases h with ⟨h₁, h₂⟩,
-      have eq_ad_bd : a⬝d ≃ b⬝d,
-        change (sides_of_triangle ⟨a, b, d⟩).snd.fst with b⬝d at h₂,
-        change (sides_of_triangle ⟨a, b, d⟩).snd.snd with d⬝a at h₂,
-        apply cong_symm,
-        apply cong_trans,
-        assumption,
-        apply segment_symm,
-        replace eq_ad_bd := (distance_congruent _ _).1 eq_ad_bd,
-        simp [length] at eq_ad_bd,
-        simp [eq_ad_bd],
-        have re := radii_equal c₁ g c g_in_circum_c₁ c_in_circum_c₁,
-        simp [distance_congruent, length] at re,
-        rwa [re, ← distance_pos b c]},
+      change (sides_of_triangle ⟨a, b, d⟩).fst with a⬝b at h₁ h₂,
+      change (sides_of_triangle ⟨a, b, d⟩).snd.fst with b⬝d at h₁ h₂,
+      change (sides_of_triangle ⟨a, b, d⟩).snd.snd with d⬝a at h₂ h₂,
+      have eq_ad_bd : distance d a = distance b d,
+        { rw ← distance_congruent,
+          apply cong_symm,
+          assumption},
+      simp [eq_ad_bd],
+      have re := radii_equal g_in_circum_c₁ c_in_circum_c₁,
+      simp [distance_congruent] at re,
+      rwa [distance_is_symm, re, ← distance_pos]},
 
   have da_intersect_c₂ := line_circle_intersect a d ne_d_a.symm c₂ a_in_c₂,
   rcases da_intersect_c₂ with ⟨l, l_on_ad, l_in_circum_c₂, bet_l_a_d⟩,
 
-  have dl_eq_al_da : length (d⬝l) = length (d⬝a) + length (a⬝l),
-    { simp [length],
-      rw [distance_is_symm a l, add_comm, (distance_between l a d).1 bet_l_a_d],
-      symmetry},
-  have dg_eq_bd_bg : length (d⬝g) = length (b⬝d) + length (b⬝g),
-    { simp [length],
-      rw [distance_is_symm b g, add_comm, (distance_between g b d).1 bet_g_b_d],
-      symmetry},
-
+  have dl_eq_da_al : distance d l = distance d a + distance a l,
+    { replace bet_l_a_d := between_symm bet_l_a_d,
+      rwa [distance_between.1 bet_l_a_d]},
+  have dg_eq_db_bg : distance d g = distance d b  + distance b g,
+    { replace bet_g_b_d := between_symm bet_g_b_d,
+      rwa [distance_between.1 bet_g_b_d]},
   have g_in_circum_c₂ : g ∈ circumference c₂,
     by simp [circumference, radius_segment],
   have c_in_circum_c₁ : c ∈ circumference c₁,
     by simp [circumference, radius_segment],
 
-  use a⬝l,
   rcases h with ⟨h₁, h₂⟩,
-  change (sides_of_triangle {p1 := a, p2 := b, p3 := d}).fst with a⬝ b at h₁ h₂,
-  change (sides_of_triangle {p1 := a, p2 := b, p3 := d}).snd.fst with b⬝d at h₁ h₂,
-  change (sides_of_triangle {p1 := a, p2 := b, p3 := d}).snd.snd with d⬝a at h₁ h₂,
+  set sides := sides_of_triangle ⟨a, b, d⟩,
+  change sides.fst with a⬝b at h₁ h₂,
+  change sides.snd.fst with b⬝d at h₁ h₂,
+  change sides.snd.snd with d⬝a at h₁ h₂,
+
+  use a⬝l,
   split,
     { refl},
     { show a⬝l ≃ b⬝c,
       rw distance_congruent,
-      calc length (a⬝l) = length (d⬝l) - length (d⬝a) : by simp [dl_eq_al_da]
-                    ... = length (d⬝l) - length (b⬝d) :
-                          by rw (distance_congruent _ _).1 h₂
-                    ... = length (d⬝g) - length (b⬝d) :
-                          by rw (distance_congruent _ _).1
-                                (radii_equal c₂ l g l_in_circum_c₂ g_in_circum_c₂)
-                    ... = length (b⬝g) : by simp [dg_eq_bd_bg]
-                    ... = length (b⬝c) : by rw (distance_congruent _ _).1
-                                (radii_equal c₁ g c g_in_circum_c₁ c_in_circum_c₁)}
+      calc distance a l = distance d l - distance d a : by simp [dl_eq_da_al]
+           ... = distance d l - distance b d : by rw distance_congruent.1 h₂
+           ... = distance d g - distance b d : by rw distance_congruent.1
+                                (radii_equal l_in_circum_c₂ g_in_circum_c₂)
+           ... = distance d g - distance d b : by simp [distance_is_symm]
+           ... = distance b g : by simp [dg_eq_db_bg]
+           ... = distance b c : by rw distance_congruent.1
+                                (radii_equal g_in_circum_c₁ c_in_circum_c₁)}
 end
 
 -- # Proposition 3
