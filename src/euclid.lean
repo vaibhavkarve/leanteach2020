@@ -25,9 +25,10 @@ local infix ` ≃ `:55 := congruent  -- typed as \ equiv
 -------------------
 axiom distance_not_neg {p1 p2 : Point} : 0 ≤ distance p1 p2
 axiom distance_pos {p1 p2 : Point} : p1 ≠ p2 ↔ 0 < distance p1 p2
+@[instance] axiom distance_is_symm_op : is_symm_op Point ℝ distance
 @[simp] axiom distance_zero_segment {p : Point} : distance p p = 0
 
-@[simp, symm] lemma distance_is_symm : ∀ (p1 p2 : Point),
+@[symm] lemma distance_is_symm : ∀ (p1 p2 : Point),
   distance p1 p2 = distance p2 p1 := distance_is_symm_op.symm_op
 axiom distance_between {a b c : Point} : between a b c ↔ distance a b + distance b c = distance a c
 axiom between_refl_left (a b : Point) : between a a b
