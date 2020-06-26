@@ -13,31 +13,15 @@ lemma hypothesis1_about_circles_radius (s : Segment) :
   let c₁ : Circle := ⟨s.p1, s.p2⟩ in
   let c₂ : Circle := ⟨s.p2, s.p1⟩ in
   distance c₁.center c₂.center ≤ radius c₁ + radius c₂ := 
-begin
-  intros,
-  show distance s.p1 s.p2 ≤ radius c₁ + radius c₂,
-    calc distance s.p1 s.p2 ≤ distance s.p1 s.p2 + distance s.p1 s.p2
-                                              : by {simp, apply distance_not_neg}
-         ... = radius c₁ + distance s.p1 s.p2 : by refl
-         ... = radius c₁ + distance s.p2 s.p1 : by simp
-         ... = radius c₁ + radius c₂ : by refl,
-end
+by simp [radius, radius_segment, distance_not_neg]
 
 
 -- Another lemma needed for Proposition 1
 lemma hypothesis2_about_circles_radius (s : Segment) :
   let c₁ : Circle := ⟨s.p1, s.p2⟩ in
   let c₂ : Circle := ⟨s.p2, s.p1⟩ in
-  abs (radius c₁ - radius c₂) <= distance c₁.center c₂.center :=
-  begin
-    intros,
-    show abs (radius c₁ - radius c₂) ≤ distance s.p1 s.p2,
-    calc abs (radius c₁ - radius c₂) = abs (distance s.p1 s.p2 - radius c₂) : by refl
-         ... = abs (distance s.p1 s.p2 - distance s.p2 s.p1) : by refl
-         ... = abs (distance s.p1 s.p2 - distance s.p1 s.p2) : by simp
-         ... = 0 : by simp
-         ... ≤ distance s.p1 s.p2 : by apply distance_not_neg,
-  end
+  abs (radius c₁ - radius c₂) ≤ distance c₁.center c₂.center :=
+by simp [radius, radius_segment, distance_is_symm, distance_not_neg]
 
 
 -- # Proposition 1
