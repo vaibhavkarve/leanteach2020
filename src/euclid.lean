@@ -41,12 +41,12 @@ axiom between_refl_right (a b : Point) : between a b b
 
 
 -- TODO: The proof for the following lemmas follows from cong_is_equiv.
-@[refl] lemma cong_refl {A : Type} (a : A) : a ≃ a :=
-  sorry
-@[symm] lemma cong_symm {A : Type} (a b: A) : a ≃ b → b ≃ a :=
-  sorry
-@[trans] lemma cong_trans {A : Type} (a b c: A) : a ≃ b → b ≃ c → a ≃ c :=
-  sorry
+@[refl] lemma cong_refl {A : Type} : ∀ a : A, a ≃ a :=
+  cong_is_equiv.to_is_preorder.to_is_refl.refl
+lemma cong_symm {A : Type} : ∀ (a b : A), a ≃ b → b ≃ a :=
+  cong_is_equiv.to_is_symm.symm
+@[trans] lemma cong_trans {A : Type} : ∀ (a b c : A), a ≃ b → b ≃ c → a ≃ c :=
+  cong_is_equiv.to_is_preorder.to_is_trans.trans
 lemma cong_equiv {A : Type} : equivalence (@congruent A) :=
   -- The @ makes implicit arguments explicit.
   mk_equivalence congruent cong_refl cong_symm cong_trans
