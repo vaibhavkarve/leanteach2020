@@ -23,17 +23,16 @@ local infix ` ≃ `:55 := congruent  -- typed as \ equiv
 
 -- Missing Axiom(s)
 -------------------
-axiom distance_not_neg (p1 p2 : Point) : 0 ≤ distance p1 p2
-axiom distance_pos (p1 p2 : Point) : p1 ≠ p2 ↔ 0 < distance p1 p2
-axiom distance_is_symm_op : is_symm_op Point ℝ distance
-@[simp] axiom distance_zero_segment (p : Point) : distance p p = 0
+axiom distance_not_neg {p1 p2 : Point} : 0 ≤ distance p1 p2
+axiom distance_pos {p1 p2 : Point} : p1 ≠ p2 ↔ 0 < distance p1 p2
+@[simp] axiom distance_zero_segment {p : Point} : distance p p = 0
 
 @[simp, symm] lemma distance_is_symm : ∀ (p1 p2 : Point),
   distance p1 p2 = distance p2 p1 := distance_is_symm_op.symm_op
-axiom distance_between (a b c : Point) : between a b c ↔ distance a b + distance b c = distance a c
+axiom distance_between {a b c : Point} : between a b c ↔ distance a b + distance b c = distance a c
 axiom between_refl_left (a b : Point) : between a a b
 axiom between_refl_right (a b : Point) : between a b b
-@[symm] axiom between_symm (x y z : Point) : between x y z → between z y x
+@[symm] axiom between_symm {x y z : Point} : between x y z → between z y x
 
 
 -- Congruence is an equivalence relation.
