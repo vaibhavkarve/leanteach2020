@@ -89,30 +89,31 @@ begin
   split,
     { intros eq_b_c,
       subst eq_b_c,
-      have eq_a_b : a = b := zero_segment _ _ h₁,
+      have eq_a_b : a = b := zero_segment h₁,
       cc},
     { intros eq_c_a,
       subst eq_c_a,
-      have eq_b_c : b = c := zero_segment _ _ h₂,
+      have eq_b_c : b = c := zero_segment h₂,
       cc},    
 end
 
 
-lemma radii_equal (c : Circle) (a b : Point) :
+lemma radii_equal {c : Circle} {a b : Point} :
      a ∈ circumference c
   → b ∈ circumference c
   → c.center⬝a ≃ c.center⬝b :=
 begin
   intros h₁ h₂,
   simp [circumference] at *,
-  apply cong_trans,
-  replace h₁ := cong_symm _ _ h₁,
-  repeat {assumption},
+  transitivity,
+    apply cong_symm,
+    repeat {assumption},
 end
 
 
---! # Proposition 2
--------------------
+
+-- # Proposition 2
+------------------
 theorem placeline (a b c : Point) :
      a ≠ b
   → b ≠ c
