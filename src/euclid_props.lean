@@ -35,23 +35,22 @@ begin
   set c₂ : Circle := ⟨b, a⟩,
   have h₁ := hypothesis1_about_circles_radius (a⬝b),
   have h₂ := hypothesis2_about_circles_radius (a⬝b),
-  set c := circles_intersect c₁ c₂ h₁ h₂,
+  set c := circles_intersect h₁ h₂,
   use c,
   simp,
-  have hp₁ : c ∈ circumference c₁, from (circles_intersect' c₁ c₂ h₁ h₂).1,
-  have hp₂ : c ∈ circumference c₂, from (circles_intersect' c₁ c₂ h₁ h₂).2,
+  have hp₁ := (circles_intersect' h₁ h₂).1,
+  have hp₂ := (circles_intersect' h₁ h₂).2,
+  set c := circles_intersect h₁ h₂,
   --- Cleaning up the context ---
-    tidy,
-    unfold circumference radius_segment at hp₁ hp₂;
-    unfold sides_of_triangle;
-    dsimp * at *,
-  --- Cleaning done ---
-    {calc a⬝b ≃ b⬝a : by symmetry
-          ... ≃ b⬝c : by assumption},
-    {calc b⬝c ≃ b⬝a : by {apply cong_symm, assumption}
-          ... ≃ a⬝b : by apply segment_symm
-          ... ≃ a⬝c : by assumption
-          ... ≃ c⬝a : by symmetry},
+    fsplit;
+    dsimp [circumference, sides_of_triangle, radius_segment] at *,
+      { rwa segment_symm},
+      { transitivity,
+        apply cong_symm,
+        assumption,
+        conv_lhs {rw segment_symm},
+        conv_rhs {rw segment_symm},
+        assumption},
 end
 
 
