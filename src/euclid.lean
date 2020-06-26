@@ -37,7 +37,8 @@ axiom between_refl_right (a b : Point) : between a b b
 
 
 -- Congruence is an equivalence relation.
-axiom cong_is_equiv (A : Type) : is_equiv A (≃)
+@[instance] axiom cong_is_equiv {A : Type} : is_equiv A (≃)
+
 
 -- TODO: The proof for the following lemmas follows from cong_is_equiv.
 @[refl] lemma cong_refl {A : Type} (a : A) : a ≃ a :=
