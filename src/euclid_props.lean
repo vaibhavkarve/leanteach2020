@@ -125,29 +125,24 @@ begin
 
   have ne_d_b : d ≠ b,
     { symmetry,
-      apply (equilateral_triangle_nonzero_sides a b d _ _).1,
-      repeat {assumption}},
-  have b_in_c₁ : circle_interior b c₁,
-    by simpa [circle_interior, radius, ←distance_pos],
+      apply (equilateral_triangle_nonzero_sides ne_a_b h).1},
+  have b_in_c₁ : circle_interior b c₁ := center_in_circle ne_b_c,
 
-  have db_intersect_c₁ := line_circle_intersect b d ne_d_b.symm c₁ b_in_c₁,
-  rcases db_intersect_c₁ with ⟨g, g_on_bd, g_in_circum_c₁, bet_g_b_d⟩,
+  have db_intersect_c₁ := line_circle_intersect ne_d_b.symm b_in_c₁,
+  rcases db_intersect_c₁ with ⟨g, g_on_bd, g_on_c₁, bet_g_b_d⟩,
 
   set c₂ : Circle := ⟨d, g⟩,
   have ne_d_a : d ≠ a,
-    { apply (equilateral_triangle_nonzero_sides a b d _ _).2,
-      repeat {assumption}},
+    by apply (equilateral_triangle_nonzero_sides ne_a_b h).2,
   have ne_d_g : d ≠ g,
     { rw [distance_pos, distance_is_symm, ←distance_between.1 bet_g_b_d],
       have h₁ : distance b d > 0 := distance_pos.1 ne_d_b.symm,
       have h₂ : distance g b ≥ 0 := distance_not_neg,
       linarith},
-  have d_in_c₂ : circle_interior d c₂,
-    { simpa [circle_interior, radius, radius_segment, ← distance_pos]},
-  have c_in_circum_c₁ : c ∈ circumference c₁,
-    by simp [circumference, radius_segment],
+  have d_in_c₂ : circle_interior d c₂ := center_in_circle ne_d_g,
+  have c_on_c₁ : c ∈ circumference c₁ := radius_on_circumference _ _,
   have a_in_c₂ : circle_interior a c₂,
-    { simp [circle_interior, radius, radius_segment],
+    { dsimp only [circle_interior, radius, radius_segment],
       rw [distance_is_symm d g, ← distance_between.1 bet_g_b_d],
       rcases h with ⟨h₁, h₂⟩,
       change (sides_of_triangle ⟨a, b, d⟩).fst with a⬝b at h₁ h₂,
@@ -157,13 +152,13 @@ begin
         { rw ← distance_congruent,
           apply cong_symm,
           assumption},
-      simp [eq_ad_bd],
-      have re := radii_equal g_in_circum_c₁ c_in_circum_c₁,
-      simp [distance_congruent] at re,
+      simp only [eq_ad_bd, lt_add_iff_pos_left],
+      have re := radii_equal g_on_c₁ c_on_c₁,
+      simp only [distance_congruent] at re,
       rwa [distance_is_symm, re, ← distance_pos]},
 
-  have da_intersect_c₂ := line_circle_intersect a d ne_d_a.symm c₂ a_in_c₂,
-  rcases da_intersect_c₂ with ⟨l, l_on_ad, l_in_circum_c₂, bet_l_a_d⟩,
+  have da_intersect_c₂ := line_circle_intersect ne_d_a.symm a_in_c₂,
+  rcases da_intersect_c₂ with ⟨l, l_on_ad, l_on_c₂, bet_l_a_d⟩,
 
   have dl_eq_da_al : distance d l = distance d a + distance a l,
     { replace bet_l_a_d := between_symm bet_l_a_d,
@@ -171,10 +166,7 @@ begin
   have dg_eq_db_bg : distance d g = distance d b  + distance b g,
     { replace bet_g_b_d := between_symm bet_g_b_d,
       rwa [distance_between.1 bet_g_b_d]},
-  have g_in_circum_c₂ : g ∈ circumference c₂,
-    by simp [circumference, radius_segment],
-  have c_in_circum_c₁ : c ∈ circumference c₁,
-    by simp [circumference, radius_segment],
+  have g_on_c₂ : g ∈ circumference c₂ := radius_on_circumference _ _,
 
   rcases h with ⟨h₁, h₂⟩,
   set sides := sides_of_triangle ⟨a, b, d⟩,
@@ -182,19 +174,17 @@ begin
   change sides.snd.fst with b⬝d at h₁ h₂,
   change sides.snd.snd with d⬝a at h₁ h₂,
 
-  use a⬝l,
-  split,
-    { refl},
-    { show a⬝l ≃ b⬝c,
-      rw distance_congruent,
-      calc distance a l = distance d l - distance d a : by simp [dl_eq_da_al]
-           ... = distance d l - distance b d : by rw distance_congruent.1 h₂
-           ... = distance d g - distance b d : by rw distance_congruent.1
-                                (radii_equal l_in_circum_c₂ g_in_circum_c₂)
-           ... = distance d g - distance d b : by simp [distance_is_symm]
-           ... = distance b g : by simp [dg_eq_db_bg]
-           ... = distance b c : by rw distance_congruent.1
-                                (radii_equal g_in_circum_c₁ c_in_circum_c₁)}
+  use l,
+  rw distance_congruent,
+  calc distance a l = distance d l - distance d a :
+                      by simp only [dl_eq_da_al, add_sub_cancel']
+       ... = distance d l - distance b d : by rw distance_congruent.1 h₂
+       ... = distance d g - distance b d : by rw distance_congruent.1
+                                              (radii_equal l_on_c₂ g_on_c₂)
+       ... = distance d g - distance d b : by simp only [distance_is_symm]
+       ... = distance b g : by simp only [dg_eq_db_bg, add_sub_cancel']
+       ... = distance b c : by rw distance_congruent.1
+                               (radii_equal g_on_c₁ c_on_c₁)
 end
 
 -- # Proposition 3
