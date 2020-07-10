@@ -56,7 +56,7 @@ end
 
 
 -- Lemma needed for proposition 2
-lemma line_circle_intersect (a b : Point) (ne : a ≠ b) (C : Circle) :
+lemma line_circle_intersect {a b : Point} (ne : a ≠ b) {C : Circle} :
      circle_interior a C
   → ∃ x : Point, lies_on x (line_of_points a b ne)
                 ∧ x ∈ circumference C
@@ -76,7 +76,7 @@ lemma line_circle_intersect (a b : Point) (ne : a ≠ b) (C : Circle) :
 -- Ex: set x : ℕ := 5, -> replace x with 5 everywhere
 
 -- Lemma needed for Proposition 2
-lemma equilateral_triangle_nonzero_sides (a b c : Point) :
+lemma equilateral_triangle_nonzero_sides {a b c : Point} :
      a ≠ b
   → is_equilateral ⟨a, b, c⟩
   → b ≠ c ∧ c ≠ a :=
