@@ -229,16 +229,10 @@ end
 -- the triangle, and the remaining angles equal the remaining angles
 -- respectively, namely those opposite the equal sides.
 -- SAS congruency.
-lemma prop4 (t1 t2 : Triangle) (dif1 : distinct t1.p1 t1.p2 t1.p3) (dif2 : distinct t2.p1 t2.p2 t2.p3):
-  let sides1 := (sides_of_triangle t1) in
-  let sides2 := (sides_of_triangle t2) in
-  let angles1 := (angles_of_triangle t1 dif1) in
-  let angles2 := (angles_of_triangle t2 dif2) in
-     (sides1.1 = sides2.1)
-  → (sides1.2.1 = sides2.2.1)
-  → (angles1.1 ≃ angles2.1)
-  → (sides1.2.2 = sides2.2.2)
-     ∧ (angles1.nth 1 = angles2.nth 1) ∧ (angles1.nth 2 = angles2.nth 2) :=
+lemma prop4 (a b c d e f : Point) :
+     a⬝b ≃ d⬝e
+  → a⬝c ≃ d⬝f
+  → 
 begin
   sorry
 end
