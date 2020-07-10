@@ -24,6 +24,7 @@ lemma hypothesis2_about_circles_radius (s : Segment) :
 by simp [radius, radius_segment, distance_is_symm, distance_not_neg]
 
 
+
 -- # Proposition 1
 ------------------
 theorem construct_equilateral (a b : Point) :
@@ -37,13 +38,13 @@ begin
   have h₂ := hypothesis2_about_circles_radius (a⬝b),
   set c := circles_intersect h₁ h₂,
   use c,
-  simp,
+  simp only [],
   have hp₁ := (circles_intersect' h₁ h₂).1,
   have hp₂ := (circles_intersect' h₁ h₂).2,
   set c := circles_intersect h₁ h₂,
-  --- Cleaning up the context ---
-    fsplit;
-    dsimp [circumference, sides_of_triangle, radius_segment] at *,
+
+    fsplit;  -- Cleaning up the context.
+    dsimp only [circumference, sides_of_triangle, radius_segment] at *,
       { rwa segment_symm},
       { transitivity,
         apply cong_symm,
