@@ -188,12 +188,39 @@ begin
 end
 
 -- # Proposition 3
-lemma prop3 (AB C : Segment) (greater : length AB > length C):
-  ∃ (s : Segment), (length s = length C) ∧ (s.p1 = AB.p1) ∧ (between AB.p1 s.p2 AB.p2) :=
+------------------
+-- To cut off from the greater of two given unequal straight lines a
+-- straight line equal to the less.
+lemma prop3 (a b c c' : Point) :
+     a ≠ c
+  → c ≠ c'
+  → a ≠ b
+  → length (c⬝c') ≤ length (a⬝b)
+  → ∃ (e : Point), length (a⬝e) = length (c⬝c') :=
 begin
-  sorry
-end
+  intros ne_a_c ne_c_c' ne_a_b le_cc'_ab,
+  choose d eq_ad_cc' using segment_copy ne_a_c ne_c_c',
+  set c₁ : Circle := ⟨a, d⟩,
+  have ne_a_d : a ≠ d,
+    { intros eq_a_d,
+      subst eq_a_d,
+      have eq_c_c' : c = c' := zero_segment (cong_symm _ _ eq_ad_cc'),
+      cc},
+  have a_in_c₁ : circle_interior a c₁ := center_in_circle ne_a_d,
+  choose e h using line_circle_intersect ne_a_b a_in_c₁,
+  rcases h with ⟨e_on_ab, e_on_c₁, bet_e_a_b⟩,
 
+  use e,
+  dsimp only [length],
+  have d_on_c₁ : d ∈ circumference c₁ := radius_on_circumference _ _,
+  have eq_ae_ad : distance a e = distance a d,
+    { apply distance_congruent.1,
+      exact radii_equal e_on_c₁ d_on_c₁},
+  rw eq_ae_ad,
+  apply distance_congruent.1,
+  assumption,
+end
+#exit
 -- # Proposition 4
 ------------------
 -- If two triangles have two sides equal to two sides respectively,
