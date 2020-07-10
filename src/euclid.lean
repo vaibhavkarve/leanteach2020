@@ -220,3 +220,22 @@ def circle_interior (p : Point) (c : Circle) : Prop :=
 
 def circle_exterior (p : Point) (c : Circle) : Prop :=
   radius c < distance c.center p
+
+
+lemma center_in_circle {a b : Point} (ne : a ≠ b) :
+  let c : Circle := ⟨a, b⟩ in
+  circle_interior a c :=
+begin
+  intros,
+  rwa [circle_interior, radius, radius_segment, distance_zero_segment, ← distance_pos],
+end
+
+
+lemma radius_on_circumference (a b : Point) :
+  let c : Circle := ⟨a, b⟩ in
+  b ∈ circumference c :=
+begin
+  intros,
+  rw [circumference, radius_segment],
+  simp,
+end
