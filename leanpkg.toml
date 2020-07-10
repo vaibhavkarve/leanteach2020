@@ -1,8 +1,8 @@
 [package]
 name = "leanteach"
 version = "0.1"
-lean_version = "leanprover-community/lean:3.16.3"
+lean_version = "leanprover-community/lean:3.16.5"
 path = "src"
 
 [dependencies]
-mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "103743e3d09bdce5a9dc8265f78feaa8551e9348"}
+mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "8be66ee9d5ce29eae2bc9566fded078d3f2e594b"}
