@@ -105,7 +105,6 @@ lemma radii_equal {c : Circle} {a b : Point} :
   → c.center⬝a ≃ c.center⬝b :=
 begin
   intros h₁ h₂,
-  simp [circumference] at *,
   transitivity,
     apply cong_symm,
     repeat {assumption},
@@ -115,10 +114,10 @@ end
 
 -- # Proposition 2
 ------------------
-theorem placeline (a b c : Point) :
+theorem segment_copy {a b c : Point} :
      a ≠ b
   → b ≠ c
-  → ∃ (s : Segment), (a = s.p1) ∧ (s ≃ b⬝c) :=
+  → ∃ (l : Point), (a⬝l) ≃ (b⬝c) :=
 begin
   intros ne_a_b ne_b_c,
   choose d h using construct_equilateral a b,
