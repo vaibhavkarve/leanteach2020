@@ -51,7 +51,7 @@ begin
   symmetry,
   by_contradiction,
   have line_exists := line_exists x y a_2,
-    tidy,
+    sorry,
   have h₃ : l₁ = ⟨x, y, a_2⟩,
     { apply line_unique, assumption, assumption},
   have h₄ : l₂ = ⟨x, y, a_2⟩,
@@ -240,7 +240,7 @@ theorem prop_10 (s : Segment) : ∃ (p : Point), B s.p₁ p s.p₂ ∧ p₁⬝p 
 --     If two straight lines cut one another, then they make the vertical angles equal to one another.
 
 --     Corollary. If two straight lines cut one another, then they will make the angles at the point of section equal to four right angles.
--- 
+--
 /-
 Proposition 16.
     In any triangle, if one of the sides is produced, then the exterior angle is greater than either of the interior and opposite angles.
@@ -308,7 +308,7 @@ begin
     let l' := Line,
     use l',
     choose l' using parallel_postulate,-/
-    
+
     sorry,
 end
 
@@ -362,5 +362,5 @@ Proposition 47.
     In right-angled triangles the square on the side opposite the right angle equals the sum of the squares on the sides containing the right angle.
 
 Proposition 48.
-    If in a triangle the square on one of the sides equals the sum of the squares on the remaining two sides of the triangle, then the angle contained by the remaining two sides of the triangle is right. 
+    If in a triangle the square on one of the sides equals the sum of the squares on the remaining two sides of the triangle, then the angle contained by the remaining two sides of the triangle is right.
 -/

@@ -7,128 +7,137 @@ Key:
 - ne ⇒ refers to a proof that two terms are distinct.
 - ⟨⟩ ⇒ refers to fields of structure.
 - (≃) ⇒ signifies a notation we defined.
-- ^2, ^3, etc. ⇒ superscript refers to repeated arguments of the same type.
+- ², ³, ... ⇒ superscript refers to repeated arguments of the same type.
 
-* hilbert.lean
+https://github.com/vaibhavkarve/leanteach2020
+
+* [[file:~/leanteach/src/hilbert.lean][hilbert.lean]]
 ** constant
-- Point : Type
-- B : Point → Point → Point
-- C (≃) : A → A → Type
-- lies_on_line : Point → Line → Prop
-- segment_copy : Point^{4} → ne^{2} → Point
-- angle_copy : Angle → Point^{3} → Point
-- mk_parallel : Point → Line → ¬lies_on_line → Line
+1. Point        : Type
+2. B            : Point → Point → Point
+3. C (≃)        : A → A → Type
+4. lies_on_line : Point → Line → Prop
+5. segment_copy : Point^{4} → ne^{2} → Point
+6. angle_copy   : Angle → Point^{3} → Point
+7. mk_parallel  : Point → Line → ¬lies_on_line → Line
 
 ** structure
-- Segment (⬝) := ⟨Point, Point⟩
-- Line := ⟨Point, Point, ne⟩ 
-- Ray := ⟨Point, Point⟩
-- Angle := ⟨Point, Point, Point⟩
-- Triangle := ⟨Point, Point, Point⟩
-- Circle := ⟨Point, Point⟩
+1. Segment (⬝) := ⟨Point, Point⟩
+2. Line        := ⟨Point, Point, ne⟩
+3. Ray         := ⟨Point, Point⟩
+4. Angle       := ⟨Point, Point, Point⟩
+5. Triangle    := ⟨Point, Point, Point⟩
+6. Circle      := ⟨Point, Point⟩
 
 ** def
-- line_of_ray : Ray → ne → Line
-- rays_of_angle : Angle → Ray^{2}
-- sides_of_triangle : Triangle → vector Segment 3
-- angles_of_triangle : Triangle → vector Angle 3
-- equilateral : Triangle → Prop
-- collinear_points : Point^{3} → Prop
-- lies_on_segment : Point → Segment → ne → Prop
-- intersect_segment : Segment^{2} → ne^{2} → Prop
-- intersect_line_segment : Line → Segment → ne → Prop
-- segment_of_line : Segment → Line → Prop
-- segments_hinge : Segment^{2} → ne^{2} → Prop
-- parallel_lines : Line^{2} → Prop
-- supplementary_angles : Angle^{2} → ne^{2} → Prop
-- mk_supplementary_angle : Angle → ne → Angle
-- is_right : Angle → Prop
-- radius_segment : Circle → Segment
-- circumference : Circle → set Point
-- congruent_triangle : Triangle^{2} → Prop
-- Measure : Type
-- lie_on_same_side : Point^{2} → Line → Prop
-- lie_on_opposite_sides : Point^{2} → Line → Prop
-- side_of_line : Line → Point^{2} → Prop
-- side_of_point : Point^{2} → ne → set Point
-- is_in_interior_of_angle : Angle → Point → ne^{2} → Prop
+- line_of_ray             : Ray → ne → Line
+- rays_of_angle           : Angle → Ray²
+- sides_of_triangle       : Triangle → vector Segment 3
+- angles_of_triangle      : Triangle → vector Angle 3
+- equilateral             : Triangle → Prop
+- collinear_points        : Point³ → Prop
+- lies_on_segment         : Point → Segment → ne → Prop
+- intersect_segment       : Segment² → ne² → Prop
+- intersect_line_segment  : Line → Segment → ne → Prop
+- segment_of_line         : Segment → Line → Prop
+- segments_hinge          : Segment² → ne² → Prop
+- parallel_lines          : Line² → Prop
+- supplementary_angles    : Angle² → ne² → Prop
+- mk_supplementary_angle  : Angle → ne → Angle
+- is_right                : Angle → Prop
+- radius_segment          : Circle → Segment
+- circumference           : Circle → set Point
+- congruent_triangle      : Triangle² → Prop
+- Measure                 : Type
+- lie_on_same_side        : Point² → Line → Prop
+- lie_on_opposite_sides   : Point² → Line → Prop
+- side_of_line            : Line → Point² → Prop
+- side_of_point           : Point² → ne → set Point
+- is_in_interior_of_angle : Angle → Point → ne² → Prop
 
 ** axiom
-*** I.1 line_exists : Point^{2} →Line → ne → (lies_on_line^{2} ↔ Line = Line)
-*** I.3 no_line_on_three_points : ∃ Points^{3}, ∄ Line, lies_on_line^{3}
-*** O.1
-**** *@[symm]* B_symm : Point^{3} → B → B
-**** B_implies_collinear : Point^{3} → B → collinear_points
-*** O.2 line_continuity : Point^{2} → ne → ∃ Point, lies_on_line ∧ B
-*** O.3 max_one_between : Points^{3} → collinear_points → B ⊕ B ⊕ B
-*** O.4 pasch : Point^{3} → Line → ne^{3} → ¬collinear_points → (¬lies_on_line)^{3} → intersect_line_segment → intersect_line_segment ⊕ intersect_line_segment
-*** C.1
-**** segment_copy' : Point^{4} → ne^{2} → lies_on_line ∧ Segment ≃ Segment
-**** *@[symm]* C_segment_symm : Segment^{2} → Segment ≃ Segment → Segment ≃ Segment
-**** segment_swap : Point^{2} → Segment ≃ Segment
-*** C.2 *[@trans]* C_segment_trans : Point^{6} → (Segment ≃ Segment)^{2} → Segment ≃ Segment
-*** C.3 C_segment_add_trans : Point^{6} → ne^{4} → segment_hinge^{2} → (Segment ≃ Segment)^2 → Segment ≃ Segment
-*** TODO C.4 angle_copy' : Angle → Point^{3} → ??
-*** C.5
-**** *@[trans]* C_angle_trans : Angle^{3} → (Angle ≃ Angle)^{2} → Angle ≃ Angle
-**** *@[symm]* angle_symm : Point^{3} → Angle ≃ Angle
-*** C.6 congruent_triangle_SAS : Triangle^{2} → (Segment ≃ Segment)^{2} → Angle ≃ Angle → (Angle ≃ Angle)^{2}
-*** P.1 parallel_postulate : Point →  Line → ¬lies_on_line : parallel_lines ∧ lies_on_line
-*** TODO K.1
-    Need to add in first axiom of continuity.
-*** TODO K.2
-    Need to add in second axiom of continuity.
+- [@I.1] line_exists : Point² →Line → ne → (lies_on_line² ↔ Line = Line)
+- [@I.3] no_line_on_three_points : ∃ Points³, ∄ Line, lies_on_line³
 
-*** Distance
-**** distance_nonzero : Measure → Segment → ne ↔ Measure > 0
-**** distance_congruent : Measure → Segment^{2} → Segment ≃ Segment ↔ Distance = Distance
-**** distance_between : Measure → Point^{3} → B → Measure + Measure = Measure
+
+- [@O.1]
+  1. *@[symm]* B_symm : Point³ → B → B
+  2. B_implies_collinear : Point³ → B → collinear_points
+- [@O.2] line_continuity : Point² → ne → ∃ Point, lies_on_line ∧ B
+- [@O.3] max_one_between : Points³ → collinear_points → B ⊕ B ⊕ B
+- [@O.4] pasch : Point³ → Line → ne³ → ¬collinear_points → (¬lies_on_line)³ → intersect_line_segment → intersect_line_segment ⊕ intersect_line_segment
+- [@C.1]
+  1. segment_copy' : Point⁴ → ne² → lies_on_line ∧ Segment ≃ Segment
+  2. *@[symm]* C_segment_symm : Segment² → Segment ≃ Segment → Segment ≃ Segment
+  3. segment_swap : Point² → Segment ≃ Segment
+
+
+- [@C.2] *[@trans]* C_segment_trans : Point⁶ → (Segment ≃ Segment)² → Segment ≃ Segment
+- [@C.3] C_segment_add_trans : Point⁶ → ne⁴ → segment_hinge² → (Segment ≃ Segment)^2 → Segment ≃ Segment
+- [ ] [@C.4] angle_copy' : Angle → Point³ → ??
+- [@C.5]
+  1. *@[trans]* C_angle_trans : Angle³ → (Angle ≃ Angle)² → Angle ≃ Angle
+  2. *@[symm]* angle_symm : Point³ → Angle ≃ Angle
+- [@C.6] congruent_triangle_SAS : Triangle² → (Segment ≃ Segment)² → Angle ≃ Angle → (Angle ≃ Angle)²
+
+
+- [@P.1] parallel_postulate : Point →  Line → ¬lies_on_line : parallel_lines ∧ lies_on_line
+
+- [ ] [@K.1]
+  Need to add in first axiom of continuity.
+- [ ] [@K.2]
+  Need to add in second axiom of continuity.
+
+- Distance
+  - distance_nonzero : Measure → Segment → ne ↔ Measure > 0
+  - distance_congruent : Measure → Segment² → Segment ≃ Segment ↔ Distance = Distance
+  - distance_between : Measure → Point³ → B → Measure + Measure = Measure
 ** lemma
-*** *@[refl]* C_segment_refl : Point^{2} → Segment ≃ Segment
-*** TODO first_congruence : Triangle^{2} → (Segment ≃ Segment) → Angle ≃ Angle → congruent_triangle
+*** *@[refl]* C_segment_refl : Point² → Segment ≃ Segment
+*** TODO first_congruence : Triangle² → (Segment ≃ Segment) → Angle ≃ Angle → congruent_triangle
 ** todo
-*** TODO (C.6) congruent_triangle_SAS : Point^{6} → (Segment ≃ Segment)^{2} → Angle ≃ Angle → congruent_triangle
+*** TODO (C.6) congruent_triangle_SAS : Point^{6} → (Segment ≃ Segment)² → Angle ≃ Angle → congruent_triangle
 *** DONE mk_supplementary_angle : Angle → Angle
 *** TODO mk_supp_angle_condition : Angle → ne → Point ≠ Point
 *** TODO mk_supplementary_angle_is_supplementary : Angle → ne → supplementary_angles
-*** TODO distance_scale : Measure^{2} → Segment → ∃ ℝ, ℝ > 0 ∧ Measure = ℝ * Measure
+*** TODO distance_scale : Measure² → Segment → ∃ ℝ, ℝ > 0 ∧ Measure = ℝ * Measure
 *** TODO exists_measure : Segment → ℝ → ∃ Measure, Segment = ℝ
 *** TODO side_of_line : Line → Point → ¬ lies_on_line → set Point
-* euclid.lean
+* [[file:~/leanteach/src/euclid.lean][euclid.lean]]
 ** constant
-- Point : Type
-- Line : Type
-- lies_on : Point →Line → Prop
-- between : Point^{3} → Prop
-- congruent (≃) : A → A → Prop
-- distance : Point^{3} → Prop
-- line_of_points : Point^{2} → ne → Line
-- extended_segment : Segment^{2} → ne → Point
+- Point             : Type
+- Line              : Type
+- lies_on           : Point →Line → Prop
+- between           : Point^{3} → Prop
+- congruent (≃)     : A → A → Prop
+- distance          : Point^{3} → Prop
+- line_of_points    : Point^{2} → ne → Line
+- extended_segment  : Segment^{2} → ne → Point
 - circles_intersect : Circle^{2} → distance ≤ radius + radius → |radius - radius| ≤ distance → Point
 
 ** structure
 - Segment (⬝) := ⟨Point, Point⟩
-- Circle := ⟨Point, Point⟩
-- Ray := ⟨Point, Point⟩
-- Angle := ⟨Ray, Ray, Point = Point, ¬opposite_rays⟩
-- Triangle := ⟨Point, Point, Point⟩
+- Circle      := ⟨Point, Point⟩
+- Ray         := ⟨Point, Point⟩
+- Angle       := ⟨Ray, Ray, Point = Point, ¬opposite_rays⟩
+- Triangle    := ⟨Point, Point, Point⟩
 
 ** def
-- distinct : A^{3} → ne^{3}
-- length : Segment → distance
-- line_of_segment : Segment → ne → Line
-- points_of_segment : Segment → set Point
-- radius_segment : Circle → Segment
-- radius : Circle → ℝ
-- circumference : Circle → set Point
-- line_of_ray : Ray → ne → Line
-- points_of_ray : Ray → ne → set Point
-- opposite_rays : Ray^{2} → ne^{2} → Prop
-- sides_of_triangle : Triangle → Segment^{3}
+- distinct           : A^{3} → ne^{3}
+- length             : Segment → distance
+- line_of_segment    : Segment → ne → Line
+- points_of_segment  : Segment → set Point
+- radius_segment     : Circle → Segment
+- radius             : Circle → ℝ
+- circumference      : Circle → set Point
+- line_of_ray        : Ray → ne → Line
+- points_of_ray      : Ray → ne → set Point
+- opposite_rays      : Ray^{2} → ne^{2} → Prop
+- sides_of_triangle  : Triangle → Segment^{3}
 - angles_of_triangle : Triangle → distinct → vector Angle 3
-- is_equilateral : Triangle → Prop
-- circle_interior : Point → Circle → Prop
-- circle_exterior : Point → Circle → Prop
+- is_equilateral     : Triangle → Prop
+- circle_interior    : Point → Circle → Prop
+- circle_exterior    : Point → Circle → Prop
 
 ** axiom
 *** Distance
@@ -163,7 +172,7 @@ These are extra axioms that were not part of Euclid's original.
 
 ** todo
 *** TODO *@[refl]* cong_refl : A → A ≃ A
-*** TODO *@[symm]* cong_symm : A^{2} → A ≃ A → A ≃ A 
+*** TODO *@[symm]* cong_symm : A^{2} → A ≃ A → A ≃ A
 *** TODO *@[trans]* cong_trans : A^{3} → (A ≃ A)^{2} → A ≃ A
 *** TODO angle_of_points : Point^{3} → distinct → Angle
 *** TODO is_right_angle : Angle → Prop

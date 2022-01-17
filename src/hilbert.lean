@@ -5,10 +5,9 @@ open_locale classical
 
 /- Hilbert uses three undefined types: Points, Lines and Planes.
 
-   We define Point as a constant. Lines we define as Structures
-   instead of Constants.  We do not define Planes since here, we
-   restrict our attention to planar geometry, ignoring solid
-   geometry.-/
+   We define Point as a constant. Lines we define as Structures instead of
+   Constants.  We do not define Planes since here, we restrict our attention to
+   planar geometry, ignoring solid geometry.-/
 
 constant Point : Type
 
@@ -23,14 +22,13 @@ structure Segment: Type := (p₁ p₂ : Point)
 
 constant B (x y z : Point) : Prop
 
-/- Polymorphism ⇒ make it work for multiple types at the same time.
-   For every type A, we assume there is a congruence relation C.
-   Here, "A" is an implicit argument. Lean will figure it out by
-   reading the type signatures of other arguments.  In other languages
-   this is called over-loading.-/
+/- Polymorphism ⇒ make it work for multiple types at the same time.  For every
+   type A, we assume there is a congruence relation C.  Here, "A" is an implicit
+   argument. Lean will figure it out by reading the type signatures of other
+   arguments.  In other languages this is called over-loading.-/
 
-constant C {A : Type} : A → A → Prop   
-                                       
+constant C {A : Type} : A → A → Prop
+
 /- We define our own operators here. \equiv is used to denote
    equivalence/congruence.  \cdot is used for making Segments.-/
 
@@ -255,7 +253,7 @@ constant angle_copy (α : Angle) (base p1 marker : Point) : Point
 axiom angle_copy' (α : Angle) (base p1 marker : Point) (ne1 : base ≠ p1) :
   let p2 : Point := angle_copy α base p1 marker in
   let α' : Angle := ⟨p1, base, p2⟩ in
-  decidable.by_cases 
+  decidable.by_cases
   α ≃ α' ∧ ∀ x : Point, is_in_interior_of_angle α' x ne1
 
 
@@ -305,7 +303,7 @@ begin
   have b_on_bc : lies_on_line b bc, sorry,
   have c_on_bc : lies_on_line c bc, sorry,
   have y_on_yz : lies_on_line y yz, sorry,
-  
+
   repeat {split}; try {assumption},
     { by_contradiction,
       have sc' := segment_copy' _ _ _ _ _ b_on_bc c_on_bc y_on_yz,
@@ -355,7 +353,7 @@ def supplementary_angles (α₁ α₂ : Angle)
 -- LZ,AD : How to define this rigorously when the point can basically be
 -- anywhere?
 -- VK : use *segment_copy*.
-  
+
 def mk_supplementary_angle (α : Angle) (h: α.base ≠ α.ext₂): Angle :=
  let l : Line := Line.mk α.base α.ext₂ h in
  let bl : lies_on_line α.base l := (line_exists α.base α.ext₂ h).1 in
